@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madi & Hunter — September 19, 2026</title>
+  <meta name="description" content="Join us for our wedding celebration at YMCA Mill Hollow, Kamas, Utah on September 19, 2026">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==================== RESET & BASE ==================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --forest-green: #344c12;
+      --peach: #FFBB88;
+      --cream: #f9f9f9;
+      --white: #ffffff;
+      --dark-green: #2a3d0e;
+      --light-gray: #f3f3f3;
+      --font-heading: 'Crimson Text', serif;
+      --font-body: 'Libre Baskerville', serif;
+      --section-padding: 80px;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      line-height: 1.7;
+      color: var(--peach);
+      background-color: var(--forest-green);
+      background-position: top 100px right -50px, bottom -50px left -50px;
+      background-repeat: no-repeat;
+      background-size: 400px auto, 400px auto;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    
+    /* ==================== TYPOGRAPHY ==================== */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      margin-bottom: 0.5em;
+    }
+    
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1em;
+      text-align: center;
+      color: var(--peach);
+      position: relative;
+      padding-bottom: 1.5rem;
+    }
+    
+    h2::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--peach), transparent);
+      margin: 1.5rem auto 0;
+    }
+    
+    h2::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--peach);
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      position: relative;
+    }
+    
+    h3 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 0.75em;
+      color: var(--peach);
+    }
+    
+    p {
+      margin-bottom: 1em;
+    }
+    
+    a {
+      color: var(--peach);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    a:hover {
+      color: var(--white);
+      text-decoration: underline;
+    }
+    
+    /* ==================== LAYOUT ==================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .page {
+      display: none;
+      padding: var(--section-padding) 0;
+      min-height: calc(100vh - 200px);
+    }
+    
+    .page.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in;
+      padding-bottom: unset;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* ==================== NAVIGATION ==================== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(52, 76, 18, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid rgba(255, 187, 136, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    
+    nav.hidden {
+      transform: translateY(-100%);
+    }
+    
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .nav-brand {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    
+    .nav-brand small {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-left: 0.5rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      background-color: rgba(255, 187, 136, 0.15);
+      text-decoration: none;
+      color: var(--white);
+    }
+    
+    /* ==================== HERO SECTION ==================== */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 5rem 2rem;
+      background: var(--forest-green);
+      overflow: hidden;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      padding: 4rem 3rem;
+      background-color: rgba(42, 61, 14, 0.85);
+      backdrop-filter: blur(10px);
+      border: 3px solid var(--peach);
+      border-radius: 8px;
+      box-shadow: 
+        0 0 0 1px var(--peach),
+        0 0 0 8px rgba(42, 61, 14, 0.9),
+        0 0 0 11px var(--peach),
+        0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .hero-content::before,
+    .hero-content::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--peach), transparent);
+    }
+    
+    .hero-content::before {
+      top: 1.5rem;
+    }
+    
+    .hero-content::after {
+      bottom: 1.5rem;
+    }
+    
+    /* Corner flourishes */
+    .corner-accent {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--peach);
+      opacity: 0.3;
+    }
+    
+    .corner-accent-tl {
+      top: 1rem;
+      left: 1rem;
+      border-right: none;
+      border-bottom: none;
+    }
+    
+    .corner-accent-tr {
+      top: 1rem;
+      right: 1rem;
+      border-left: none;
+      border-bottom: none;
+    }
+    
+    .corner-accent-bl {
+      bottom: 1rem;
+      left: 1rem;
+      border-right: none;
+      border-top: none;
+    }
+    
+    .corner-accent-br {
+      bottom: 1rem;
+      right: 1rem;
+      border-left: none;
+      border-top: none;
+    }
+    
+    /* Decorative Side Ornaments */
+    .side-ornament {
+      position: absolute;
+      width: 60px;
+      height: 120px;
+    }
+    
+    .side-ornament::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--peach), transparent);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .side-ornament::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--peach);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(42, 61, 14, 0.9);
+    }
+    
+    .ornament-left {
+      left: -30px;
+      top: 25%;
+    }
+    
+    .ornament-left::before {
+      background: linear-gradient(to bottom, transparent, var(--peach) 30%, var(--peach) 70%, transparent);
+    }
+    
+    .ornament-right {
+      right: -30px;
+      top: 25%;
+    }
+    
+    .ornament-right::before {
+      background: linear-gradient(to bottom, transparent, var(--peach) 30%, var(--peach) 70%, transparent);
+    }
+    
+    /* Decorative dots on ornaments */
+    .side-ornament .dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--peach);
+      border-radius: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .side-ornament .dot-top {
+      top: 15%;
+    }
+    
+    .side-ornament .dot-bottom {
+      bottom: 15%;
+    }
+    
+    .invitation-header {
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--peach);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+    
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      margin: 1rem 0;
+      color: var(--peach);
+      text-transform: none;
+    }
+    
+    .hero-ampersand {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-style: italic;
+      display: block;
+      margin: 0.5rem 0;
+      opacity: 0.8;
+    }
+    
+    .date-badge {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background-color: transparent;
+      border-top: 2px solid var(--peach);
+      border-bottom: 2px solid var(--peach);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      letter-spacing: 0.2em;
+      margin: 2rem 0;
+      text-transform: uppercase;
+    }
+    
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      margin: 2rem 0;
+      color: var(--cream);
+      font-style: italic;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+    
+    .invitation-footer {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-top: 3rem;
+      opacity: 0.9;
+    }
+    
+    /* Countdown Timer */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .countdown-item {
+      background-color: rgba(42, 61, 14, 0.8);
+      border: 2px solid var(--peach);
+      border-radius: 12px;
+      padding: 1rem;
+      min-width: 100px;
+      text-align: center;
+    }
+    
+    .countdown-number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+      display: block;
+    }
+    
+    .countdown-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.5rem;
+      opacity: 0.9;
+    }
+    
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border: 2px solid var(--peach);
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn-primary {
+      background-color: var(--peach);
+      color: var(--forest-green);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      text-decoration: none;
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--peach);
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--peach);
+      color: var(--forest-green);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    
+    /* ==================== CARDS ==================== */
+    .card {
+      background-color: rgba(42, 61, 14, 0.7);
+      border: 2px solid rgba(255, 187, 136, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      border-color: var(--peach);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    /* ==================== SECTION HERO ==================== */
+    .section-hero {
+      width: 100%;
+      height: 28vw;
+      background-size: contain;
+      background-position: center;
+      background-repeat: repeat-x;
+      margin-bottom: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .footer-border {
+      width: 100%;
+      height: 350px;
+      background-size: auto 100%;
+      background-position: bottom center;
+      background-repeat: repeat-x;
+      margin-bottom: -2;
+    }
+    
+    .page > .container {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    
+    .location-photo {
+      width: 100%;
+      max-width: 900px;
+      margin: 2rem auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 187, 136, 0.3);
+    }
+    
+    .location-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    @media (max-width: 768px) {
+      .section-hero {
+        height: 28vw;
+      }
+      
+      .footer-border {
+        height: 350px;
+      }
+      
+      .hero {
+        padding: 3rem 1rem;
+        min-height: 80vh;
+      }
+      
+      .hero-content {
+        padding: 2.5rem 1.5rem;
+        max-width: 95%;
+      }
+      
+      .invitation-header {
+        margin-bottom: 1.5rem;
+        font-size: 0.85rem;
+      }
+      
+      .hero h1 {
+        margin: 0.75rem 0;
+      }
+      
+      .hero-ampersand {
+        margin: 0.5rem 0;
+      }
+      
+      .date-badge {
+        padding: 0.75rem 1.5rem;
+        margin: 1.5rem 0;
+      }
+      
+      .hero-subtitle {
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      
+      .invitation-footer {
+        margin-top: 2rem;
+        font-size: 0.8rem;
+      }
+      
+      .countdown {
+        gap: 0.5rem;
+        margin: 1.5rem 0;
+      }
+      
+      .countdown-item {
+        min-width: 70px;
+        padding: 0.75rem 0.5rem;
+      }
+      
+      .countdown-number {
+        font-size: 1.8rem;
+      }
+      
+      .countdown-label {
+        font-size: 0.7rem;
+      }
+      
+      .btn-group {
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+      
+      .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      
+      nav {
+        background-color: rgba(42, 61, 14, 0.98);
+      }
+      
+      .nav-content {
+        padding: 0.75rem 15px;
+      }
+      
+      .nav-brand {
+        font-size: 1.2rem;
+      }
+      
+      .nav-brand small {
+        font-size: 0.7rem;
+      }
+      
+      .nav-links {
+        gap: 0.25rem;
+      }
+      
+      .nav-links a {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+      }
+    }
+    
+    /* ==================== FAQ ITEMS ==================== */
+    .faq-item {
+      margin: 2.5rem 0;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 187, 136, 0.2);
+    }
+    
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+    
+    .faq-item h3 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .faq-item p {
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+      line-height: 1.8;
+    }
+    
+    .faq-item p strong {
+      color: var(--peach);
+    }
+    
+    /* ==================== TIMELINE ==================== */
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+      margin: 2rem 0;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: var(--peach);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.9rem;
+      top: 0.3rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: var(--peach);
+      border: 3px solid var(--forest-green);
+    }
+    
+    .timeline-time {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--peach);
+      margin-bottom: 0.25rem;
+    }
+    
+    .timeline-desc {
+      color: var(--cream);
+      font-size: 1.05rem;
+    }
+    
+    /* ==================== GALLERY ==================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .gallery-item {
+      background-color: rgba(42, 61, 14, 0.8);
+      border: 2px solid rgba(255, 187, 136, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    
+    /* Large featured images - tall */
+    .gallery-item.large {
+      grid-row: span 2;
+      aspect-ratio: 3/4;
+    }
+    
+    /* Small images - shorter */
+    .gallery-item.small {
+      aspect-ratio: 4/3;
+    }
+    
+    .gallery-item:hover {
+      border-color: var(--peach);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+    
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .gallery-item.large {
+        grid-row: span 1;
+        aspect-ratio: 1/1;
+      }
+      
+      .gallery-item.small {
+        aspect-ratio: 1/1;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* ==================== MAP ==================== */
+    .map-container {
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 187, 136, 0.3);
+      background-color: rgba(42, 61, 14, 0.8);
+      margin-top: 1.5rem;
+    }
+    
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* ==================== LISTS ==================== */
+    ul {
+      list-style-position: inside;
+      color: var(--cream);
+      line-height: 2;
+    }
+    
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+    
+    ul li strong {
+      color: var(--peach);
+    }
+    
+    /* ==================== DIVIDER ==================== */
+    .divider {
+      text-align: center;
+      margin: 4rem 0;
+      position: relative;
+    }
+    
+    .divider::before,
+    .divider::after {
+      content: '❦';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: var(--peach);
+      opacity: 0.4;
+    }
+    
+    .divider::before {
+      left: 10%;
+    }
+    
+    .divider::after {
+      right: 10%;
+      transform: translateY(-50%) scaleX(-1);
+    }
+    
+    .divider img {
+      display: inline-block;
+      max-width: 150px;
+      height: auto;
+      opacity: 0.6;
+    }
+    
+    /* Section decorative accents */
+    .section-accent {
+      text-align: center;
+      margin: 2rem auto;
+      position: relative;
+      height: 20px;
+      width: 200px;
+    }
+    
+    .section-accent::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--peach));
+    }
+    
+    .section-accent::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to left, transparent, var(--peach));
+    }
+    
+    .section-accent-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      border: 2px solid var(--peach);
+      border-radius: 50%;
+      background: var(--forest-green);
+    }
+    
+    .section-accent-center::before,
+    .section-accent-center::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      border: 1px solid var(--peach);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    
+    .section-accent-center::before {
+      left: -15px;
+    }
+    
+    .section-accent-center::after {
+      right: -15px;
+    }
+    
+    /* ==================== FOOTER ==================== */
+    footer {
+      background-color: rgba(42, 61, 14, 0.9);
+      border-top: 2px solid rgba(255, 187, 136, 0.3);
+      padding: 0;
+      text-align: center;
+    }
+    
+    footer .container {
+      padding: 3rem 20px;
+    }
+    
+    footer p {
+      margin: 0.5rem 0;
+    }
+    
+    /* ==================== PAGE NAVIGATION ==================== */
+    .page-nav-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    
+    .page-subtitle {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      color: var(--cream);
+      font-size: 1.1rem;
+    }
+    
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 768px) {
+      :root {
+        --section-padding: 50px;
+      }
+      
+      body {
+        background-size: 250px auto, 250px auto;
+        background-position: top 80px right -80px, bottom -80px left -80px;
+      }
+      
+      .nav-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .nav-links {
+        justify-content: center;
+      }
+      
+      .hero {
+        min-height: 80vh;
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .timeline {
+        padding-left: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-content">
+      <div class="nav-brand" onclick="showPage('home')">
+        Madi & Hunter
+        <small>• Sept 19, 2026</small>
+      </div>
+      <ul class="nav-links">
+        <li><a onclick="showPage('home')" data-page="home" class="active">Home</a></li>
+        <li><a onclick="showPage('location')" data-page="location">Location</a></li>
+        <li><a onclick="showPage('faq')" data-page="faq">What to Know</a></li>
+        <li><a onclick="showPage('schedule')" data-page="schedule">Schedule</a></li>
+        <li><a onclick="showPage('gallery')" data-page="gallery">Gallery</a></li>
+        <li><a onclick="showPage('things-to-do')" data-page="things-to-do">Things To Do</a></li>
+        <li><a onclick="showPage('registry')" data-page="registry">Registry</a></li>
+        <li><a onclick="showPage('rsvp')" data-page="rsvp">RSVP</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div id="home" class="page active">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <section class="hero">
+      <div class="hero-content">
+        <!-- Corner Flourishes -->
+        <div class="corner-accent corner-accent-tl"></div>
+        <div class="corner-accent corner-accent-tr"></div>
+        <div class="corner-accent corner-accent-bl"></div>
+        <div class="corner-accent corner-accent-br"></div>
+        
+        <!-- Side Ornaments -->
+        <div class="side-ornament ornament-left">
+          <div class="dot dot-top"></div>
+          <div class="dot dot-bottom"></div>
+        </div>
+        <div class="side-ornament ornament-right">
+          <div class="dot dot-top"></div>
+          <div class="dot dot-bottom"></div>
+        </div>
+        
+        <p class="invitation-header">Together with their families</p>
+        
+        <h1>Madison</h1>
+        <span class="hero-ampersand">&</span>
+        <h1>Hunter</h1>
+        
+        <p class="hero-subtitle">request the pleasure of your company<br>at the celebration of their marriage</p>
+        
+        <div class="date-badge">September 19, 2026</div>
+        
+        <p class="hero-subtitle">
+          YMCA Mill Hollow<br>
+          Kamas, Utah
+        </p>
+        
+        <div class="countdown">
+          <div class="countdown-item">
+            <span class="countdown-number" id="days">—</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="hours">—</span>
+            <span class="countdown-label">Hours</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="minutes">—</span>
+            <span class="countdown-label">Minutes</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="seconds">—</span>
+            <span class="countdown-label">Seconds</span>
+          </div>
+        </div>
+        
+        <p class="invitation-footer">Ceremony at 4:30 in the afternoon</p>
+        
+        <div class="btn-group">
+          <a href="https://www.zola.com/wedding/madisonandhunterseptember19" target="_blank" rel="noopener" class="btn btn-primary">RSVP</a>
+          <a onclick="showPage('registry')" class="btn btn-secondary">Registry</a>
+        </div>
+      </div>
+    </section>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- LOCATION PAGE -->
+  <div id="location" class="page">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <div class="container">
+      <h2>Location</h2>
+      <div class="section-accent">
+        <div class="section-accent-center"></div>
+      </div>
+      
+      <div class="location-photo fade-in">
+        <img src="https://images.zola.com/5f5e0c97-b4a7-494c-af4e-dcd1ba5dca76" alt="YMCA Mill Hollow">
+      </div>
+      <p class="page-subtitle">Our special day will take place at <strong>YMCA Mill Hollow</strong> (7480 South Mill Hollow Road, Kamas, UT 84036)—a secluded spot in the Uinta Mountains. It's rustic and remote (unpaved roads, limited cell service, and lots of fresh air). Please review the details before RSVPing as travel may take longer than usual.</p>
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Ceremony & Reception</h3>
+          <p><strong>YMCA Mill Hollow</strong><br>
+          7480 South Mill Hollow Road<br>
+          Kamas, UT 84036</p>
+          <p style="color: var(--cream);">Expect pine trees and campfires—not ballrooms. Layers and sturdy shoes recommended.</p>
+          
+          <div class="map-container">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.123!2d-111.060!3d40.578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDM0JzQwLjgiTiAxMTHCsDAzJzM2LjAiVw!5e0!3m2!1sen!2sus!4v1234567890"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          
+          <div style="margin-top: 1.5rem;">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=7480+South+Mill+Hollow+Road+Kamas+UT+84036" 
+               target="_blank" 
+               rel="noopener" 
+               class="btn btn-primary">Get Directions</a>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h3>Weekend Options</h3>
+          <ul>
+            <li><strong>Interested in joining for the weekend?</strong> Let us know you want to stay overnight. (We'll share a packing list.)</li>
+            <li><strong>House or Rental (Airbnb/VRBO)</strong> — Prefer privacy? Book nearby, just check travel times.</li>
+            <li><strong>Nearby Hotels</strong> — A few options within driving distance. Check travel times.</li>
+            <li><strong>Roam Uinta</strong> — Camp nearby (tent/RV) and enjoy the stars!</li>
+          </ul>
+          <div class="btn-group" style="margin-top: 1.5rem;">
+            <a onclick="showPage('rsvp')" class="btn btn-primary">Tell us you're staying</a>
+            <a onclick="showPage('things-to-do')" class="btn btn-secondary">Explore nearby</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="page-nav-buttons">
+        <a onclick="showPage('home')" class="btn btn-secondary">← Home</a>
+        <a onclick="showPage('faq')" class="btn btn-secondary">What to Know →</a>
+      </div>
+    </div>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- FAQ PAGE -->
+  <div id="faq" class="page">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <div class="container">
+      <h2>What to Know</h2>
+      <div class="section-accent">
+        <div class="section-accent-center"></div>
+      </div>
+      
+      <div class="card">
+        <div class="faq-item">
+          <h3>When should I RSVP by?</h3>
+          <p>Please RSVP by <strong>July 01, 2026</strong>.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>What do I wear?</h3>
+          <p>If you want to show up in the right vibe, think semi-formal garden party. We're encouraging jewel tones, but black and white are totally fine too. Just a heads-up: the venue is in the woods with rocky terrain, so wear heels at your own risk!</p>
+          <p>If you have questions about attire reach out to one of us and we can help!</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Is this far from Salt Lake City?</h3>
+          <p>It's about a one-hour drive from Salt Lake City, plus a few miles down a dirt road. Cell reception can be spotty once you're close, but emergency calling still works. There's limited Wi-Fi available, and we'll also have walkie-talkies to help everyone stay connected.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Will food be provided?</h3>
+          <p>Yes! Dinner is provided Friday night (for early guests) and Saturday night. RSVP because spots will fill up fast.</p>
+          <p>Overnight guests should bring lunches, snacks, and any breakfast items they want. We'll have firepits, limited fridge space, and plenty of room for shared food setups.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Will there be alcohol?</h3>
+          <p>We will have a selection of white and red wines during reception. Feel free to bring your own beer/seltzer/wine for camping.</p>
+          <p><strong>Liquor is not permitted at this location.</strong></p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Am I allowed to smoke here?</h3>
+          <p>Due to fire risk and insurance policies, smoking is not allowed on the property.</p>
+          <p>E-cigs and vapes must be kept with you at all times—please don't set them down or lose them. This site also operates as a summer camp for kids from May through August, so we want to keep the area safe and clean.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Do I have to stay the night?</h3>
+          <p>Not at all! Overnight camping is optional. You're welcome to stay for the celebration and head home afterward, or stay at a nearby hotel/cabin if that's more your style.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>What do I need to bring?</h3>
+          <p>Even though it's September, Mill Hollow's elevation makes evenings feel more like mid-October. Pack warm layers—you'll want them once the sun goes down.</p>
+          <p>Water activities are welcome and encouraged, but the lake is cold in the evenings. Midday and early afternoon are the best times to kayak or swim.</p>
+          <p>We'll be providing dinner on Friday night and again on Saturday. Overnight guests should bring their own lunches, snacks, and breakfast items. Limited fridge space will be available.</p>
+          <p>We have several firepits available for both cooking and hanging out. If you'd like, feel free to bring a bundle of firewood to contribute.</p>
+          <p>See packing list for more details.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Will it be cold?</h3>
+          <p>Most likely in the evenings. Daytime is comfortable, but nights at this elevation drop fast. Expect crisp, chilly air after sunset—hoodies, jackets, and layers are recommended.</p>
+          <p>It's around 70°F-85°F on average during daylight hours. A bit cooler early morning and evening. Averages around 50°F - 60°F.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Can I bring a date?</h3>
+          <p>Please reach out to either of us by <strong>July 1</strong> so we can coordinate any added costs. We want to be mindful of all guests, and together we can accommodate meals and seating.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>What if I can't make it?</h3>
+          <p>If you can't join, your words mean the world to us. Leave a note here: <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener">Send love to the couple</a>.</p>
+        </div>
+      </div>
+      
+      <div class="page-nav-buttons">
+        <a onclick="showPage('location')" class="btn btn-secondary">← Location</a>
+        <a onclick="showPage('schedule')" class="btn btn-secondary">Schedule →</a>
+      </div>
+    </div>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- SCHEDULE PAGE -->
+  <div id="schedule" class="page">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <div class="container">
+      <h2>Schedule</h2>
+      <div class="section-accent">
+        <div class="section-accent-center"></div>
+      </div>
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Saturday, September 19, 2026</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-time">4:00 PM</div>
+              <div class="timeline-desc">Guest arrival</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">4:30 PM</div>
+              <div class="timeline-desc">Ceremony</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">5:00 PM</div>
+              <div class="timeline-desc">Cocktail hour & photos</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">6:00 PM</div>
+              <div class="timeline-desc">Dinner</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">7:00 PM</div>
+              <div class="timeline-desc">Toasts & first dance</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">9:30 PM</div>
+              <div class="timeline-desc">Send-off</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h3>Important Notes</h3>
+          <ul>
+            <li><strong>Outdoor ceremony</strong> — Bring a layer for comfort</li>
+            <li><strong>Limited parking</strong> — Please carpool or rideshare when possible</li>
+            <li><strong>Kid-friendly ceremony</strong> — Reception has adult beverages</li>
+            <li><strong>Rustic venue</strong> — Expect natural beauty, not ballrooms</li>
+            <li><strong>Photography</strong> — We'll have a professional photographer, but feel free to take photos during cocktail hour and reception</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="page-nav-buttons">
+        <a onclick="showPage('faq')" class="btn btn-secondary">← What to Know</a>
+        <a onclick="showPage('gallery')" class="btn btn-secondary">Gallery →</a>
+      </div>
+    </div>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- GALLERY PAGE -->
+  <div id="gallery" class="page">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <div class="container">
+      <h2>Gallery</h2>
+      <div class="section-accent">
+        <div class="section-accent-center"></div>
+      </div>
+      <p class="page-subtitle">A glimpse of our journey together.</p>
+      
+      <div class="gallery-grid">
+        <div class="gallery-item small"><img src="https://images.zola.com/f7694ca5-40b9-4a67-b37f-63852dfb3f46" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/c5751e7a-fbc8-446d-b183-a83939454d8b" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item large"><img src="https://images.zola.com/aa6ec89e-3ea0-4177-9500-cbdec831da25" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item large"><img src="https://images.zola.com/f5c1d685-e9fc-4ce3-858c-d9020f8df4eb" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/1a09dd6a-1ddd-4501-94bf-0818eae65fea" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/2f060c8b-9698-43ab-815c-1f55b5e106e7" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/af06f752-0fec-41e5-8aef-e772288dd968" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/c19e3630-17c0-4480-bd23-4d5be18cc57e" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item large"><img src="https://images.zola.com/3ba26fc0-d758-4cb2-968e-4168d63a76d9" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item large"><img src="https://images.zola.com/b9f9719f-809f-4bfd-97c9-78b1d2e42ddf" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/cb0b354e-3649-4224-aac5-ecf2297b7f6f" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/91f7f7cb-9424-4ac0-a525-e46e68976969" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/ac7b7acf-2f41-4f75-ab03-1f6a402b99dc" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/1a8783b2-8d5f-4d91-ace7-cafc5414e534" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item large"><img src="https://images.zola.com/8e472809-4244-4c98-b26e-603e875bb529" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item large"><img src="https://images.zola.com/a8b530f9-637f-4df7-967d-ab4c280cb018" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/1ffe73d6-d70c-4c65-b523-0313d1de96fd" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/a29cc9a9-5406-4ac7-a50a-7e12e4b61a35" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/252b2fb1-b000-48b7-99d1-a9e8bda79141" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/3372a854-2b67-4dca-a34f-80688d8738fb" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/b7cafff9-df30-4f2d-848e-0810470a8701" alt="Madi & Hunter" loading="lazy"></div>
+        <div class="gallery-item small"><img src="https://images.zola.com/c218724a-4b47-4abf-a41d-b1adf7eebdd6" alt="Madi & Hunter" loading="lazy"></div>
+      </div>
+      
+      <div class="page-nav-buttons">
+        <a onclick="showPage('schedule')" class="btn btn-secondary">← Schedule</a>
+        <a onclick="showPage('things-to-do')" class="btn btn-secondary">Things To Do →</a>
+      </div>
+    </div>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- THINGS TO DO PAGE -->
+  <div id="things-to-do" class="page">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <div class="container">
+      <h2>Things To Do</h2>
+      <div class="section-accent">
+        <div class="section-accent-center"></div>
+      </div>
+      <p class="page-subtitle">Make a weekend of it! Here are some activities and attractions near Mill Hollow.</p>
+      
+      <div class="card">
+        <ul style="font-size: 1.1rem;">
+          <li><strong>Scenic drives in the Uintas</strong> — Mirror Lake Highway offers breathtaking views and photo opportunities</li>
+          <li><strong>Hiking trails</strong> — Explore beautiful trails ranging from easy walks to challenging hikes</li>
+          <li><strong>Lakeside picnics</strong> — Enjoy the serene mountain lakes and natural beauty</li>
+          <li><strong>Kamas & Park City</strong> — Visit charming local coffee shops, restaurants, and boutiques</li>
+          <li><strong>Water activities</strong> — Kayaking, paddleboarding, and swimming (bring your gear!)</li>
+          <li><strong>Stargazing</strong> — The night sky at this elevation is absolutely spectacular</li>
+          <li><strong>Wildlife viewing</strong> — Keep an eye out for deer, elk, and various bird species</li>
+          <li><strong>Photography</strong> — Capture stunning mountain landscapes and fall colors</li>
+        </ul>
+      </div>
+      
+      <div class="page-nav-buttons">
+        <a onclick="showPage('gallery')" class="btn btn-secondary">← Gallery</a>
+        <a onclick="showPage('registry')" class="btn btn-secondary">Registry →</a>
+      </div>
+    </div>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- REGISTRY PAGE -->
+  <div id="registry" class="page">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <div class="container">
+      <h2>Registry</h2>
+      <div class="section-accent">
+        <div class="section-accent-center"></div>
+      </div>
+      <div class="card" style="text-align: center; max-width: 700px; margin: 0 auto;">
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--cream);">
+          Your presence is the best gift. If you'd like to contribute to our honeymoon and help us create memories, we've set up a Honeyfund.
+        </p>
+        <a href="https://www.honeyfund.com/site/hartmann-burningham-05-16-2026" target="_blank" rel="noopener" class="btn btn-primary">View Our Honeyfund</a>
+      </div>
+      
+      <div class="page-nav-buttons">
+        <a onclick="showPage('things-to-do')" class="btn btn-secondary">← Things To Do</a>
+        <a onclick="showPage('rsvp')" class="btn btn-secondary">RSVP →</a>
+      </div>
+    </div>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- RSVP PAGE -->
+  <div id="rsvp" class="page">
+    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
+    
+    <div class="container">
+      <h2>RSVP</h2>
+      <div class="section-accent">
+        <div class="section-accent-center"></div>
+      </div>
+      <div class="card" style="text-align: center; max-width: 700px; margin: 0 auto;">
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--cream);">
+          Kindly RSVP by <strong style="color: var(--peach);">July 1, 2026</strong>. We can't wait to celebrate with you!
+        </p>
+        <p style="font-size: 1.05rem; margin-bottom: 2rem; color: var(--cream);">
+          If you can't make it, we'd still love to hear from you. Leave us a note—your love and well wishes mean the world to us.
+        </p>
+        <div class="btn-group">
+          <a href="https://www.zola.com/wedding/madisonandhunterseptember19" target="_blank" rel="noopener" class="btn btn-primary">RSVP on Zola</a>
+          <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener" class="btn btn-secondary">Send Your Love</a>
+        </div>
+      </div>
+      
+      <div class="page-nav-buttons">
+        <a onclick="showPage('registry')" class="btn btn-secondary">← Registry</a>
+        <a onclick="showPage('home')" class="btn btn-secondary">Home →</a>
+      </div>
+    </div>
+    
+    <div class="footer-border" style="background-image: url('footer.png');"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+        © <span id="year"></span> Madi & Hunter
+      </p>
+      <p>
+        <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="font-weight: 600;">Back to top ↑</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Countdown Timer
+    const weddingDate = new Date('2026-09-19T16:30:00-06:00').getTime();
+    
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+      
+      if (distance < 0) {
+        document.getElementById('days').textContent = '0';
+        document.getElementById('hours').textContent = '0';
+        document.getElementById('minutes').textContent = '0';
+        document.getElementById('seconds').textContent = '0';
+        return;
+      }
+      
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Page Navigation
+    function showPage(pageName) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show selected page
+      document.getElementById(pageName).classList.add('active');
+      
+      // Update nav active state
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-page') === pageName) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Scroll to top
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      
+      // Update URL hash without jumping
+      history.pushState(null, null, '#' + pageName);
+    }
+
+    // Handle initial page load with hash
+    window.addEventListener('load', () => {
+      const hash = window.location.hash.substring(1);
+      if (hash && document.getElementById(hash)) {
+        showPage(hash);
+      }
+    });
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', () => {
+      const hash = window.location.hash.substring(1) || 'home';
+      if (document.getElementById(hash)) {
+        showPage(hash);
+      }
+    });
+
+    // Hide/show navigation on scroll (mobile only)
+    let lastScrollTop = 0;
+    let scrollTimeout;
+    const nav = document.querySelector('nav');
+    
+    window.addEventListener('scroll', () => {
+      // Only apply on mobile
+      if (window.innerWidth > 768) {
+        nav.classList.remove('hidden');
+        return;
+      }
+      
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // Clear previous timeout
+      clearTimeout(scrollTimeout);
+      
+      // If at top of page, always show nav
+      if (scrollTop < 100) {
+        nav.classList.remove('hidden');
+        lastScrollTop = scrollTop;
+        return;
+      }
+      
+      // Scrolling down - hide nav
+      if (scrollTop > lastScrollTop && scrollTop > 200) {
+        nav.classList.add('hidden');
+      } 
+      // Scrolling up - show nav
+      else if (scrollTop < lastScrollTop) {
+        nav.classList.remove('hidden');
+      }
+      
+      lastScrollTop = scrollTop;
+    });
+
+    // Swipe navigation for mobile
+    const pageOrder = ['home', 'location', 'faq', 'schedule', 'gallery', 'things-to-do', 'registry', 'rsvp'];
+    
+    function getCurrentPageIndex() {
+      const currentPage = document.querySelector('.page.active');
+      if (!currentPage) return 0;
+      const currentPageId = currentPage.id;
+      return pageOrder.indexOf(currentPageId);
+    }
+    
+    function navigateToNextPage() {
+      const currentIndex = getCurrentPageIndex();
+      if (currentIndex < pageOrder.length - 1) {
+        showPage(pageOrder[currentIndex + 1]);
+      }
+    }
+    
+    function navigateToPreviousPage() {
+      const currentIndex = getCurrentPageIndex();
+      if (currentIndex > 0) {
+        showPage(pageOrder[currentIndex - 1]);
+      }
+    }
+    
+    // Touch event handlers for swipe detection
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    const minSwipeDistance = 50; // Minimum distance for a swipe
+    
+    function isMobileDevice() {
+      return window.innerWidth <= 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+    
+    document.addEventListener('touchstart', (e) => {
+      if (!isMobileDevice()) return;
+      
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    
+    document.addEventListener('touchend', (e) => {
+      if (!isMobileDevice()) return;
+      
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+      const absDeltaX = Math.abs(deltaX);
+      const absDeltaY = Math.abs(deltaY);
+      
+      // Only trigger swipe if horizontal movement is greater than vertical (to avoid conflicts with scrolling)
+      if (absDeltaX > absDeltaY && absDeltaX > minSwipeDistance) {
+        // Swipe left (next page)
+        if (deltaX < 0) {
+          navigateToNextPage();
+        }
+        // Swipe right (previous page)
+        else if (deltaX > 0) {
+          navigateToPreviousPage();
+        }
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
