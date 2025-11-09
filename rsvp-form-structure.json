@@ -1,0 +1,211 @@
+{
+  "formTitle": "Weekend Interest Form",
+  "formDescription": "Where: YMCA Mill Hollow: 7480 South Mill Hollow Road, Kamas, UT 84036\nWhen: Sept 18th - 20th, 2026\nContact: For questions message Madi at 801-458-2972 or email us at hunterandmadi9496@gmail.com\n\nPlease submit by July 1, 2026",
+  "sections": [
+    {
+      "sectionTitle": "Basic Information",
+      "questions": [
+        {
+          "title": "First and Last name(s)",
+          "type": "short_answer",
+          "required": true,
+          "description": "Please list all names of people attending"
+        },
+        {
+          "title": "Email address",
+          "type": "short_answer",
+          "required": true,
+          "description": "We'll use this to send you the packing list and updates",
+          "validation": "email"
+        },
+        {
+          "title": "Phone number",
+          "type": "short_answer",
+          "required": false,
+          "description": "Optional - for urgent updates, especially with limited cell service"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Weekend Plans",
+      "questions": [
+        {
+          "title": "Will you be staying overnight?",
+          "type": "multiple_choice",
+          "required": true,
+          "description": "Overnight camping is optional. You're welcome to stay for the celebration and head home afterward.",
+          "options": [
+            "Yes, I'm staying overnight",
+            "No, I'm not staying overnight"
+          ],
+          "conditional": {
+            "showIf": null
+          }
+        },
+        {
+          "title": "Who will be staying overnight? Please list everyone!",
+          "type": "paragraph",
+          "required": true,
+          "description": "List all names of people staying overnight",
+          "conditional": {
+            "showIf": {
+              "questionIndex": 0,
+              "answer": "Yes, I'm staying overnight"
+            }
+          }
+        },
+        {
+          "title": "Are you planning to arrive on Friday evening or Saturday morning?",
+          "type": "multiple_choice",
+          "required": true,
+          "description": "*** Please don't arrive any later than noon on Saturday morning so you have time to settle in! ***",
+          "options": [
+            "Friday evening",
+            "Saturday morning"
+          ],
+          "conditional": {
+            "showIf": {
+              "questionIndex": 0,
+              "answer": "Yes, I'm staying overnight"
+            }
+          }
+        },
+        {
+          "title": "What is your preferred sleeping arrangement?",
+          "type": "multiple_choice",
+          "required": true,
+          "description": "",
+          "options": [
+            "Bunkin' it! In a cabin bunk please (We'll have a Friend Bunk and a Family Bunk ready for overnighters!) These cabins have 12 beds with a shared half bath. Reach out if you'd like more pictures!",
+            "Roughin it! I'll bring my own tent or stay nearby for the weekend (please feed me!)"
+          ],
+          "conditional": {
+            "showIf": {
+              "questionIndex": 0,
+              "answer": "Yes, I'm staying overnight"
+            }
+          }
+        },
+        {
+          "title": "Emergency contact",
+          "type": "short_answer",
+          "required": false,
+          "description": "Name and phone number of emergency contact (for overnight guests)",
+          "conditional": {
+            "showIf": {
+              "questionIndex": 0,
+              "answer": "Yes, I'm staying overnight"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Ceremony & Guests",
+      "questions": [
+        {
+          "title": "Will you be attending the ceremony on Saturday, September 19th at 4:30 PM?",
+          "type": "multiple_choice",
+          "required": true,
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "title": "Are you bringing any additional guests?",
+          "type": "multiple_choice",
+          "required": false,
+          "description": "If yes, please list their names in the next question",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "conditional": {
+            "showIf": null
+          }
+        },
+        {
+          "title": "If bringing additional guests, please list their names",
+          "type": "paragraph",
+          "required": false,
+          "description": "Only answer if you selected 'Yes' above",
+          "conditional": {
+            "showIf": {
+              "questionIndex": 2,
+              "answer": "Yes"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Meals",
+      "questions": [
+        {
+          "title": "Will you be eating both nights?",
+          "type": "multiple_choice",
+          "required": true,
+          "description": "(we will reach out about dietary restrictions)\n\n** Dinner will be provided Fri and Saturday, we ask that people help pitch for the cost of OR bring their own lunches and snacks (full shared kitchen in Main Lodge, fridge space may be limited) **",
+          "options": [
+            "Feed me only dinner please!",
+            "I'll feed myself",
+            "Help feed me: I will help procure these goods (any donation helps!)"
+          ]
+        },
+        {
+          "title": "Any dietary restrictions or allergies we should know about?",
+          "type": "paragraph",
+          "required": false,
+          "description": "Please list any dietary restrictions, allergies, or special dietary needs",
+          "conditional": {
+            "showIf": {
+              "questionIndex": 3,
+              "answer": ["Feed me only dinner please!", "Help feed me: I will help procure these goods (any donation helps!)"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Additional Information",
+      "questions": [
+        {
+          "title": "Would you like a suggested packing list sent to you?",
+          "type": "multiple_choice",
+          "required": true,
+          "options": [
+            "Yes",
+            "No thanks, I got it!"
+          ],
+          "conditional": {
+            "showIf": {
+              "questionIndex": 0,
+              "answer": "Yes, I'm staying overnight"
+            }
+          }
+        },
+        {
+          "title": "Song requests (optional)",
+          "type": "paragraph",
+          "required": false,
+          "description": "Any songs you'd love to hear at the reception?"
+        },
+        {
+          "title": "Comments, questions, or well wishes",
+          "type": "paragraph",
+          "required": false,
+          "description": "Anything else you'd like us to know?"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "collectEmail": false,
+    "limitToOneResponse": false,
+    "showProgressBar": true,
+    "shuffleQuestions": false,
+    "confirmationMessage": "Thank you for your RSVP! We can't wait to celebrate with you!"
+  }
+}
+

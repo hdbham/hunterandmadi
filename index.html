@@ -992,6 +992,473 @@
         padding-left: 2rem;
       }
     }
+    
+    /* ==================== FORM STYLES ==================== */
+    .rsvp-form {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .form-section {
+      margin-bottom: 3rem;
+    }
+    
+    .form-section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--peach);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .form-group {
+      margin-bottom: 2rem;
+    }
+    
+    .form-group.hidden {
+      display: none;
+    }
+    
+    .form-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      color: var(--peach);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .form-label .required {
+      color: var(--peach);
+      margin-left: 0.25rem;
+    }
+    
+    .form-help {
+      font-size: 0.9rem;
+      color: var(--cream);
+      margin-top: 0.5rem;
+      font-style: italic;
+      opacity: 0.9;
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid rgba(255, 187, 136, 0.3);
+      border-radius: 8px;
+      background-color: rgba(42, 61, 14, 0.7);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--peach);
+      background-color: rgba(42, 61, 14, 0.9);
+      box-shadow: 0 0 0 3px rgba(255, 187, 136, 0.2);
+    }
+    
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-radio-group,
+    .form-checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .form-radio,
+    .form-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+      padding: 1rem;
+      border: 2px solid rgba(255, 187, 136, 0.2);
+      border-radius: 8px;
+      background-color: rgba(42, 61, 14, 0.5);
+      transition: all 0.3s ease;
+    }
+    
+    .form-radio:hover,
+    .form-checkbox:hover {
+      border-color: var(--peach);
+      background-color: rgba(42, 61, 14, 0.7);
+    }
+    
+    .form-radio input[type="radio"],
+    .form-checkbox input[type="checkbox"] {
+      margin-top: 0.25rem;
+      cursor: pointer;
+      accent-color: var(--peach);
+    }
+    
+    .form-radio input[type="radio"]:checked + label,
+    .form-checkbox input[type="checkbox"]:checked + label {
+      color: var(--peach);
+    }
+    
+    .form-radio label,
+    .form-checkbox label {
+      cursor: pointer;
+      color: var(--cream);
+      line-height: 1.5;
+    }
+    
+    .form-submit {
+      width: 100%;
+      padding: 1.25rem 2rem;
+      background-color: var(--peach);
+      color: var(--forest-green);
+      border: 2px solid var(--peach);
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      margin-top: 2rem;
+    }
+    
+    .form-submit:hover {
+      background-color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    /* ==================== MODAL ==================== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.3s ease-in;
+      overflow-y: auto;
+    }
+    
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .modal-content {
+      background-color: rgba(42, 61, 14, 0.7);
+      border: 2px solid rgba(255, 187, 136, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      position: relative;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: slideDown 0.3s ease-out;
+      text-align: center;
+    }
+    
+    .modal-content:hover {
+      border-color: var(--peach);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--peach);
+      font-size: 2rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      line-height: 1;
+    }
+    
+    .modal-close:hover {
+      background-color: rgba(255, 187, 136, 0.2);
+      transform: rotate(90deg);
+    }
+    
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.2rem);
+      color: var(--peach);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .modal-message {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      color: var(--cream);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .modal-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .modal-links a {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background-color: var(--peach);
+      color: var(--forest-green);
+      border: 2px solid var(--peach);
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .modal-links a:hover {
+      background-color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    @media (max-width: 768px) {
+      .modal-content {
+        padding: 2rem 1.5rem;
+      }
+      
+      .modal-links {
+        flex-direction: column;
+      }
+    }
+    
+    .form-message {
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-family: var(--font-body);
+      display: none;
+    }
+    
+    .form-message.success {
+      background-color: rgba(76, 175, 80, 0.2);
+      border: 2px solid rgba(76, 175, 80, 0.5);
+      color: #a5d6a7;
+      display: block;
+    }
+    
+    .form-message.error {
+      background-color: rgba(244, 67, 54, 0.2);
+      border: 2px solid rgba(244, 67, 54, 0.5);
+      color: #ef9a9a;
+      display: block;
+    }
+    
+    @media (max-width: 768px) {
+      .form-radio,
+      .form-checkbox {
+        padding: 0.75rem;
+      }
+      
+      .form-input,
+      .form-textarea,
+      .form-select {
+        padding: 0.875rem;
+      }
+    }
+    
+    /* ==================== STEP-BY-STEP FORM ==================== */
+    .form-step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding: 1rem 0;
+    }
+    
+    .step-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 187, 136, 0.3);
+      border: 2px solid rgba(255, 187, 136, 0.5);
+      transition: all 0.3s ease;
+    }
+    
+    .step-dot.active {
+      background-color: var(--peach);
+      border-color: var(--peach);
+      transform: scale(1.2);
+    }
+    
+    .form-step {
+      display: none;
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    .form-step.active {
+      display: block;
+    }
+    
+    .form-navigation {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 2px solid rgba(255, 187, 136, 0.2);
+    }
+    
+    .form-navigation button {
+      flex: 1;
+      max-width: 200px;
+    }
+    
+    @media (max-width: 768px) {
+      .form-navigation {
+        flex-direction: column;
+      }
+      
+      .form-navigation button {
+        max-width: 100%;
+      }
+    }
+    
+    /* ==================== ATTENDEE CARDS ==================== */
+    .attendee-card {
+      background-color: rgba(42, 61, 14, 0.5);
+      border: 2px solid rgba(255, 187, 136, 0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .attendee-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 187, 136, 0.2);
+    }
+    
+    .attendee-number {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--peach);
+      font-weight: 600;
+    }
+    
+    .remove-attendee {
+      background: none;
+      border: 2px solid rgba(244, 67, 54, 0.5);
+      color: #ef9a9a;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .remove-attendee:hover {
+      background-color: rgba(244, 67, 54, 0.2);
+      border-color: rgba(244, 67, 54, 0.8);
+    }
+    
+    .add-attendee-btn {
+      width: 100%;
+      padding: 1rem;
+      background-color: rgba(255, 187, 136, 0.1);
+      border: 2px dashed rgba(255, 187, 136, 0.5);
+      border-radius: 8px;
+      color: var(--peach);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    
+    .add-attendee-btn:hover {
+      background-color: rgba(255, 187, 136, 0.2);
+      border-color: var(--peach);
+    }
+    
+    .attendee-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .attendee-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .additional-guests-dropdown {
+      margin-top: 1rem;
+    }
+    
+    .additional-guests-dropdown select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid rgba(255, 187, 136, 0.3);
+      border-radius: 8px;
+      background-color: rgba(42, 61, 14, 0.7);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -1039,7 +1506,7 @@
         
         <p class="invitation-header">Together with their families</p>
         
-        <h1>Madison</h1>
+        <h1>Madi</h1>
         <span class="hero-ampersand">&</span>
         <h1>Hunter</h1>
         
@@ -1096,8 +1563,13 @@
       <div class="location-photo fade-in">
         <img src="https://images.zola.com/5f5e0c97-b4a7-494c-af4e-dcd1ba5dca76" alt="YMCA Mill Hollow">
       </div>
-      <p class="page-subtitle">Our special day will take place at <strong>YMCA Mill Hollow</strong> (7480 South Mill Hollow Road, Kamas, UT 84036)—a secluded spot in the Uinta Mountains. It's rustic and remote (unpaved roads, limited cell service, and lots of fresh air). Please review the details before RSVPing as travel may take longer than usual.</p>
-      
+      <p class="page-subtitle">Our special day will take place at YMCA Mill Hollow (7480 South Mill Hollow Road, Kamas, UT) a stunning and secluded spot nestled in the Uinta Mountains. We love its rustic beauty, but want guests to be prepared for its quirks! 
+
+        <br><br>The site is remote, featuring unpaved roads, limited service, and abundant fresh mountain air; well worth the drive! This isn’t your typical wedding venue; think more pine trees and campfires than ballrooms and chandeliers. Please review the location before RSVPing, as travel may be more difficult or take more time than you're used to. 
+        
+        <br><br>Overnight guests - we recommend packing layers, sturdy shoes, and anything you’ll need for a mountain getaway. We will provide a packing suggestion list if you plan to stay the night! Thank you for joining us on this little adventure. We can’t wait to celebrate with you! 
+        
+        <br><br>Please review the options below if you plan to attend the whole weekend. </p>  
       <div class="card-grid">
         <div class="card">
           <h3>Ceremony & Reception</h3>
@@ -1406,17 +1878,121 @@
       <div class="section-accent">
         <div class="section-accent-center"></div>
       </div>
-      <div class="card" style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--cream);">
-          Kindly RSVP by <strong style="color: var(--peach);">July 1, 2026</strong>. We can't wait to celebrate with you!
-        </p>
-        <p style="font-size: 1.05rem; margin-bottom: 2rem; color: var(--cream);">
-          If you can't make it, we'd still love to hear from you. Leave us a note—your love and well wishes mean the world to us.
-        </p>
-        <div class="btn-group">
-          <a href="https://www.zola.com/wedding/madisonandhunterseptember19" target="_blank" rel="noopener" class="btn btn-primary">RSVP on Zola</a>
-          <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener" class="btn btn-secondary">Send Your Love</a>
-        </div>
+      <p class="page-subtitle" style="text-align: center; margin-bottom: 2rem;">
+        Kindly RSVP by <strong style="color: var(--peach);">July 1, 2026</strong>. We can't wait to celebrate with you!
+      </p>
+      
+      <div class="card">
+        <form id="rsvpForm" class="rsvp-form">
+          <div class="form-message" id="formMessage"></div>
+          
+          <!-- Thank You Modal -->
+          <div class="modal" id="thankYouModal">
+            <div class="modal-content">
+              <button class="modal-close" id="modalClose" onclick="closeThankYouModal()">&times;</button>
+              <h2 class="modal-title">Thank You!</h2>
+              <p class="modal-message">
+                We're so excited to celebrate with you! Your RSVP has been received and we can't wait to see you there.
+              </p>
+              <div class="modal-links">
+                <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener">
+                  Send Love on Padlet →
+                </a>
+                <a href="#" onclick="showPage('registry'); closeThankYouModal(); return false;">
+                  View Registry →
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Step Progress Indicator -->
+          <div class="form-step-indicator" id="stepIndicator" style="display: none;">
+            <div class="step-dot active" data-step="0"></div>
+            <div class="step-dot" data-step="1"></div>
+            <div class="step-dot" data-step="2"></div>
+          </div>
+          
+          <!-- STEP 1: Ceremony Attendance -->
+          <div class="form-step active" data-step="0">
+            <h3 class="form-section-title">Will you be attending the ceremony?</h3>
+            <div class="form-group">
+              <label class="form-label">
+                Will you be attending the ceremony on Saturday, September 19th at 4:30 PM? <span class="required">*</span>
+              </label>
+              <div class="form-radio-group">
+                <div class="form-radio">
+                  <input type="radio" id="ceremony_yes" name="ceremony" value="Yes" required>
+                  <label for="ceremony_yes">Yes</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="ceremony_no" name="ceremony" value="No" required>
+                  <label for="ceremony_no">No</label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Not Attending Message -->
+            <div class="form-group hidden" id="not-attending-message">
+              <div class="card" style="text-align: center; padding: 2rem; margin-top: 1rem;">
+                <p style="font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--cream);">
+                  We're sorry you can't make it, but your love and well wishes mean the world to us!
+                </p>
+                <p style="font-size: 1.05rem; margin-bottom: 2rem; color: var(--cream);">
+                  Please leave us a note—we'd love to hear from you.
+                </p>
+                <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener" class="btn btn-primary">Send Your Love</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- STEP 2: Add Attendees -->
+          <div class="form-step hidden" data-step="1" id="attendees-step">
+            <h3 class="form-section-title">Who's Attending?</h3>
+            <p style="color: var(--cream); margin-bottom: 1.5rem; text-align: center;">
+              Please add each person who will be attending. We need emergency contact and health information for everyone.
+            </p>
+            
+            <div id="attendees-container">
+              <!-- Attendees will be added here dynamically -->
+            </div>
+            
+            <button type="button" class="add-attendee-btn" id="addAttendeeBtn">
+              + Add Another Attendee
+            </button>
+          </div>
+          
+          <!-- STEP 3: Additional Information -->
+          <div class="form-step hidden" data-step="2" id="meals-step">
+            <h3 class="form-section-title">Additional Information</h3>
+            
+            <p style="color: var(--cream); margin-bottom: 1.5rem; text-align: center;">
+              Meal preferences and dietary restrictions have been collected for each attendee in the previous step.
+            </p>
+            
+            <div class="form-group">
+              <label class="form-label" for="song_requests">
+                Song requests (optional)
+              </label>
+              <textarea id="song_requests" name="song_requests" class="form-textarea"></textarea>
+              <div class="form-help">Any songs you'd love to hear at the reception?</div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="comments">
+                Comments, questions, or well wishes
+              </label>
+              <textarea id="comments" name="comments" class="form-textarea"></textarea>
+              <div class="form-help">Anything else you'd like us to know?</div>
+            </div>
+          </div>
+          
+          <!-- Navigation Buttons -->
+          <div class="form-navigation">
+            <button type="button" class="btn btn-secondary hidden" id="prevBtn">← Previous</button>
+            <button type="button" class="btn btn-primary" id="nextBtn">Next →</button>
+            <button type="submit" class="btn btn-primary hidden" id="submitBtn">Submit RSVP</button>
+          </div>
+        </form>
       </div>
       
       <div class="page-nav-buttons">
@@ -1473,6 +2049,42 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+    // Modal Functions
+    function showThankYouModal() {
+      const modal = document.getElementById('thankYouModal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+    }
+    
+    function closeThankYouModal() {
+      const modal = document.getElementById('thankYouModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+    }
+    
+    // Close modal when clicking outside
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('thankYouModal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeThankYouModal();
+          }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeThankYouModal();
+          }
+        });
+      }
+    });
+    
     // Page Navigation
     function showPage(pageName) {
       // Hide all pages
@@ -1615,6 +2227,664 @@
         }
       }
     }, { passive: true });
+
+    // RSVP Form Step-by-Step Navigation
+    const rsvpForm = document.getElementById('rsvpForm');
+    if (rsvpForm) {
+      let currentStep = 0;
+      const totalSteps = 3;
+      let attendees = []; // Array to store attendee data
+      let attendeeCounter = 0;
+      
+      const steps = document.querySelectorAll('.form-step');
+      const stepIndicator = document.getElementById('stepIndicator');
+      const stepDots = document.querySelectorAll('.step-dot');
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      const attendeesContainer = document.getElementById('attendees-container');
+      const addAttendeeBtn = document.getElementById('addAttendeeBtn');
+      
+      // Get conditional elements
+      const ceremonyRadios = document.querySelectorAll('input[name="ceremony"]');
+      const notAttendingMessage = document.getElementById('not-attending-message');
+      const mealsStep = document.getElementById('meals-step');
+      
+      // Attendee Management Functions
+      function createAttendeeCard(index) {
+        const card = document.createElement('div');
+        card.className = 'attendee-card';
+        card.dataset.attendeeIndex = index;
+        
+        card.innerHTML = `
+          <div class="attendee-card-header">
+            <span class="attendee-number">Attendee ${index + 1}</span>
+            ${index > 0 ? '<button type="button" class="remove-attendee">Remove</button>' : ''}
+          </div>
+          <div class="attendee-grid">
+            <div class="form-group">
+              <label class="form-label">
+                Full Name <span class="required">*</span>
+              </label>
+              <input type="text" name="attendee_name_${index}" class="form-input" required>
+              <div class="form-help">First and last name</div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                Email address ${index === 0 ? '<span class="required">*</span>' : ''}
+              </label>
+              <input type="email" name="attendee_email_${index}" class="form-input" ${index === 0 ? 'required' : ''}>
+              <div class="form-help">${index === 0 ? 'We\'ll use this to send you the packing list and updates' : 'Email address for this attendee'}</div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                Phone number
+              </label>
+              <input type="tel" name="attendee_phone_${index}" class="form-input">
+              <div class="form-help">Phone number for this attendee</div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                Emergency Contact Name <span class="required">*</span>
+              </label>
+              <input type="text" name="attendee_emergency_name_${index}" class="form-input" required>
+              <div class="form-help">Name of emergency contact</div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                Emergency Contact Phone <span class="required">*</span>
+              </label>
+              <input type="tel" name="attendee_emergency_phone_${index}" class="form-input" required>
+              <div class="form-help">Phone number of emergency contact</div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                Dietary Restrictions
+              </label>
+              <textarea name="attendee_dietary_${index}" class="form-textarea" rows="3"></textarea>
+              <div class="form-help">Any dietary restrictions, allergies, or special dietary needs</div>
+            </div>
+            
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">
+                Health Information
+              </label>
+              <textarea name="attendee_health_${index}" class="form-textarea" rows="3"></textarea>
+              <div class="form-help">Any health conditions, medications, or important medical information we should know</div>
+            </div>
+            
+            <div class="form-group" style="grid-column: 1 / -1; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid rgba(255, 187, 136, 0.3);">
+              <h4 style="color: var(--peach); margin-bottom: 1rem; font-family: var(--font-heading);">Overnight Stay Information</h4>
+            </div>
+            
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">
+                Are you planning to arrive on Friday evening or Saturday morning?
+              </label>
+              <div class="form-radio-group">
+                <div class="form-radio">
+                  <input type="radio" id="arrival_friday_${index}" name="arrival_${index}" value="Friday evening">
+                  <label for="arrival_friday_${index}">Friday evening</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="arrival_saturday_${index}" name="arrival_${index}" value="Saturday morning">
+                  <label for="arrival_saturday_${index}">Saturday morning</label>
+                </div>
+              </div>
+              <div class="form-help">*** Please don't arrive any later than noon on Saturday morning so you have time to settle in! ***</div>
+            </div>
+            
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">
+                What is your preferred sleeping arrangement?
+              </label>
+              <div class="form-radio-group">
+                <div class="form-radio">
+                  <input type="radio" id="sleeping_bunk_${index}" name="sleeping_${index}" value="Bunkin' it! In a cabin bunk please (We'll have a Friend Bunk and a Family Bunk ready for overnighters!) These cabins have 12 beds with a shared half bath. Reach out if you'd like more pictures!">
+                  <label for="sleeping_bunk_${index}">Bunkin' it! In a cabin bunk please (We'll have a Friend Bunk and a Family Bunk ready for overnighters!) These cabins have 12 beds with a shared half bath. Reach out if you'd like more pictures!</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="sleeping_tent_${index}" name="sleeping_${index}" value="Roughin it! I'll bring my own tent or stay nearby for the weekend (please feed me!)">
+                  <label for="sleeping_tent_${index}">Roughin it! I'll bring my own tent or stay nearby for the weekend (please feed me!)</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">
+                Would you like a suggested packing list sent to you?
+              </label>
+              <div class="form-radio-group">
+                <div class="form-radio">
+                  <input type="radio" id="packing_yes_${index}" name="packing_list_${index}" value="Yes">
+                  <label for="packing_yes_${index}">Yes</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="packing_no_${index}" name="packing_list_${index}" value="No thanks, I got it!">
+                  <label for="packing_no_${index}">No thanks, I got it!</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group" style="grid-column: 1 / -1; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid rgba(255, 187, 136, 0.3);">
+              <h4 style="color: var(--peach); margin-bottom: 1rem; font-family: var(--font-heading);">Meal Preferences</h4>
+            </div>
+            
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">
+                Will you be eating both nights?
+              </label>
+              <div class="form-radio-group">
+                <div class="form-radio">
+                  <input type="radio" id="meals_dinner_${index}" name="meals_${index}" value="Feed me only dinner please!">
+                  <label for="meals_dinner_${index}">Feed me only dinner please!</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="meals_self_${index}" name="meals_${index}" value="I'll feed myself">
+                  <label for="meals_self_${index}">I'll feed myself</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="meals_help_${index}" name="meals_${index}" value="Help feed me: I will help procure these goods (any donation helps!)">
+                  <label for="meals_help_${index}">Help feed me: I will help procure these goods (any donation helps!)</label>
+                </div>
+              </div>
+              <div class="form-help">Dinner will be provided Fri and Saturday, we ask that people help pitch for the cost of OR bring your own lunches and snacks (full shared kitchen in Main Lodge, fridge space may be limited)</div>
+            </div>
+          </div>
+        `;
+        
+        // Add remove button functionality
+        const removeBtn = card.querySelector('.remove-attendee');
+        if (removeBtn) {
+          removeBtn.addEventListener('click', () => removeAttendee(index));
+        }
+        
+        return card;
+      }
+      
+      function addAttendee() {
+        const index = attendeeCounter++;
+        const card = createAttendeeCard(index);
+        attendeesContainer.appendChild(card);
+        attendees.push({ index: index });
+      }
+      
+      function removeAttendee(index) {
+        const card = document.querySelector(`[data-attendee-index="${index}"]`);
+        if (card) {
+          card.remove();
+          attendees = attendees.filter(a => a.index !== index);
+          // Reindex remaining attendees
+          const remainingCards = attendeesContainer.querySelectorAll('.attendee-card');
+          remainingCards.forEach((card, newIndex) => {
+            card.dataset.attendeeIndex = newIndex;
+            card.querySelector('.attendee-number').textContent = `Attendee ${newIndex + 1}`;
+            // Update input names
+            card.querySelectorAll('input, textarea').forEach(input => {
+              const name = input.name;
+              if (name) {
+                const parts = name.split('_');
+                const lastPart = parts[parts.length - 1];
+                input.name = name.replace(`_${lastPart}`, `_${newIndex}`);
+              }
+            });
+            // Show/hide remove button
+            const removeBtn = card.querySelector('.remove-attendee');
+            if (newIndex === 0 && removeBtn) {
+              removeBtn.remove();
+            } else if (newIndex > 0 && !removeBtn) {
+              const header = card.querySelector('.attendee-card-header');
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'remove-attendee';
+              btn.textContent = 'Remove';
+              btn.addEventListener('click', () => removeAttendee(newIndex));
+              header.appendChild(btn);
+            }
+          });
+          attendeeCounter = remainingCards.length;
+        }
+      }
+      
+      // Initialize with first attendee
+      if (addAttendeeBtn) {
+        addAttendeeBtn.addEventListener('click', addAttendee);
+        // Add first attendee automatically
+        addAttendee();
+      }
+      
+      // Step navigation functions
+      function showStep(stepIndex) {
+        // Hide all steps
+        steps.forEach((step, index) => {
+          step.classList.remove('active');
+          if (stepDots[index]) {
+            stepDots[index].classList.remove('active');
+          }
+        });
+        
+        // Show current step
+        if (steps[stepIndex]) {
+          steps[stepIndex].classList.add('active');
+          if (stepDots[stepIndex]) {
+            stepDots[stepIndex].classList.add('active');
+          }
+        }
+        
+        // Show/hide navigation buttons
+        if (stepIndex === 0) {
+          prevBtn.classList.add('hidden');
+        } else {
+          prevBtn.classList.remove('hidden');
+        }
+        
+        // Check if this is the last step
+        const ceremonyValue = document.querySelector('input[name="ceremony"]:checked')?.value;
+        const isAttending = ceremonyValue === "Yes";
+        let lastStep = 0; // Default: ceremony is last
+        
+        if (isAttending) {
+          lastStep = 2; // Additional info step is last if attending (step 2)
+        }
+        
+        // Show submit button only at the last step (when next button is removed)
+        if (stepIndex >= lastStep) {
+          nextBtn.classList.add('hidden');
+          submitBtn.classList.remove('hidden');
+        } else {
+          nextBtn.classList.remove('hidden');
+          submitBtn.classList.add('hidden');
+        }
+        
+        // Show step indicator after first step
+        if (stepIndex > 0) {
+          stepIndicator.style.display = 'flex';
+        } else {
+          stepIndicator.style.display = 'none';
+        }
+        
+        // Scroll to top of form
+        rsvpForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      
+      function goToNextStep() {
+        const currentStepElement = steps[currentStep];
+        let isValid = true;
+        
+        // Special validation for attendees step
+        if (currentStep === 1) {
+          const attendeeCards = attendeesContainer.querySelectorAll('.attendee-card');
+          if (attendeeCards.length === 0) {
+            isValid = false;
+            alert('Please add at least one attendee.');
+            return;
+          }
+          
+          // Validate each attendee
+          attendeeCards.forEach((card) => {
+            // Get the actual attendee index from the card's data attribute
+            const attendeeIndex = parseInt(card.dataset.attendeeIndex);
+            const isFirstAttendee = attendeeIndex === 0;
+            
+            const nameInput = card.querySelector(`input[name="attendee_name_${attendeeIndex}"]`);
+            const emergencyNameInput = card.querySelector(`input[name="attendee_emergency_name_${attendeeIndex}"]`);
+            const emergencyPhoneInput = card.querySelector(`input[name="attendee_emergency_phone_${attendeeIndex}"]`);
+            
+            // Email is required for first attendee (index 0)
+            if (isFirstAttendee) {
+              const emailInput = card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`);
+              if (!emailInput || !emailInput.value.trim()) {
+                isValid = false;
+                if (emailInput) emailInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+              } else if (emailInput) {
+                emailInput.style.borderColor = '';
+              }
+            }
+            
+            if (!nameInput || !nameInput.value.trim()) {
+              isValid = false;
+              if (nameInput) nameInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+            } else if (nameInput) {
+              nameInput.style.borderColor = '';
+            }
+            
+            if (!emergencyNameInput || !emergencyNameInput.value.trim()) {
+              isValid = false;
+              if (emergencyNameInput) emergencyNameInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+            } else if (emergencyNameInput) {
+              emergencyNameInput.style.borderColor = '';
+            }
+            
+            if (!emergencyPhoneInput || !emergencyPhoneInput.value.trim()) {
+              isValid = false;
+              if (emergencyPhoneInput) emergencyPhoneInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+            } else if (emergencyPhoneInput) {
+              emergencyPhoneInput.style.borderColor = '';
+            }
+          });
+          
+          if (!isValid) {
+            return;
+          }
+        } else {
+          // Standard validation for other steps
+          const inputs = currentStepElement.querySelectorAll('input[required], textarea[required], select[required]');
+          
+          inputs.forEach(input => {
+            if (input.type === 'radio' || input.type === 'checkbox') {
+              // Skip - handled separately
+            } else if (input.tagName === 'SELECT') {
+              if (input.multiple) {
+                const selected = Array.from(input.selectedOptions).filter(opt => opt.value);
+                if (selected.length === 0) {
+                  isValid = false;
+                  input.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+                } else {
+                  input.style.borderColor = '';
+                }
+              } else if (!input.value || input.value === '') {
+                isValid = false;
+                input.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+              } else {
+                input.style.borderColor = '';
+              }
+            } else if (!input.value.trim()) {
+              isValid = false;
+              input.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+            } else {
+              input.style.borderColor = '';
+            }
+          });
+          
+          // Check radio buttons
+          const radioGroups = currentStepElement.querySelectorAll('input[type="radio"][required]');
+          radioGroups.forEach(radio => {
+            const group = document.querySelectorAll(`input[name="${radio.name}"]`);
+            const hasSelection = Array.from(group).some(r => r.checked);
+            if (!hasSelection) {
+              isValid = false;
+              group.forEach(r => {
+                const radioElement = r.closest('.form-radio');
+                if (radioElement) radioElement.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+              });
+            } else {
+              group.forEach(r => {
+                const radioElement = r.closest('.form-radio');
+                if (radioElement) radioElement.style.borderColor = '';
+              });
+            }
+          });
+        }
+        
+        if (!isValid) {
+          return;
+        }
+        
+        // Check ceremony attendance to determine next step
+        if (currentStep === 0) {
+          const selectedCeremony = document.querySelector('input[name="ceremony"]:checked');
+          if (selectedCeremony?.value === "No") {
+            // Show not attending message and stop
+            notAttendingMessage.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            prevBtn.classList.add('hidden');
+            stepIndicator.style.display = 'none';
+            return;
+          } else {
+            notAttendingMessage.classList.add('hidden');
+          }
+        }
+        
+        // Move to next step
+        if (currentStep < totalSteps - 1) {
+          currentStep++;
+          showStep(currentStep);
+        }
+      }
+      
+      function prevStep() {
+        if (currentStep > 0) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      }
+      
+      // Conditional field updates
+      function toggleField(element, show, requiredInputs = []) {
+        if (show) {
+          element.classList.remove('hidden');
+          requiredInputs.forEach(input => {
+            if (input) {
+              if (input.type === 'radio' || input.type === 'checkbox') {
+                const group = document.querySelectorAll(`input[name="${input.name}"]`);
+                group.forEach(radio => radio.required = true);
+              } else {
+                input.required = true;
+              }
+            }
+          });
+        } else {
+          element.classList.add('hidden');
+          requiredInputs.forEach(input => {
+            if (input) {
+              if (input.type === 'radio' || input.type === 'checkbox') {
+                const group = document.querySelectorAll(`input[name="${input.name}"]`);
+                group.forEach(radio => {
+                  radio.required = false;
+                  radio.checked = false;
+                });
+              } else {
+                input.required = false;
+                input.value = '';
+              }
+            }
+          });
+        }
+      }
+      
+      // Event listeners
+      nextBtn.addEventListener('click', goToNextStep);
+      prevBtn.addEventListener('click', prevStep);
+      
+      ceremonyRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if (radio.value === "No") {
+            notAttendingMessage.classList.remove('hidden');
+            stepIndicator.style.display = 'none';
+          } else {
+            notAttendingMessage.classList.add('hidden');
+          }
+          // Update step display to reflect button visibility
+          showStep(currentStep);
+        });
+      });
+      
+      // Initialize
+      showStep(0);
+      
+      // Form submission
+      rsvpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+        
+        // Disable submit button
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+        
+        // Collect form data - structured by attendee
+        const data = {
+          attendees: [],
+          contact: {},
+          weekend: {},
+          meals: {},
+          additional: {}
+        };
+        
+        // Collect all attendee data
+        const attendeeCards = attendeesContainer.querySelectorAll('.attendee-card');
+        attendeeCards.forEach((card) => {
+          // Get the actual attendee index from the card's data attribute
+          const attendeeIndex = parseInt(card.dataset.attendeeIndex);
+          const isFirstAttendee = attendeeIndex === 0;
+          
+          const attendee = {
+            index: attendeeIndex,
+            name: '',
+            email: '',
+            phone: '',
+            emergency_contact_name: '',
+            emergency_contact_phone: '',
+            dietary_restrictions: '',
+            health_info: '',
+            arrival: '',
+            sleeping: '',
+            packing_list: '',
+            meals: ''
+          };
+          
+          const nameInput = card.querySelector(`input[name="attendee_name_${attendeeIndex}"]`);
+          const emailInput = card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`);
+          const phoneInput = card.querySelector(`input[name="attendee_phone_${attendeeIndex}"]`);
+          const emergencyNameInput = card.querySelector(`input[name="attendee_emergency_name_${attendeeIndex}"]`);
+          const emergencyPhoneInput = card.querySelector(`input[name="attendee_emergency_phone_${attendeeIndex}"]`);
+          const dietaryInput = card.querySelector(`textarea[name="attendee_dietary_${attendeeIndex}"]`);
+          const healthInput = card.querySelector(`textarea[name="attendee_health_${attendeeIndex}"]`);
+          const arrivalInput = card.querySelector(`input[name="arrival_${attendeeIndex}"]:checked`);
+          const sleepingInput = card.querySelector(`input[name="sleeping_${attendeeIndex}"]:checked`);
+          const packingInput = card.querySelector(`input[name="packing_list_${attendeeIndex}"]:checked`);
+          const mealsInput = card.querySelector(`input[name="meals_${attendeeIndex}"]:checked`);
+          
+          if (nameInput) attendee.name = nameInput.value.trim();
+          if (emailInput) attendee.email = emailInput.value.trim();
+          if (phoneInput) attendee.phone = phoneInput.value.trim();
+          if (emergencyNameInput) attendee.emergency_contact_name = emergencyNameInput.value.trim();
+          if (emergencyPhoneInput) attendee.emergency_contact_phone = emergencyPhoneInput.value.trim();
+          if (dietaryInput) attendee.dietary_restrictions = dietaryInput.value.trim();
+          if (healthInput) attendee.health_info = healthInput.value.trim();
+          if (arrivalInput) attendee.arrival = arrivalInput.value;
+          if (sleepingInput) attendee.sleeping = sleepingInput.value;
+          if (packingInput) attendee.packing_list = packingInput.value;
+          if (mealsInput) attendee.meals = mealsInput.value;
+          
+          data.attendees.push(attendee);
+          
+          // Collect contact info from first attendee
+          if (isFirstAttendee) {
+            data.contact.email = attendee.email;
+            data.contact.phone = attendee.phone;
+          }
+        });
+        
+        // Collect ceremony attendance
+        const ceremony = document.querySelector('input[name="ceremony"]:checked');
+        if (ceremony) data.ceremony = ceremony.value;
+        
+        // Collect additional info
+        const songRequests = document.querySelector('textarea[name="song_requests"]');
+        if (songRequests && songRequests.value.trim()) {
+          data.additional.song_requests = songRequests.value.trim();
+        }
+        
+        const comments = document.querySelector('textarea[name="comments"]');
+        if (comments && comments.value.trim()) {
+          data.additional.comments = comments.value.trim();
+        }
+        
+        // Add timestamp
+        data.timestamp = new Date().toISOString();
+        
+        // Replace this URL with your Google Apps Script web app URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyEWSgd0oIrNfcWCq6MiLFMlXuJhWw3tQ-Lln9iuHNnrZK5klbvBFlziEbYD1fCDHFq/exec';
+        
+        // Check if script URL is configured
+        if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' || !SCRIPT_URL || SCRIPT_URL.trim() === '') {
+          formMessage.className = 'form-message error';
+          formMessage.innerHTML = 'Form is not configured. Please set up the Google Apps Script URL. See RSVP-FORM-SETUP.md for instructions.';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit RSVP';
+          formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          return;
+        }
+        
+        try {
+          // Log submission details
+          const submissionLog = {
+            timestamp: new Date().toISOString(),
+            ceremony: data.ceremony,
+            contactEmail: data.contact?.email || '',
+            contactPhone: data.contact?.phone || '',
+            attendeeCount: data.attendees?.length || 0,
+            attendees: data.attendees?.map(a => ({
+              name: a.name || '',
+              email: a.email || '',
+              phone: a.phone || '',
+              stayingOvernight: !!(a.arrival || a.sleeping || a.packing_list)
+            })) || [],
+            hasSongRequests: !!(data.additional?.song_requests),
+            hasComments: !!(data.additional?.comments)
+          };
+          
+          console.log('RSVP Submission Details:', submissionLog);
+          console.log('Full submission data:', data);
+          
+          const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+          
+          // Log fetch attempt (we can't read response with no-cors)
+          console.log('RSVP submitted to:', SCRIPT_URL);
+          console.log('Fetch response status:', response.status || 'no-cors mode (status not available)');
+          
+          // Show thank you modal
+          showThankYouModal();
+          
+          // Reset form
+          rsvpForm.reset();
+          
+          // Clear attendees
+          attendeesContainer.innerHTML = '';
+          attendees = [];
+          attendeeCounter = 0;
+          addAttendee(); // Add first attendee back
+          
+          // Reset to first step
+          currentStep = 0;
+          showStep(0);
+          
+          // Hide not attending message
+          notAttendingMessage.classList.add('hidden');
+          
+        } catch (error) {
+          console.error('RSVP Submission Error:', error);
+          console.error('Error details:', {
+            message: error.message,
+            stack: error.stack,
+            timestamp: new Date().toISOString()
+          });
+          
+          formMessage.className = 'form-message error';
+          formMessage.textContent = 'There was an error submitting your RSVP. Please try again or contact us directly.';
+          formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit RSVP';
+        }
+      });
+    }
   </script>
 </body>
 </html>
