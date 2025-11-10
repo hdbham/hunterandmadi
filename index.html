@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none'">
   <title>Madi & Hunter — September 19, 2026</title>
   <meta name="description" content="Join us for our wedding celebration at YMCA Mill Hollow, Kamas, Utah on September 19, 2026">
   
@@ -1539,11 +1541,6 @@
         </div>
         
         <p class="invitation-footer">Ceremony at 4:30 in the afternoon</p>
-        
-        <div class="btn-group">
-          <a href="https://www.zola.com/wedding/madisonandhunterseptember19" target="_blank" rel="noopener" class="btn btn-primary">RSVP</a>
-          <a onclick="showPage('registry')" class="btn btn-secondary">Registry</a>
-        </div>
       </div>
     </section>
     
@@ -2017,6 +2014,51 @@
   </footer>
 
   <script>
+    // Prevent frame embedding and maintain mobile viewport
+    (function() {
+      // Break out of frames (clickjacking protection)
+      if (window.top !== window.self) {
+        window.top.location = window.self.location;
+      }
+      
+      // Prevent viewport changes on mobile
+      let viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport) {
+        // Lock viewport settings
+        const lockedContent = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes';
+        
+        // Monitor for viewport changes and restore
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'content') {
+              const currentContent = viewport.getAttribute('content');
+              if (currentContent !== lockedContent) {
+                viewport.setAttribute('content', lockedContent);
+              }
+            }
+          });
+        });
+        
+        observer.observe(viewport, {
+          attributes: true,
+          attributeFilter: ['content']
+        });
+        
+        // Ensure viewport is set correctly on load
+        viewport.setAttribute('content', lockedContent);
+      }
+      
+      // Prevent zoom on double tap (iOS) - optional, can be removed if you want zoom
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function(event) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+    })();
+    
     // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
