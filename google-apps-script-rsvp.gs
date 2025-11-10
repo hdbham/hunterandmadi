@@ -62,7 +62,8 @@ function doPost(e) {
         'Emergency Contact Name',
         'Emergency Contact Phone',
         'Dietary Restrictions',
-        'Health Information',
+        'Allergies',
+        'Accessibility Needs',
         'Staying Overnight',
         'Arrival Time',
         'Sleeping Arrangement',
@@ -113,7 +114,8 @@ function doPost(e) {
           attendee.emergency_contact_name || '',
           attendee.emergency_contact_phone || '',
           attendee.dietary_restrictions || '',
-          attendee.health_info || '',
+          attendee.allergies || '',
+          attendee.accessibility || '',
           isStayingOvernight ? 'Yes' : 'No',
           attendee.arrival || '',
           attendee.sleeping || '',
@@ -183,7 +185,8 @@ function setupSheet() {
     'Emergency Contact Name',
     'Emergency Contact Phone',
     'Dietary Restrictions',
-    'Health Information',
+    'Allergies',
+    'Accessibility Needs',
     'Staying Overnight',
     'Arrival Time',
     'Sleeping Arrangement',
@@ -340,9 +343,15 @@ function sendReceiptEmail(data, recipientEmail) {
         `;
       }
       
-      if (attendee.health_info) {
+      if (attendee.allergies) {
         htmlBody += `
-            <p><span class="label">Health Information:</span> <span class="value">${attendee.health_info}</span></p>
+            <p><span class="label">Allergies:</span> <span class="value">${attendee.allergies}</span></p>
+        `;
+      }
+      
+      if (attendee.accessibility) {
+        htmlBody += `
+            <p><span class="label">Accessibility Needs:</span> <span class="value">${attendee.accessibility}</span></p>
         `;
       }
       

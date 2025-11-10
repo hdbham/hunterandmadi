@@ -1544,6 +1544,12 @@
       </div>
     </section>
     
+    <div class="container">
+      <div class="page-nav-buttons" style="margin-top: 2rem;">
+        <a onclick="showPage('location')" class="btn btn-primary">Next →</a>
+      </div>
+    </div>
+    
     <div class="footer-border" style="background-image: url('footer.png');"></div>
   </div>
 
@@ -1596,12 +1602,17 @@
           <h3>Weekend Options</h3>
           <ul>
             <li><strong>Interested in joining for the weekend?</strong> Let us know you want to stay overnight. (We'll share a packing list.)</li>
-            <li><strong>House or Rental (Airbnb/VRBO)</strong> — Prefer privacy? Book nearby, just check travel times.</li>
+            <li><strong>House or Rental (Airbnb/VRBO)</strong> — Prefer privacy? Book nearby, just check travel times. 
+              <a href="https://www.airbnb.com/s/Kamas--UT--United-States/homes?checkin=2026-09-18&checkout=2026-09-20&refinement_paths%5B%5D=%2Fhomes&search_type=user_map_move&zoom=11&search_by_map=true&sw_lat=40.5&sw_lng=-111.2&ne_lat=40.7&ne_lng=-111.0" target="_blank" rel="noopener" style="color: var(--peach); text-decoration: underline; margin-left: 0.5rem;">Search Airbnb</a> | 
+              <a href="https://www.vrbo.com/search/keywords:kamas-utah-united-states-of-america/arrival:2026-09-18/departure:2026-09-20" target="_blank" rel="noopener" style="color: var(--peach); text-decoration: underline;">Search VRBO</a>
+            </li>
             <li><strong>Nearby Hotels</strong> — A few options within driving distance. Check travel times.</li>
-            <li><strong>Roam Uinta</strong> — Camp nearby (tent/RV) and enjoy the stars!</li>
+            <li><strong>Roam Uinta</strong> — Camp nearby (tent/RV) and enjoy the stars! 
+              <a href="https://www.roamuintas.com/" target="_blank" rel="noopener" style="color: var(--peach); text-decoration: underline; margin-left: 0.5rem;">Visit Roam Uinta</a>
+            </li>
           </ul>
           <div class="btn-group" style="margin-top: 1.5rem;">
-            <a onclick="showPage('rsvp')" class="btn btn-primary">Tell us you're staying</a>
+            <a onclick="showPage('rsvp')" class="btn btn-primary">Tell us you're interested in staying</a>
             <a onclick="showPage('things-to-do')" class="btn btn-secondary">Explore nearby</a>
           </div>
         </div>
@@ -1634,7 +1645,7 @@
         
         <div class="faq-item">
           <h3>What do I wear?</h3>
-          <p>If you want to show up in the right vibe, think semi-formal garden party. We're encouraging jewel tones, but black and white are totally fine too. Just a heads-up: the venue is in the woods with rocky terrain, so wear heels at your own risk!</p>
+          <p>If you want to show up in the right vibe, think dressy casual garden party. We're encouraging jewel tones, but black and white are totally fine too. Just a heads-up: the venue is in the woods with rocky terrain, so wear heels at your own risk!</p>
           <p>If you have questions about attire reach out to one of us and we can help!</p>
         </div>
         
@@ -1725,7 +1736,7 @@
             </div>
             <div class="timeline-item">
               <div class="timeline-time">5:00 PM</div>
-              <div class="timeline-desc">Cocktail hour & photos</div>
+              <div class="timeline-desc">Cocktail hour</div>
             </div>
             <div class="timeline-item">
               <div class="timeline-time">6:00 PM</div>
@@ -1749,7 +1760,7 @@
             <li><strong>Limited parking</strong> — Please carpool or rideshare when possible</li>
             <li><strong>Kid-friendly ceremony</strong> — Reception has adult beverages</li>
             <li><strong>Rustic venue</strong> — Expect natural beauty, not ballrooms</li>
-            <li><strong>Photography</strong> — We'll have a professional photographer, but feel free to take photos during cocktail hour and reception</li>
+            <li><strong>Photography</strong> — We'll have a professional photographer, but feel free to take photos during cocktail hour</li>
           </ul>
         </div>
       </div>
@@ -1819,17 +1830,60 @@
       </div>
       <p class="page-subtitle">Make a weekend of it! Here are some activities and attractions near Mill Hollow.</p>
       
-      <div class="card">
-        <ul style="font-size: 1.1rem;">
-          <li><strong>Scenic drives in the Uintas</strong> — Mirror Lake Highway offers breathtaking views and photo opportunities</li>
-          <li><strong>Hiking trails</strong> — Explore beautiful trails ranging from easy walks to challenging hikes</li>
-          <li><strong>Lakeside picnics</strong> — Enjoy the serene mountain lakes and natural beauty</li>
-          <li><strong>Kamas & Park City</strong> — Visit charming local coffee shops, restaurants, and boutiques</li>
-          <li><strong>Water activities</strong> — Kayaking, paddleboarding, and swimming (bring your gear!)</li>
-          <li><strong>Stargazing</strong> — The night sky at this elevation is absolutely spectacular</li>
-          <li><strong>Wildlife viewing</strong> — Keep an eye out for deer, elk, and various bird species</li>
-          <li><strong>Photography</strong> — Capture stunning mountain landscapes and fall colors</li>
-        </ul>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Scenic Drives</h3>
+          <div style="margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Mountain highway scenic drive" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+          </div>
+          <p style="color: var(--cream); margin-bottom: 1rem;">Mirror Lake Highway (UT-150) offers breathtaking views and photo opportunities through the Uinta Mountains.</p>
+          <a href="https://www.fs.usda.gov/recarea/ashley/recarea/?recid=80820" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Learn More</a>
+        </div>
+        
+        <div class="card">
+          <h3>Hiking Trails</h3>
+          <div style="margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80" alt="Mountain hiking trail" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+          </div>
+          <p style="color: var(--cream); margin-bottom: 1rem;">Explore beautiful trails ranging from easy walks to challenging hikes in the Uinta-Wasatch-Cache National Forest.</p>
+          <a href="https://www.alltrails.com/parks/us/utah/uintas-wasatch-cache-national-forest" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Find Trails</a>
+        </div>
+        
+        <div class="card">
+          <h3>Lakes & Water Activities</h3>
+          <div style="margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Mountain lake" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+          </div>
+          <p style="color: var(--cream); margin-bottom: 1rem;">Enjoy serene mountain lakes, kayaking, paddleboarding, and swimming. Mirror Lake, Trial Lake, and many others are nearby.</p>
+          <a href="https://www.fs.usda.gov/recarea/ashley/recarea/?recid=80820" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Explore Lakes</a>
+        </div>
+        
+        <div class="card">
+          <h3>Kamas & Park City</h3>
+          <div style="margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80" alt="Park City Main Street" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+          </div>
+          <p style="color: var(--cream); margin-bottom: 1rem;">Visit charming local coffee shops, restaurants, and boutiques in nearby Kamas and Park City (about 30 minutes away).</p>
+          <a href="https://www.visitparkcity.com/" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Visit Park City</a>
+        </div>
+        
+        <div class="card">
+          <h3>Stargazing</h3>
+          <div style="margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&q=80" alt="Starry night sky" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+          </div>
+          <p style="color: var(--cream); margin-bottom: 1rem;">The night sky at this elevation is absolutely spectacular. Perfect for stargazing away from city lights.</p>
+          <a href="https://www.darksky.org/our-work/conservation/idsp/" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Dark Sky Info</a>
+        </div>
+        
+        <div class="card">
+          <h3>Wildlife Viewing</h3>
+          <div style="margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=800&q=80" alt="Mountain wildlife" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+          </div>
+          <p style="color: var(--cream); margin-bottom: 1rem;">Keep an eye out for deer, elk, moose, and various bird species. The Uintas are home to diverse wildlife.</p>
+          <a href="https://wildlife.utah.gov/" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Utah Wildlife</a>
+        </div>
       </div>
       
       <div class="page-nav-buttons">
@@ -1946,7 +2000,7 @@
           <div class="form-step hidden" data-step="1" id="attendees-step">
             <h3 class="form-section-title">Who's Attending?</h3>
             <p style="color: var(--cream); margin-bottom: 1.5rem; text-align: center;">
-              Please add each person who will be attending. We need emergency contact and health information for everyone.
+              Please add each person who will be attending. We need emergency contact information for everyone.
             </p>
             
             <div id="attendees-container">
@@ -2047,13 +2101,13 @@
           attributeFilter: ['content']
         });
         
-        // Also check periodically in case something bypasses the observer
+        // Also check periodically in case something bypasses the observer (much less frequent to reduce lag)
         setInterval(function() {
           const currentContent = viewport.getAttribute('content');
           if (currentContent !== lockedContent) {
             viewport.setAttribute('content', lockedContent);
           }
-        }, 100);
+        }, 5000);
       }
       
       // Prevent all zoom gestures
@@ -2069,29 +2123,41 @@
         e.preventDefault();
       });
       
-      // Prevent pinch zoom
-      let lastTouchDistance = 0;
+      // Prevent pinch zoom (only when actually pinching)
+      let isPinching = false;
       document.addEventListener('touchstart', function(e) {
         if (e.touches.length === 2) {
-          lastTouchDistance = Math.abs(e.touches[0].clientX - e.touches[1].clientX) + 
-                             Math.abs(e.touches[0].clientY - e.touches[1].clientY);
+          isPinching = true;
         }
-      }, { passive: false });
+      }, { passive: true });
       
       document.addEventListener('touchmove', function(e) {
-        if (e.touches.length === 2) {
+        if (isPinching && e.touches.length === 2) {
           e.preventDefault();
         }
       }, { passive: false });
       
-      // Prevent double tap zoom
-      let lastTouchEnd = 0;
-      document.addEventListener('touchend', function(event) {
-        const now = Date.now();
-        if (now - lastTouchEnd <= 300) {
-          event.preventDefault();
+      document.addEventListener('touchend', function(e) {
+        if (e.touches.length < 2) {
+          isPinching = false;
         }
-        lastTouchEnd = now;
+      }, { passive: true });
+      
+      // Prevent double tap zoom (only on double tap, not all touches)
+      let lastTouchEnd = 0;
+      let touchCount = 0;
+      document.addEventListener('touchend', function(event) {
+        if (event.touches.length === 0) {
+          const now = Date.now();
+          touchCount++;
+          if (now - lastTouchEnd <= 300 && touchCount === 2 && !isPinching) {
+            event.preventDefault();
+            touchCount = 0;
+          } else if (now - lastTouchEnd > 300) {
+            touchCount = 1;
+          }
+          lastTouchEnd = now;
+        }
       }, { passive: false });
       
       // Force correct scale on load and resize
@@ -2183,26 +2249,37 @@
       }
     });
     
-    // Page Navigation
+    // Page Navigation (optimized - cache DOM elements)
+    const allPages = document.querySelectorAll('.page');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
     function showPage(pageName) {
-      // Hide all pages
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
+      // Hide all pages (optimized - use cached elements)
+      for (let i = 0; i < allPages.length; i++) {
+        allPages[i].classList.remove('active');
+      }
       
       // Show selected page
-      document.getElementById(pageName).classList.add('active');
+      const targetPage = document.getElementById(pageName);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
       
-      // Update nav active state
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
+      // Update nav active state (optimized - use cached elements)
+      for (let i = 0; i < navLinks.length; i++) {
+        const link = navLinks[i];
         if (link.getAttribute('data-page') === pageName) {
           link.classList.add('active');
+        } else {
+          link.classList.remove('active');
         }
-      });
+      }
       
-      // Scroll to top
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      // Scroll to top (debounced to prevent lag)
+      clearTimeout(window._scrollTimeout);
+      window._scrollTimeout = setTimeout(() => {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }, 50);
       
       // Update URL hash without jumping
       history.pushState(null, null, '#' + pageName);
@@ -2224,27 +2301,26 @@
       }
     });
 
-    // Hide/show navigation on scroll (mobile only)
+    // Hide/show navigation on scroll (mobile only) - throttled for performance
     let lastScrollTop = 0;
-    let scrollTimeout;
+    let ticking = false;
     const nav = document.querySelector('nav');
     
-    window.addEventListener('scroll', () => {
+    function updateNavOnScroll() {
       // Only apply on mobile
       if (window.innerWidth > 768) {
         nav.classList.remove('hidden');
+        ticking = false;
         return;
       }
       
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
-      // Clear previous timeout
-      clearTimeout(scrollTimeout);
-      
       // If at top of page, always show nav
       if (scrollTop < 100) {
         nav.classList.remove('hidden');
         lastScrollTop = scrollTop;
+        ticking = false;
         return;
       }
       
@@ -2258,7 +2334,15 @@
       }
       
       lastScrollTop = scrollTop;
-    });
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavOnScroll);
+        ticking = true;
+      }
+    }, { passive: true });
 
     // Swipe navigation for mobile
     const pageOrder = ['home', 'location', 'faq', 'schedule', 'gallery', 'things-to-do', 'registry', 'rsvp'];
@@ -2408,12 +2492,20 @@
               <div class="form-help">Any dietary restrictions, allergies, or special dietary needs</div>
             </div>
             
+            <div class="form-group">
+              <label class="form-label">
+                Any allergies we should know about?
+              </label>
+              <textarea name="attendee_allergies_${index}" class="form-textarea" rows="2"></textarea>
+              <div class="form-help">List any allergies we should be aware of</div>
+            </div>
+            
             <div class="form-group" style="grid-column: 1 / -1;">
               <label class="form-label">
-                Health Information
+                Any accessibility needs or any other important information we should know?
               </label>
-              <textarea name="attendee_health_${index}" class="form-textarea" rows="3"></textarea>
-              <div class="form-help">Any health conditions, medications, or important medical information we should know</div>
+              <textarea name="attendee_accessibility_${index}" class="form-textarea" rows="2"></textarea>
+              <div class="form-help">Accessibility needs or any other important information</div>
             </div>
             
             <div class="form-group" style="grid-column: 1 / -1; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid rgba(255, 187, 136, 0.3);">
@@ -2517,34 +2609,43 @@
         if (card) {
           card.remove();
           attendees = attendees.filter(a => a.index !== index);
-          // Reindex remaining attendees
+          // Reindex remaining attendees (optimized - use for loop)
           const remainingCards = attendeesContainer.querySelectorAll('.attendee-card');
-          remainingCards.forEach((card, newIndex) => {
+          for (let i = 0; i < remainingCards.length; i++) {
+            const card = remainingCards[i];
+            const newIndex = i;
             card.dataset.attendeeIndex = newIndex;
-            card.querySelector('.attendee-number').textContent = `Attendee ${newIndex + 1}`;
-            // Update input names
-            card.querySelectorAll('input, textarea').forEach(input => {
+            const attendeeNumber = card.querySelector('.attendee-number');
+            if (attendeeNumber) {
+              attendeeNumber.textContent = `Attendee ${newIndex + 1}`;
+            }
+            // Update input names (optimized - batch updates)
+            const inputs = card.querySelectorAll('input, textarea');
+            for (let j = 0; j < inputs.length; j++) {
+              const input = inputs[j];
               const name = input.name;
               if (name) {
                 const parts = name.split('_');
                 const lastPart = parts[parts.length - 1];
                 input.name = name.replace(`_${lastPart}`, `_${newIndex}`);
               }
-            });
+            }
             // Show/hide remove button
             const removeBtn = card.querySelector('.remove-attendee');
             if (newIndex === 0 && removeBtn) {
               removeBtn.remove();
             } else if (newIndex > 0 && !removeBtn) {
               const header = card.querySelector('.attendee-card-header');
-              const btn = document.createElement('button');
-              btn.type = 'button';
-              btn.className = 'remove-attendee';
-              btn.textContent = 'Remove';
-              btn.addEventListener('click', () => removeAttendee(newIndex));
-              header.appendChild(btn);
+              if (header) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'remove-attendee';
+                btn.textContent = 'Remove';
+                btn.addEventListener('click', () => removeAttendee(newIndex));
+                header.appendChild(btn);
+              }
             }
-          });
+          }
           attendeeCounter = remainingCards.length;
         }
       }
@@ -2556,15 +2657,18 @@
         addAttendee();
       }
       
-      // Step navigation functions
+      // Step navigation functions (optimized - cache ceremony radio)
+      const ceremonyRadioYes = document.querySelector('input[name="ceremony"][value="Yes"]');
+      const ceremonyRadioNo = document.querySelector('input[name="ceremony"][value="No"]');
+      
       function showStep(stepIndex) {
-        // Hide all steps
-        steps.forEach((step, index) => {
-          step.classList.remove('active');
-          if (stepDots[index]) {
-            stepDots[index].classList.remove('active');
+        // Hide all steps (optimized - use for loop)
+        for (let i = 0; i < steps.length; i++) {
+          steps[i].classList.remove('active');
+          if (stepDots[i]) {
+            stepDots[i].classList.remove('active');
           }
-        });
+        }
         
         // Show current step
         if (steps[stepIndex]) {
@@ -2581,9 +2685,8 @@
           prevBtn.classList.remove('hidden');
         }
         
-        // Check if this is the last step
-        const ceremonyValue = document.querySelector('input[name="ceremony"]:checked')?.value;
-        const isAttending = ceremonyValue === "Yes";
+        // Check if this is the last step (optimized - use cached radio elements)
+        const isAttending = ceremonyRadioYes && ceremonyRadioYes.checked;
         let lastStep = 0; // Default: ceremony is last
         
         if (isAttending) {
@@ -2606,8 +2709,13 @@
           stepIndicator.style.display = 'none';
         }
         
-        // Scroll to top of form
-        rsvpForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Scroll to top of form (debounced to prevent lag)
+        if (rsvpForm.scrollIntoView) {
+          clearTimeout(rsvpForm._scrollTimeout);
+          rsvpForm._scrollTimeout = setTimeout(() => {
+            rsvpForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        }
       }
       
       function goToNextStep() {
@@ -2623,23 +2731,25 @@
             return;
           }
           
-          // Validate each attendee
-          attendeeCards.forEach((card) => {
+          // Validate each attendee (optimized - cache queries)
+          for (let i = 0; i < attendeeCards.length; i++) {
+            const card = attendeeCards[i];
             // Get the actual attendee index from the card's data attribute
             const attendeeIndex = parseInt(card.dataset.attendeeIndex);
             const isFirstAttendee = attendeeIndex === 0;
             
+            // Cache all queries at once
             const nameInput = card.querySelector(`input[name="attendee_name_${attendeeIndex}"]`);
+            const emailInput = isFirstAttendee ? card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`) : null;
             const emergencyNameInput = card.querySelector(`input[name="attendee_emergency_name_${attendeeIndex}"]`);
             const emergencyPhoneInput = card.querySelector(`input[name="attendee_emergency_phone_${attendeeIndex}"]`);
             
             // Email is required for first attendee (index 0)
-            if (isFirstAttendee) {
-              const emailInput = card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`);
-              if (!emailInput || !emailInput.value.trim()) {
+            if (isFirstAttendee && emailInput) {
+              if (!emailInput.value.trim()) {
                 isValid = false;
-                if (emailInput) emailInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
-              } else if (emailInput) {
+                emailInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+              } else {
                 emailInput.style.borderColor = '';
               }
             }
@@ -2664,59 +2774,64 @@
             } else if (emergencyPhoneInput) {
               emergencyPhoneInput.style.borderColor = '';
             }
-          });
+          }
           
           if (!isValid) {
             return;
           }
         } else {
-          // Standard validation for other steps
+          // Standard validation for other steps (optimized - use for loop)
           const inputs = currentStepElement.querySelectorAll('input[required], textarea[required], select[required]');
           
-          inputs.forEach(input => {
+          for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
             if (input.type === 'radio' || input.type === 'checkbox') {
               // Skip - handled separately
-            } else if (input.tagName === 'SELECT') {
+              continue;
+            }
+            
+            let borderColor = '';
+            if (input.tagName === 'SELECT') {
               if (input.multiple) {
                 const selected = Array.from(input.selectedOptions).filter(opt => opt.value);
                 if (selected.length === 0) {
                   isValid = false;
-                  input.style.borderColor = 'rgba(244, 67, 54, 0.8)';
-                } else {
-                  input.style.borderColor = '';
+                  borderColor = 'rgba(244, 67, 54, 0.8)';
                 }
               } else if (!input.value || input.value === '') {
                 isValid = false;
-                input.style.borderColor = 'rgba(244, 67, 54, 0.8)';
-              } else {
-                input.style.borderColor = '';
+                borderColor = 'rgba(244, 67, 54, 0.8)';
               }
             } else if (!input.value.trim()) {
               isValid = false;
-              input.style.borderColor = 'rgba(244, 67, 54, 0.8)';
-            } else {
-              input.style.borderColor = '';
+              borderColor = 'rgba(244, 67, 54, 0.8)';
             }
-          });
+            
+            input.style.borderColor = borderColor;
+          }
           
-          // Check radio buttons
+          // Check radio buttons (optimized - cache groups to prevent duplicate queries)
           const radioGroups = currentStepElement.querySelectorAll('input[type="radio"][required]');
-          radioGroups.forEach(radio => {
+          const checkedGroups = new Set();
+          for (let i = 0; i < radioGroups.length; i++) {
+            const radio = radioGroups[i];
+            if (checkedGroups.has(radio.name)) continue;
+            checkedGroups.add(radio.name);
+            
             const group = document.querySelectorAll(`input[name="${radio.name}"]`);
             const hasSelection = Array.from(group).some(r => r.checked);
+            const borderColor = hasSelection ? '' : 'rgba(244, 67, 54, 0.8)';
+            
             if (!hasSelection) {
               isValid = false;
-              group.forEach(r => {
-                const radioElement = r.closest('.form-radio');
-                if (radioElement) radioElement.style.borderColor = 'rgba(244, 67, 54, 0.8)';
-              });
-            } else {
-              group.forEach(r => {
-                const radioElement = r.closest('.form-radio');
-                if (radioElement) radioElement.style.borderColor = '';
-              });
             }
-          });
+            
+            // Batch DOM updates
+            for (let j = 0; j < group.length; j++) {
+              const radioElement = group[j].closest('.form-radio');
+              if (radioElement) radioElement.style.borderColor = borderColor;
+            }
+          }
         }
         
         if (!isValid) {
@@ -2797,8 +2912,11 @@
           } else {
             notAttendingMessage.classList.add('hidden');
           }
-          // Update step display to reflect button visibility
-          showStep(currentStep);
+          // Update step display to reflect button visibility (debounced to prevent lag)
+          clearTimeout(rsvpForm._stepUpdateTimeout);
+          rsvpForm._stepUpdateTimeout = setTimeout(() => {
+            showStep(currentStep);
+          }, 50);
         });
       });
       
@@ -2827,9 +2945,10 @@
           additional: {}
         };
         
-        // Collect all attendee data
+        // Collect all attendee data (optimized - use for loop)
         const attendeeCards = attendeesContainer.querySelectorAll('.attendee-card');
-        attendeeCards.forEach((card) => {
+        for (let i = 0; i < attendeeCards.length; i++) {
+          const card = attendeeCards[i];
           // Get the actual attendee index from the card's data attribute
           const attendeeIndex = parseInt(card.dataset.attendeeIndex);
           const isFirstAttendee = attendeeIndex === 0;
@@ -2842,20 +2961,23 @@
             emergency_contact_name: '',
             emergency_contact_phone: '',
             dietary_restrictions: '',
-            health_info: '',
+            allergies: '',
+            accessibility: '',
             arrival: '',
             sleeping: '',
             packing_list: '',
             meals: ''
           };
           
+          // Cache all queries at once
           const nameInput = card.querySelector(`input[name="attendee_name_${attendeeIndex}"]`);
           const emailInput = card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`);
           const phoneInput = card.querySelector(`input[name="attendee_phone_${attendeeIndex}"]`);
           const emergencyNameInput = card.querySelector(`input[name="attendee_emergency_name_${attendeeIndex}"]`);
           const emergencyPhoneInput = card.querySelector(`input[name="attendee_emergency_phone_${attendeeIndex}"]`);
           const dietaryInput = card.querySelector(`textarea[name="attendee_dietary_${attendeeIndex}"]`);
-          const healthInput = card.querySelector(`textarea[name="attendee_health_${attendeeIndex}"]`);
+          const allergiesInput = card.querySelector(`textarea[name="attendee_allergies_${attendeeIndex}"]`);
+          const accessibilityInput = card.querySelector(`textarea[name="attendee_accessibility_${attendeeIndex}"]`);
           const arrivalInput = card.querySelector(`input[name="arrival_${attendeeIndex}"]:checked`);
           const sleepingInput = card.querySelector(`input[name="sleeping_${attendeeIndex}"]:checked`);
           const packingInput = card.querySelector(`input[name="packing_list_${attendeeIndex}"]:checked`);
@@ -2867,7 +2989,8 @@
           if (emergencyNameInput) attendee.emergency_contact_name = emergencyNameInput.value.trim();
           if (emergencyPhoneInput) attendee.emergency_contact_phone = emergencyPhoneInput.value.trim();
           if (dietaryInput) attendee.dietary_restrictions = dietaryInput.value.trim();
-          if (healthInput) attendee.health_info = healthInput.value.trim();
+          if (allergiesInput) attendee.allergies = allergiesInput.value.trim();
+          if (accessibilityInput) attendee.accessibility = accessibilityInput.value.trim();
           if (arrivalInput) attendee.arrival = arrivalInput.value;
           if (sleepingInput) attendee.sleeping = sleepingInput.value;
           if (packingInput) attendee.packing_list = packingInput.value;
@@ -2880,7 +3003,7 @@
             data.contact.email = attendee.email;
             data.contact.phone = attendee.phone;
           }
-        });
+        }
         
         // Collect ceremony attendance
         const ceremony = document.querySelector('input[name="ceremony"]:checked');
