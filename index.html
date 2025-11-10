@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none'">
   <title>Madi & Hunter — September 19, 2026</title>
@@ -2021,13 +2021,16 @@
         window.top.location = window.self.location;
       }
       
-      // Prevent viewport changes on mobile
+      // Prevent viewport changes on mobile - aggressive protection
       let viewport = document.querySelector('meta[name="viewport"]');
       if (viewport) {
-        // Lock viewport settings
-        const lockedContent = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes';
+        // Lock viewport settings - prevent any zoom
+        const lockedContent = 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no';
         
-        // Monitor for viewport changes and restore
+        // Set viewport immediately
+        viewport.setAttribute('content', lockedContent);
+        
+        // Monitor for viewport changes and restore aggressively
         const observer = new MutationObserver(function(mutations) {
           mutations.forEach(function(mutation) {
             if (mutation.type === 'attributes' && mutation.attributeName === 'content') {
@@ -2044,11 +2047,44 @@
           attributeFilter: ['content']
         });
         
-        // Ensure viewport is set correctly on load
-        viewport.setAttribute('content', lockedContent);
+        // Also check periodically in case something bypasses the observer
+        setInterval(function() {
+          const currentContent = viewport.getAttribute('content');
+          if (currentContent !== lockedContent) {
+            viewport.setAttribute('content', lockedContent);
+          }
+        }, 100);
       }
       
-      // Prevent zoom on double tap (iOS) - optional, can be removed if you want zoom
+      // Prevent all zoom gestures
+      document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+      });
+      
+      document.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+      });
+      
+      document.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+      });
+      
+      // Prevent pinch zoom
+      let lastTouchDistance = 0;
+      document.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 2) {
+          lastTouchDistance = Math.abs(e.touches[0].clientX - e.touches[1].clientX) + 
+                             Math.abs(e.touches[0].clientY - e.touches[1].clientY);
+        }
+      }, { passive: false });
+      
+      document.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 2) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+      
+      // Prevent double tap zoom
       let lastTouchEnd = 0;
       document.addEventListener('touchend', function(event) {
         const now = Date.now();
@@ -2056,7 +2092,27 @@
           event.preventDefault();
         }
         lastTouchEnd = now;
-      }, false);
+      }, { passive: false });
+      
+      // Force correct scale on load and resize
+      function enforceViewport() {
+        if (viewport) {
+          viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no');
+        }
+        // Also set document scale directly
+        if (document.documentElement) {
+          document.documentElement.style.zoom = '1';
+        }
+      }
+      
+      window.addEventListener('load', enforceViewport);
+      window.addEventListener('resize', enforceViewport);
+      window.addEventListener('orientationchange', function() {
+        setTimeout(enforceViewport, 100);
+      });
+      
+      // Initial enforcement
+      enforceViewport();
     })();
     
     // Set current year
