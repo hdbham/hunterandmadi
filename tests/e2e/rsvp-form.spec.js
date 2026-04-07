@@ -21,8 +21,8 @@ test.describe('RSVP Form E2E', () => {
     const firstStep = page.locator('.form-step.active[data-step="0"]');
     await expect(firstStep).toBeVisible();
     
-    const ceremonyQuestion = page.locator('text=Will you be attending the ceremony');
-    await expect(ceremonyQuestion).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Ceremony' })).toBeVisible();
+    await expect(page.getByText('Join us Saturday, Sept 19 at 4:30 PM?')).toBeVisible();
   });
 
   test('should navigate to attendees step when selecting Yes', async ({ page }) => {
@@ -36,8 +36,7 @@ test.describe('RSVP Form E2E', () => {
     const attendeesStep = page.locator('.form-step.active[data-step="1"]');
     await expect(attendeesStep).toBeVisible();
     
-    const attendeesTitle = page.locator('text=Who\'s Attending?');
-    await expect(attendeesTitle).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Guests' })).toBeVisible();
   });
 
   test('should show not attending message when selecting No', async ({ page }) => {
@@ -92,8 +91,6 @@ test.describe('RSVP Form E2E', () => {
     // Step 2: Fill attendee information
     await page.fill('input[name="attendee_name_0"]', 'John Doe');
     await page.fill('input[name="attendee_email_0"]', 'john@example.com');
-    await page.fill('input[name="attendee_emergency_name_0"]', 'Jane Doe');
-    await page.fill('input[name="attendee_emergency_phone_0"]', '123-456-7890');
     
     await page.click('#nextBtn');
     
@@ -103,31 +100,25 @@ test.describe('RSVP Form E2E', () => {
     // Submit form
     await page.click('#submitBtn');
     
-    // Should show success message
-    const successMessage = page.locator('.form-message.success');
-    await expect(successMessage).toBeVisible();
+    // Success is shown in the thank-you modal (not .form-message.success)
+    const thankYouModal = page.locator('#thankYouModal.active');
+    await expect(thankYouModal).toBeVisible();
+    await expect(thankYouModal.getByRole('heading', { name: /thank you/i })).toBeVisible();
     
-    // Should have registry link
-    const registryLink = page.locator('a[onclick*="registry"]');
+    const registryLink = thankYouModal.locator('a[href="#registry"]');
     await expect(registryLink).toBeVisible();
   });
 
   test('should handle form submission error gracefully', async ({ page }) => {
-    // Mock fetch to return error
-    await page.route('**/YOUR_GOOGLE_APPS_SCRIPT_URL_HERE', route => {
-      route.fulfill({
-        status: 500,
-        body: JSON.stringify({ error: 'Server error' })
-      });
-    });
+    // Opaque no-cors responses do not expose HTTP status to JS, so we abort the
+    // request to force fetch() to reject and hit the form's catch block.
+    await page.route('**/script.google.com/macros/s/**', route => route.abort());
     
     // Fill and submit form
     await page.check('#ceremony_yes');
     await page.click('#nextBtn');
     await page.fill('input[name="attendee_name_0"]', 'John Doe');
     await page.fill('input[name="attendee_email_0"]', 'john@example.com');
-    await page.fill('input[name="attendee_emergency_name_0"]', 'Jane Doe');
-    await page.fill('input[name="attendee_emergency_phone_0"]', '123-456-7890');
     await page.click('#nextBtn');
     await page.click('#submitBtn');
     

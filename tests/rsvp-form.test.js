@@ -60,10 +60,7 @@ describe('RSVP Form Structure', () => {
     test('should have attendee card structure in JavaScript', () => {
       // Check that the createAttendeeCard function creates the right structure
       expect(html).toMatch(/attendee_name_/);
-      expect(html).toMatch(/attendee_emergency_name_/);
-      expect(html).toMatch(/attendee_emergency_phone_/);
       expect(html).toMatch(/attendee_dietary_/);
-      expect(html).toMatch(/attendee_health_/);
     });
 
     test('should have email field for first attendee', () => {
@@ -80,8 +77,8 @@ describe('RSVP Form Structure', () => {
       expect(html).toMatch(/packing_list_\$\{index\}/);
     });
 
-    test('should have meal preference fields', () => {
-      expect(html).toMatch(/meals_\$\{index\}/);
+    test('should have packing list fields', () => {
+      expect(html).toMatch(/packing_list_\$\{index\}/);
     });
   });
 

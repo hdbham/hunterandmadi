@@ -519,6 +519,10 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
     
+    .container .card p {
+      color: var(--cream);
+    }
+    
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -690,10 +694,6 @@
       line-height: 1.8;
     }
     
-    .faq-item p strong {
-      color: var(--peach);
-    }
-    
     /* ==================== TIMELINE ==================== */
     .timeline {
       position: relative;
@@ -830,10 +830,6 @@
       margin-bottom: 0.5rem;
     }
     
-    ul li strong {
-      color: var(--peach);
-    }
-    
     /* ==================== DIVIDER ==================== */
     .divider {
       text-align: center;
@@ -962,6 +958,25 @@
       font-size: 1.1rem;
     }
     
+    .location-read-notice {
+      display: block;
+      max-width: 42rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.35rem;
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      background: linear-gradient(135deg, rgba(255, 187, 136, 0.28) 0%, rgba(255, 187, 136, 0.12) 100%);
+      border: 1px solid rgba(255, 187, 136, 0.55);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+    
     /* ==================== RESPONSIVE ==================== */
     @media (max-width: 768px) {
       :root {
@@ -1043,6 +1058,10 @@
       margin-top: 0.5rem;
       font-style: italic;
       opacity: 0.9;
+    }
+    
+    .link-spaced {
+      margin-left: 0.5rem;
     }
     
     .form-input,
@@ -1472,14 +1491,13 @@
         <small>• Sept 19, 2026</small>
       </div>
       <ul class="nav-links">
-        <li><a onclick="showPage('home')" data-page="home" class="active">Home</a></li>
-        <li><a onclick="showPage('location')" data-page="location">Location</a></li>
-        <li><a onclick="showPage('faq')" data-page="faq">What to Know</a></li>
-        <li><a onclick="showPage('schedule')" data-page="schedule">Schedule</a></li>
-        <li><a onclick="showPage('gallery')" data-page="gallery">Gallery</a></li>
-        <li><a onclick="showPage('things-to-do')" data-page="things-to-do">Things To Do</a></li>
-        <li><a onclick="showPage('registry')" data-page="registry">Registry</a></li>
-        <li><a onclick="showPage('rsvp')" data-page="rsvp">RSVP</a></li>
+        <li><a href="#home" onclick="showPage('home'); return false;" data-page="home" class="active">Home</a></li>
+        <li><a href="#location" onclick="showPage('location'); return false;" data-page="location">Location</a></li>
+        <li><a href="#faq" onclick="showPage('faq'); return false;" data-page="faq">What to Know</a></li>
+        <li><a href="#schedule" onclick="showPage('schedule'); return false;" data-page="schedule">Schedule</a></li>
+        <li><a href="#gallery" onclick="showPage('gallery'); return false;" data-page="gallery">Gallery</a></li>
+        <li><a href="#registry" onclick="showPage('registry'); return false;" data-page="registry">Registry</a></li>
+        <li><a href="#rsvp" onclick="showPage('rsvp'); return false;" data-page="rsvp">RSVP</a></li>
       </ul>
     </div>
   </nav>
@@ -1546,7 +1564,7 @@
     
     <div class="container">
       <div class="page-nav-buttons" style="margin-top: 2rem;">
-        <a onclick="showPage('location')" class="btn btn-primary">Next →</a>
+        <a href="#location" onclick="showPage('location'); return false;" class="btn btn-primary">Next →</a>
       </div>
     </div>
     
@@ -1566,20 +1584,23 @@
       <div class="location-photo fade-in">
         <img src="https://images.zola.com/5f5e0c97-b4a7-494c-af4e-dcd1ba5dca76" alt="YMCA Mill Hollow">
       </div>
-      <p class="page-subtitle">Our special day will take place at YMCA Mill Hollow (7480 South Mill Hollow Road, Kamas, UT) a stunning and secluded spot nestled in the Uinta Mountains. We love its rustic beauty, but want guests to be prepared for its quirks! 
+      <h3 style="text-align: center; color: var(--peach); font-size: 1.2rem; text-transform: lowercase; margin-bottom: 1rem;">Please read all of the details before RSVPing</h3>
+      <p class="page-subtitle">We’re getting married at <strong>YMCA Mill Hollow</strong>, a secluded and gorgeous mountain hideaway nestled in the Uinta Mountains near Kamas, UT. Tall pines, open sky, limited cell service but tons of friends and memories.
 
-        <br><br>The site is remote, featuring unpaved roads, limited service, and abundant fresh mountain air; well worth the drive! This isn’t your typical wedding venue; think more pine trees and campfires than ballrooms and chandeliers. Please review the location before RSVPing, as travel may be more difficult or take more time than you're used to. 
-        
-        <br><br>Overnight guests - we recommend packing layers, sturdy shoes, and anything you’ll need for a mountain getaway. We will provide a packing suggestion list if you plan to stay the night! Thank you for joining us on this little adventure. We can’t wait to celebrate with you! 
-        
-        <br><br>Please review the options below if you plan to attend the whole weekend. </p>  
+        <br><br>Heads up: the roads are unpaved and it’s a bit of a drive, so give yourself some extra time. So worth it though.
+
+        <br><br>We have camp games, a live band, food, and firepits. Up the road is an awesome lake we’ll definitely have time to explore. We’re bringing two kayaks, so feel free to bring your favorite slacklining gear, lawn games, a costume, or honestly anything that makes this feel authentically campy (interpret that however you want).
+
+        <br><br>We have cabins and tent space, so come ready to stay the night if you can. Pack layers, sturdy shoes, and anything you’d want for a mountain getaway. Can’t wait to celebrate with you out there.
+
+
       <div class="card-grid">
         <div class="card">
           <h3>Ceremony & Reception</h3>
           <p><strong>YMCA Mill Hollow</strong><br>
           7480 South Mill Hollow Road<br>
           Kamas, UT 84036</p>
-          <p style="color: var(--cream);">Expect pine trees and campfires—not ballrooms. Layers and sturdy shoes recommended.</p>
+          <p>We’re marrying beneath the pines and open sky. Evenings cool off quickly at this elevation; extra layers and shoes you’re happy walking in will keep you comfortable.</p>
           
           <div class="map-container">
             <iframe 
@@ -1599,28 +1620,25 @@
         </div>
         
         <div class="card">
-          <h3>Weekend Options</h3>
+          <h3>Want to spend the weekend?</h3>
           <ul>
-            <li><strong>Interested in joining for the weekend?</strong> Let us know you want to stay overnight. (We'll share a packing list.)</li>
-            <li><strong>House or Rental (Airbnb/VRBO)</strong> — Prefer privacy? Book nearby, just check travel times. 
-              <a href="https://www.airbnb.com/s/Kamas--UT--United-States/homes?checkin=2026-09-18&checkout=2026-09-20&refinement_paths%5B%5D=%2Fhomes&search_type=user_map_move&zoom=11&search_by_map=true&sw_lat=40.5&sw_lng=-111.2&ne_lat=40.7&ne_lng=-111.0" target="_blank" rel="noopener" style="color: var(--peach); text-decoration: underline; margin-left: 0.5rem;">Search Airbnb</a> | 
-              <a href="https://www.vrbo.com/search/keywords:kamas-utah-united-states-of-america/arrival:2026-09-18/departure:2026-09-20" target="_blank" rel="noopener" style="color: var(--peach); text-decoration: underline;">Search VRBO</a>
-            </li>
-            <li><strong>Nearby Hotels</strong> — A few options within driving distance. Check travel times.</li>
-            <li><strong>Roam Uinta</strong> — Camp nearby (tent/RV) and enjoy the stars! 
-              <a href="https://www.roamuintas.com/" target="_blank" rel="noopener" style="color: var(--peach); text-decoration: underline; margin-left: 0.5rem;">Visit Roam Uinta</a>
-            </li>
+            <li>We have limited cabins on site - express interest in rsvp </li>
+            <li><a href="https://www.airbnb.com/s/Kamas--UT--United-States/homes?checkin=2026-09-18&checkout=2026-09-20&refinement_paths%5B%5D=%2Fhomes&search_type=user_map_move&zoom=11&search_by_map=true&sw_lat=40.5&sw_lng=-111.2&ne_lat=40.7&ne_lng=-111.0" target="_blank" rel="noopener">Airbnb</a> | <a href="https://www.vrbo.com/search/keywords:kamas-utah-united-states-of-america/arrival:2026-09-18/departure:2026-09-20" target="_blank" rel="noopener">VRBO</a></li>
+            <li><a href="https://www.google.com/maps/search/hotels+near+Kamas,+UT+84036/" target="_blank" rel="noopener">Hotels</a></li>
+            <li><a href="https://www.roamuintas.com/" target="_blank" rel="noopener">Roam Uinta</a></li>
+            <li>Friday/Saturday tenting on site</li>
+            <li><a href="https://www.recreation.gov/camping/campgrounds/233847?tab=seasons" target="_blank" rel="noopener">Mill Hollow Campground</a> (~$26) (optional Sunday addition)</li>
           </ul>
           <div class="btn-group" style="margin-top: 1.5rem;">
-            <a onclick="showPage('rsvp')" class="btn btn-primary">Tell us you're interested in staying</a>
-            <a onclick="showPage('things-to-do')" class="btn btn-secondary">Explore nearby</a>
+            <a href="#rsvp" onclick="showPage('rsvp'); return false;" class="btn btn-primary">RSVP</a>
+            <a href="#registry" onclick="showPage('registry'); return false;" class="btn btn-secondary">View registry</a>
           </div>
         </div>
       </div>
       
       <div class="page-nav-buttons">
-        <a onclick="showPage('home')" class="btn btn-secondary">← Home</a>
-        <a onclick="showPage('faq')" class="btn btn-secondary">What to Know →</a>
+        <a href="#home" onclick="showPage('home'); return false;" class="btn btn-secondary">← Home</a>
+        <a href="#faq" onclick="showPage('faq'); return false;" class="btn btn-secondary">What to Know →</a>
       </div>
     </div>
     
@@ -1640,7 +1658,7 @@
       <div class="card">
         <div class="faq-item">
           <h3>When should I RSVP by?</h3>
-          <p>Please RSVP by <strong>July 01, 2026</strong>.</p>
+          <p>Please RSVP by <strong>July 1, 2026</strong>.</p>
         </div>
         
         <div class="faq-item">
@@ -1656,13 +1674,13 @@
         
         <div class="faq-item">
           <h3>Will food be provided?</h3>
-          <p>Yes! Dinner is provided Friday night (for early guests) and Saturday night. RSVP because spots will fill up fast.</p>
+          <p>Yes! Dinner is provided Friday night (for early guests who want to help with setup) and Saturday night in the main lodge. RSVP because spots will fill up fast.</p>
           <p>Overnight guests should bring lunches, snacks, and any breakfast items they want. We'll have firepits, limited fridge space, and plenty of room for shared food setups.</p>
         </div>
         
         <div class="faq-item">
           <h3>Will there be alcohol?</h3>
-          <p>We will have a selection of white and red wines during reception. Feel free to bring your own beer/seltzer/wine for camping.</p>
+          <p>We will have a selection of white and red wines. Feel free to bring your own beer/seltzer/wine for camping.</p>
           <p><strong>Liquor is not permitted at this location.</strong></p>
         </div>
         
@@ -1674,7 +1692,13 @@
         
         <div class="faq-item">
           <h3>Do I have to stay the night?</h3>
-          <p>Not at all! Overnight camping is optional. You're welcome to stay for the celebration and head home afterward, or stay at a nearby hotel/cabin if that's more your style.</p>
+          <p>Not at all! Overnight camping is optional. You're welcome to stay for the celebration and head home afterward, or stay at a nearby hotel/cabin if that's more your style. We have limited cabins on site - express interest in rsvp</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>What happens Sunday if I'm staying overnight?</h3>
+          <p>We'll leave the venue by noon on Sunday. Anyone who wants to hang out a bit longer is welcome to join us for a relaxed morning by the pond before heading out.</p>
+          <p>If you want to stay nearby Sunday night, check out Mill Hollow Campground up the road. Campsites can be reserved on <a href="https://www.recreation.gov/camping/campgrounds/233847?tab=seasons" target="_blank" rel="noopener">Recreation.gov</a>.</p>
         </div>
         
         <div class="faq-item">
@@ -1704,8 +1728,8 @@
       </div>
       
       <div class="page-nav-buttons">
-        <a onclick="showPage('location')" class="btn btn-secondary">← Location</a>
-        <a onclick="showPage('schedule')" class="btn btn-secondary">Schedule →</a>
+        <a href="#location" onclick="showPage('location'); return false;" class="btn btn-secondary">← Location</a>
+        <a href="#schedule" onclick="showPage('schedule'); return false;" class="btn btn-secondary">Schedule →</a>
       </div>
     </div>
     
@@ -1727,28 +1751,24 @@
           <h3>Saturday, September 19, 2026</h3>
           <div class="timeline">
             <div class="timeline-item">
-              <div class="timeline-time">4:00 PM</div>
-              <div class="timeline-desc">Guest arrival</div>
+              <div class="timeline-time">2:00 PM</div>
+              <div class="timeline-desc">Guests arrive, settle in, explore</div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-time">4:30 PM</div>
+              <div class="timeline-time">4:00 PM</div>
               <div class="timeline-desc">Ceremony</div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-time">5:00 PM</div>
+              <div class="timeline-time">4:30 PM</div>
               <div class="timeline-desc">Cocktail hour</div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-time">6:00 PM</div>
+              <div class="timeline-time">5:30 PM</div>
               <div class="timeline-desc">Dinner</div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-time">7:00 PM</div>
-              <div class="timeline-desc">Toasts & first dance</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-time">9:30 PM</div>
-              <div class="timeline-desc">Send-off</div>
+              <div class="timeline-time">6:30 PM</div>
+              <div class="timeline-desc">Toasts & dancing</div>
             </div>
           </div>
         </div>
@@ -1759,15 +1779,15 @@
             <li><strong>Outdoor ceremony</strong> — Bring a layer for comfort</li>
             <li><strong>Limited parking</strong> — Please carpool or rideshare when possible</li>
             <li><strong>Kid-friendly ceremony</strong> — Reception has adult beverages</li>
-            <li><strong>Rustic venue</strong> — Expect natural beauty, not ballrooms</li>
-            <li><strong>Photography</strong> — We'll have a professional photographer, but feel free to take photos during cocktail hour</li>
+            <li><strong>Mountain setting</strong> — Intimate outdoor spaces; uneven ground in places</li>
+            <li><strong>Photography</strong> — We'll have a professional photographer, but feel free to take photos.</li>
           </ul>
         </div>
       </div>
       
       <div class="page-nav-buttons">
-        <a onclick="showPage('faq')" class="btn btn-secondary">← What to Know</a>
-        <a onclick="showPage('gallery')" class="btn btn-secondary">Gallery →</a>
+        <a href="#faq" onclick="showPage('faq'); return false;" class="btn btn-secondary">← What to Know</a>
+        <a href="#gallery" onclick="showPage('gallery'); return false;" class="btn btn-secondary">Gallery →</a>
       </div>
     </div>
     
@@ -1811,84 +1831,8 @@
       </div>
       
       <div class="page-nav-buttons">
-        <a onclick="showPage('schedule')" class="btn btn-secondary">← Schedule</a>
-        <a onclick="showPage('things-to-do')" class="btn btn-secondary">Things To Do →</a>
-      </div>
-    </div>
-    
-    <div class="footer-border" style="background-image: url('footer.png');"></div>
-  </div>
-
-  <!-- THINGS TO DO PAGE -->
-  <div id="things-to-do" class="page">
-    <div class="section-hero" style="background-image: url('framedborder.png');"></div>
-    
-    <div class="container">
-      <h2>Things To Do</h2>
-      <div class="section-accent">
-        <div class="section-accent-center"></div>
-      </div>
-      <p class="page-subtitle">Make a weekend of it! Here are some activities and attractions near Mill Hollow.</p>
-      
-      <div class="card-grid">
-        <div class="card">
-          <h3>Scenic Drives</h3>
-          <div style="margin-bottom: 1rem;">
-            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Mountain highway scenic drive" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
-          </div>
-          <p style="color: var(--cream); margin-bottom: 1rem;">Mirror Lake Highway (UT-150) offers breathtaking views and photo opportunities through the Uinta Mountains.</p>
-          <a href="https://www.fs.usda.gov/recarea/ashley/recarea/?recid=80820" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Learn More</a>
-        </div>
-        
-        <div class="card">
-          <h3>Hiking Trails</h3>
-          <div style="margin-bottom: 1rem;">
-            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80" alt="Mountain hiking trail" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
-          </div>
-          <p style="color: var(--cream); margin-bottom: 1rem;">Explore beautiful trails ranging from easy walks to challenging hikes in the Uinta-Wasatch-Cache National Forest.</p>
-          <a href="https://www.alltrails.com/parks/us/utah/uintas-wasatch-cache-national-forest" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Find Trails</a>
-        </div>
-        
-        <div class="card">
-          <h3>Lakes & Water Activities</h3>
-          <div style="margin-bottom: 1rem;">
-            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Mountain lake" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
-          </div>
-          <p style="color: var(--cream); margin-bottom: 1rem;">Enjoy serene mountain lakes, kayaking, paddleboarding, and swimming. Mirror Lake, Trial Lake, and many others are nearby.</p>
-          <a href="https://www.fs.usda.gov/recarea/ashley/recarea/?recid=80820" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Explore Lakes</a>
-        </div>
-        
-        <div class="card">
-          <h3>Kamas & Park City</h3>
-          <div style="margin-bottom: 1rem;">
-            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80" alt="Park City Main Street" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
-          </div>
-          <p style="color: var(--cream); margin-bottom: 1rem;">Visit charming local coffee shops, restaurants, and boutiques in nearby Kamas and Park City (about 30 minutes away).</p>
-          <a href="https://www.visitparkcity.com/" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Visit Park City</a>
-        </div>
-        
-        <div class="card">
-          <h3>Stargazing</h3>
-          <div style="margin-bottom: 1rem;">
-            <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&q=80" alt="Starry night sky" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
-          </div>
-          <p style="color: var(--cream); margin-bottom: 1rem;">The night sky at this elevation is absolutely spectacular. Perfect for stargazing away from city lights.</p>
-          <a href="https://www.darksky.org/our-work/conservation/idsp/" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Dark Sky Info</a>
-        </div>
-        
-        <div class="card">
-          <h3>Wildlife Viewing</h3>
-          <div style="margin-bottom: 1rem;">
-            <img src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=800&q=80" alt="Mountain wildlife" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
-          </div>
-          <p style="color: var(--cream); margin-bottom: 1rem;">Keep an eye out for deer, elk, moose, and various bird species. The Uintas are home to diverse wildlife.</p>
-          <a href="https://wildlife.utah.gov/" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top: 0.5rem;">Utah Wildlife</a>
-        </div>
-      </div>
-      
-      <div class="page-nav-buttons">
-        <a onclick="showPage('gallery')" class="btn btn-secondary">← Gallery</a>
-        <a onclick="showPage('registry')" class="btn btn-secondary">Registry →</a>
+        <a href="#schedule" onclick="showPage('schedule'); return false;" class="btn btn-secondary">← Schedule</a>
+        <a href="#registry" onclick="showPage('registry'); return false;" class="btn btn-secondary">Registry →</a>
       </div>
     </div>
     
@@ -1905,15 +1849,15 @@
         <div class="section-accent-center"></div>
       </div>
       <div class="card" style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--cream);">
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
           Your presence is the best gift. If you'd like to contribute to our honeymoon and help us create memories, we've set up a Honeyfund.
         </p>
         <a href="https://www.honeyfund.com/site/hartmann-burningham-05-16-2026" target="_blank" rel="noopener" class="btn btn-primary">View Our Honeyfund</a>
       </div>
       
       <div class="page-nav-buttons">
-        <a onclick="showPage('things-to-do')" class="btn btn-secondary">← Things To Do</a>
-        <a onclick="showPage('rsvp')" class="btn btn-secondary">RSVP →</a>
+        <a href="#gallery" onclick="showPage('gallery'); return false;" class="btn btn-secondary">← Gallery</a>
+        <a href="#rsvp" onclick="showPage('rsvp'); return false;" class="btn btn-secondary">RSVP →</a>
       </div>
     </div>
     
@@ -1930,7 +1874,7 @@
         <div class="section-accent-center"></div>
       </div>
       <p class="page-subtitle" style="text-align: center; margin-bottom: 2rem;">
-        Kindly RSVP by <strong style="color: var(--peach);">July 1, 2026</strong>. We can't wait to celebrate with you!
+        Please respond by <strong>July 1, 2026</strong>.
       </p>
       
       <div class="card">
@@ -1943,13 +1887,13 @@
               <button class="modal-close" id="modalClose" onclick="closeThankYouModal()">&times;</button>
               <h2 class="modal-title">Thank You!</h2>
               <p class="modal-message">
-                We're so excited to celebrate with you! Your RSVP has been received and we can't wait to see you there.
+                Thank you—your RSVP is in. We can’t wait to celebrate with you.
               </p>
               <div class="modal-links">
                 <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener">
                   Send Love on Padlet →
                 </a>
-                <a href="#" onclick="showPage('registry'); closeThankYouModal(); return false;">
+                <a href="#registry" onclick="closeThankYouModal(); showPage('registry'); return false;">
                   View Registry →
                 </a>
               </div>
@@ -1957,7 +1901,7 @@
           </div>
           
           <!-- Step Progress Indicator -->
-          <div class="form-step-indicator" id="stepIndicator" style="display: none;">
+          <div class="form-step-indicator" id="stepIndicator" style="display: flex;">
             <div class="step-dot active" data-step="0"></div>
             <div class="step-dot" data-step="1"></div>
             <div class="step-dot" data-step="2"></div>
@@ -1965,10 +1909,11 @@
           
           <!-- STEP 1: Ceremony Attendance -->
           <div class="form-step active" data-step="0">
-            <h3 class="form-section-title">Will you be attending the ceremony?</h3>
+            <h3 class="form-section-title">Ceremony</h3>
+            <p style="text-align: center; margin-bottom: 1.25rem; font-style: italic; opacity: 0.8;">Please RSVP by August 1, 2026</p>
             <div class="form-group">
               <label class="form-label">
-                Will you be attending the ceremony on Saturday, September 19th at 4:30 PM? <span class="required">*</span>
+                Join us Saturday, Sept 19 by 4:00 PM for the ceremony and reception? <span class="required">*</span>
               </label>
               <div class="form-radio-group">
                 <div class="form-radio">
@@ -1985,22 +1930,23 @@
             <!-- Not Attending Message -->
             <div class="form-group hidden" id="not-attending-message">
               <div class="card" style="text-align: center; padding: 2rem; margin-top: 1rem;">
-                <p style="font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--cream);">
-                  We're sorry you can't make it, but your love and well wishes mean the world to us!
+                <p style="font-size: 1.1rem; margin-bottom: 1.25rem;">
+                  We’ll miss you. Leave a note if you’d like.
                 </p>
-                <p style="font-size: 1.05rem; margin-bottom: 2rem; color: var(--cream);">
-                  Please leave us a note—we'd love to hear from you.
-                </p>
-                <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener" class="btn btn-primary">Send Your Love</a>
+                <a href="https://padlet.com/hunterandmadi9496/can-t-make-it-p4c8sxlkn2ja2v0s" target="_blank" rel="noopener" class="btn btn-primary">Leave a note</a>
+                <div class="form-group" style="margin-top: 1.25rem; text-align: left; max-width: 420px; margin-left: auto; margin-right: auto;">
+                  <label class="form-label" for="regret_email">Email (optional)</label>
+                  <input type="email" id="regret_email" name="regret_email" class="form-input" placeholder="Confirmation only" autocomplete="email">
+                </div>
               </div>
             </div>
           </div>
           
           <!-- STEP 2: Add Attendees -->
           <div class="form-step hidden" data-step="1" id="attendees-step">
-            <h3 class="form-section-title">Who's Attending?</h3>
-            <p style="color: var(--cream); margin-bottom: 1.5rem; text-align: center;">
-              Please add each person who will be attending. We need emergency contact information for everyone.
+            <h3 class="form-section-title">Guests</h3>
+            <p style="margin-bottom: 1.25rem; text-align: center;">
+              Fill out one card per person in your party, including yourself.
             </p>
             
             <div id="attendees-container">
@@ -2008,32 +1954,26 @@
             </div>
             
             <button type="button" class="add-attendee-btn" id="addAttendeeBtn">
-              + Add Another Attendee
+              + Add guest
             </button>
           </div>
           
           <!-- STEP 3: Additional Information -->
           <div class="form-step hidden" data-step="2" id="meals-step">
-            <h3 class="form-section-title">Additional Information</h3>
-            
-            <p style="color: var(--cream); margin-bottom: 1.5rem; text-align: center;">
-              Meal preferences and dietary restrictions have been collected for each attendee in the previous step.
-            </p>
+            <h3 class="form-section-title">Extras</h3>
             
             <div class="form-group">
               <label class="form-label" for="song_requests">
                 Song requests (optional)
               </label>
               <textarea id="song_requests" name="song_requests" class="form-textarea"></textarea>
-              <div class="form-help">Any songs you'd love to hear at the reception?</div>
             </div>
             
             <div class="form-group">
               <label class="form-label" for="comments">
-                Comments, questions, or well wishes
+                Note for us (optional)
               </label>
               <textarea id="comments" name="comments" class="form-textarea"></textarea>
-              <div class="form-help">Anything else you'd like us to know?</div>
             </div>
           </div>
           
@@ -2041,14 +1981,14 @@
           <div class="form-navigation">
             <button type="button" class="btn btn-secondary hidden" id="prevBtn">← Previous</button>
             <button type="button" class="btn btn-primary" id="nextBtn">Next →</button>
-            <button type="submit" class="btn btn-primary hidden" id="submitBtn">Submit RSVP</button>
+            <button type="submit" class="btn btn-primary hidden" id="submitBtn">Submit</button>
           </div>
         </form>
       </div>
       
       <div class="page-nav-buttons">
-        <a onclick="showPage('registry')" class="btn btn-secondary">← Registry</a>
-        <a onclick="showPage('home')" class="btn btn-secondary">Home →</a>
+        <a href="#registry" onclick="showPage('registry'); return false;" class="btn btn-secondary">← Registry</a>
+        <a href="#home" onclick="showPage('home'); return false;" class="btn btn-secondary">Home →</a>
       </div>
     </div>
     
@@ -2254,6 +2194,9 @@
     const navLinks = document.querySelectorAll('.nav-links a');
     
     function showPage(pageName) {
+      if (!document.getElementById(pageName)) {
+        pageName = 'home';
+      }
       // Hide all pages (optimized - use cached elements)
       for (let i = 0; i < allPages.length; i++) {
         allPages[i].classList.remove('active');
@@ -2345,7 +2288,7 @@
     }, { passive: true });
 
     // Swipe navigation for mobile
-    const pageOrder = ['home', 'location', 'faq', 'schedule', 'gallery', 'things-to-do', 'registry', 'rsvp'];
+    const pageOrder = ['home', 'location', 'faq', 'schedule', 'gallery', 'registry', 'rsvp'];
     
     function getCurrentPageIndex() {
       const currentPage = document.querySelector('.page.active');
@@ -2440,160 +2383,105 @@
         
         card.innerHTML = `
           <div class="attendee-card-header">
-            <span class="attendee-number">Attendee ${index + 1}</span>
+            <span class="attendee-number">${index === 0 ? 'You' : 'Guest ' + (index + 1)}</span>
             ${index > 0 ? '<button type="button" class="remove-attendee">Remove</button>' : ''}
           </div>
           <div class="attendee-grid">
             <div class="form-group">
               <label class="form-label">
-                Full Name <span class="required">*</span>
+                Name <span class="required">*</span>
               </label>
               <input type="text" name="attendee_name_${index}" class="form-input" required>
-              <div class="form-help">First and last name</div>
             </div>
             
             <div class="form-group">
               <label class="form-label">
-                Email address ${index === 0 ? '<span class="required">*</span>' : ''}
+                Email ${index === 0 ? '<span class="required">*</span>' : '(optional)'}
               </label>
               <input type="email" name="attendee_email_${index}" class="form-input" ${index === 0 ? 'required' : ''}>
-              <div class="form-help">${index === 0 ? 'We\'ll use this to send you the packing list and updates' : 'Email address for this attendee'}</div>
+              ${index === 0 ? '<div class="form-help">We\'ll send your confirmation here</div>' : ''}
             </div>
             
             <div class="form-group">
               <label class="form-label">
-                Phone number
+                Phone <span class="required">*</span>
               </label>
               <input type="tel" name="attendee_phone_${index}" class="form-input">
-              <div class="form-help">Phone number for this attendee</div>
             </div>
             
             <div class="form-group">
               <label class="form-label">
-                Emergency Contact Name <span class="required">*</span>
+                Dietary needs (allergies, restrictions)
               </label>
-              <input type="text" name="attendee_emergency_name_${index}" class="form-input" required>
-              <div class="form-help">Name of emergency contact</div>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">
-                Emergency Contact Phone <span class="required">*</span>
-              </label>
-              <input type="tel" name="attendee_emergency_phone_${index}" class="form-input" required>
-              <div class="form-help">Phone number of emergency contact</div>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">
-                Dietary Restrictions
-              </label>
-              <textarea name="attendee_dietary_${index}" class="form-textarea" rows="3"></textarea>
-              <div class="form-help">Any dietary restrictions, allergies, or special dietary needs</div>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">
-                Any allergies we should know about?
-              </label>
-              <textarea name="attendee_allergies_${index}" class="form-textarea" rows="2"></textarea>
-              <div class="form-help">List any allergies we should be aware of</div>
-            </div>
-            
-            <div class="form-group" style="grid-column: 1 / -1;">
-              <label class="form-label">
-                Any accessibility needs or any other important information we should know?
-              </label>
-              <textarea name="attendee_accessibility_${index}" class="form-textarea" rows="2"></textarea>
-              <div class="form-help">Accessibility needs or any other important information</div>
+              <textarea name="attendee_dietary_${index}" class="form-textarea" rows="2"></textarea>
             </div>
             
             <div class="form-group" style="grid-column: 1 / -1; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid rgba(255, 187, 136, 0.3);">
-              <h4 style="color: var(--peach); margin-bottom: 1rem; font-family: var(--font-heading);">Overnight Stay Information</h4>
-            </div>
-            
-            <div class="form-group" style="grid-column: 1 / -1;">
               <label class="form-label">
-                Are you planning to arrive on Friday evening or Saturday morning?
+                Select your weekend itinerary:
               </label>
               <div class="form-radio-group">
                 <div class="form-radio">
-                  <input type="radio" id="arrival_friday_${index}" name="arrival_${index}" value="Friday evening">
-                  <label for="arrival_friday_${index}">Friday evening</label>
+                  <input type="radio" id="arrival_full_weekend_${index}" name="arrival_${index}" value="The Full Weekend — Arriving Friday to help out and staying through Sunday morning">
+                  <label for="arrival_full_weekend_${index}"><strong>The Full Weekend</strong> — Arriving Friday to help out and staying through Sunday morning</label>
                 </div>
                 <div class="form-radio">
-                  <input type="radio" id="arrival_saturday_${index}" name="arrival_${index}" value="Saturday morning">
-                  <label for="arrival_saturday_${index}">Saturday morning</label>
-                </div>
-              </div>
-              <div class="form-help">*** Please don't arrive any later than noon on Saturday morning so you have time to settle in! ***</div>
-            </div>
-            
-            <div class="form-group" style="grid-column: 1 / -1;">
-              <label class="form-label">
-                What is your preferred sleeping arrangement?
-              </label>
-              <div class="form-radio-group">
-                <div class="form-radio">
-                  <input type="radio" id="sleeping_bunk_${index}" name="sleeping_${index}" value="Bunkin' it! In a cabin bunk please (We'll have a Friend Bunk and a Family Bunk ready for overnighters!) These cabins have 12 beds with a shared half bath. Reach out if you'd like more pictures!">
-                  <label for="sleeping_bunk_${index}">Bunkin' it! In a cabin bunk please (We'll have a Friend Bunk and a Family Bunk ready for overnighters!) These cabins have 12 beds with a shared half bath. Reach out if you'd like more pictures!</label>
+                  <input type="radio" id="arrival_setup_crew_${index}" name="arrival_${index}" value="The Setup Crew — Staying Friday night to help prep, heading out after the wedding Saturday">
+                  <label for="arrival_setup_crew_${index}"><strong>The Setup Crew</strong> — Staying Friday night to help prep, heading out after the wedding Saturday</label>
                 </div>
                 <div class="form-radio">
-                  <input type="radio" id="sleeping_tent_${index}" name="sleeping_${index}" value="Roughin it! I'll bring my own tent or stay nearby for the weekend (please feed me!)">
-                  <label for="sleeping_tent_${index}">Roughin it! I'll bring my own tent or stay nearby for the weekend (please feed me!)</label>
+                  <input type="radio" id="arrival_saturday_guest_${index}" name="arrival_${index}" value="The Saturday Guest — Arriving by 2:00 PM Saturday to settle in and staying overnight">
+                  <label for="arrival_saturday_guest_${index}"><strong>The Saturday Guest</strong> — Arriving by 2:00 PM Saturday, staying overnight (no Friday)</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="arrival_day_guest_${index}" name="arrival_${index}" value="The Day Guest — Attending the wedding festivities on Saturday only">
+                  <label for="arrival_day_guest_${index}"><strong>The Day Guest</strong> — Attending Saturday only, no overnight stay</label>
                 </div>
               </div>
             </div>
             
-            <div class="form-group" style="grid-column: 1 / -1;">
+            <div class="form-group sleeping-pref-group" style="grid-column: 1 / -1;">
               <label class="form-label">
-                Would you like a suggested packing list sent to you?
+                Sleeping preference
               </label>
+              <div class="form-help" style="margin-bottom: 0.75rem;"><a href="https://drive.google.com/drive/folders/1gQthU8GkG-tj-Td_vhJcz9CcZLmp5qDf?usp=drive_link" target="_blank" rel="noopener">📷 View cabin photos</a></div>
               <div class="form-radio-group">
                 <div class="form-radio">
-                  <input type="radio" id="packing_yes_${index}" name="packing_list_${index}" value="Yes">
-                  <label for="packing_yes_${index}">Yes</label>
+                  <input type="radio" id="sleeping_bunk_${index}" name="sleeping_${index}" value="Interested in a cabin bunk (Friend Bunk or Family Bunk — 12 beds, shared half bath)">
+                  <label for="sleeping_bunk_${index}">🛖 Cabin bunk (shared half bath, limited spots)</label>
                 </div>
                 <div class="form-radio">
-                  <input type="radio" id="packing_no_${index}" name="packing_list_${index}" value="No thanks, I got it!">
-                  <label for="packing_no_${index}">No thanks, I got it!</label>
+                  <input type="radio" id="sleeping_tent_${index}" name="sleeping_${index}" value="Bringing my own tent or staying nearby">
+                  <label for="sleeping_tent_${index}">🏕️ Own tent or stay nearby</label>
+                </div>
+                <div class="form-radio">
+                  <input type="radio" id="sleeping_unsure_${index}" name="sleeping_${index}" value="Not sure yet">
+                  <label for="sleeping_unsure_${index}">Not sure yet — we'll follow up closer to the date</label>
                 </div>
               </div>
             </div>
             
-            <div class="form-group" style="grid-column: 1 / -1; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid rgba(255, 187, 136, 0.3);">
-              <h4 style="color: var(--peach); margin-bottom: 1rem; font-family: var(--font-heading);">Meal Preferences</h4>
-            </div>
-            
-            <div class="form-group" style="grid-column: 1 / -1;">
-              <label class="form-label">
-                Will you be eating both nights?
-              </label>
-              <div class="form-radio-group">
-                <div class="form-radio">
-                  <input type="radio" id="meals_dinner_${index}" name="meals_${index}" value="Feed me only dinner please!">
-                  <label for="meals_dinner_${index}">Feed me only dinner please!</label>
-                </div>
-                <div class="form-radio">
-                  <input type="radio" id="meals_self_${index}" name="meals_${index}" value="I'll feed myself">
-                  <label for="meals_self_${index}">I'll feed myself</label>
-                </div>
-                <div class="form-radio">
-                  <input type="radio" id="meals_help_${index}" name="meals_${index}" value="Help feed me: I will help procure these goods (any donation helps!)">
-                  <label for="meals_help_${index}">Help feed me: I will help procure these goods (any donation helps!)</label>
-                </div>
-              </div>
-              <div class="form-help">Dinner will be provided Fri and Saturday, we ask that people help pitch for the cost of OR bring your own lunches and snacks (full shared kitchen in Main Lodge, fridge space may be limited)</div>
-            </div>
           </div>
         `;
         
+        // Show/hide sleeping preference based on arrival selection
+        const sleepingGroup = card.querySelector('.sleeping-pref-group');
+        const arrivalRadios = card.querySelectorAll(`input[name="arrival_${index}"]`);
+        arrivalRadios.forEach(radio => {
+          radio.addEventListener('change', () => {
+            if (sleepingGroup) {
+              const isDayGuest = radio.value.startsWith('The Day Guest');
+              sleepingGroup.style.display = isDayGuest ? 'none' : '';
+            }
+          });
+        });
+
         // Add remove button functionality
         const removeBtn = card.querySelector('.remove-attendee');
         if (removeBtn) {
           removeBtn.addEventListener('click', () => removeAttendee(index));
         }
-        
+
         return card;
       }
       
@@ -2617,7 +2505,7 @@
             card.dataset.attendeeIndex = newIndex;
             const attendeeNumber = card.querySelector('.attendee-number');
             if (attendeeNumber) {
-              attendeeNumber.textContent = `Attendee ${newIndex + 1}`;
+              attendeeNumber.textContent = newIndex === 0 ? 'You' : `Guest ${newIndex + 1}`;
             }
             // Update input names (optimized - batch updates)
             const inputs = card.querySelectorAll('input, textarea');
@@ -2658,9 +2546,6 @@
       }
       
       // Step navigation functions (optimized - cache ceremony radio)
-      const ceremonyRadioYes = document.querySelector('input[name="ceremony"][value="Yes"]');
-      const ceremonyRadioNo = document.querySelector('input[name="ceremony"][value="No"]');
-      
       function showStep(stepIndex) {
         // Hide all steps (optimized - use for loop)
         for (let i = 0; i < steps.length; i++) {
@@ -2678,34 +2563,41 @@
           }
         }
         
-        // Show/hide navigation buttons
         if (stepIndex === 0) {
           prevBtn.classList.add('hidden');
         } else {
           prevBtn.classList.remove('hidden');
         }
         
-        // Check if this is the last step (optimized - use cached radio elements)
-        const isAttending = ceremonyRadioYes && ceremonyRadioYes.checked;
-        let lastStep = 0; // Default: ceremony is last
+        const ceremonyChecked = document.querySelector('input[name="ceremony"]:checked');
+        const ceremonyVal = ceremonyChecked ? ceremonyChecked.value : null;
+        const isAttending = ceremonyVal === 'Yes';
+        const lastAttendingStep = totalSteps - 1;
         
-        if (isAttending) {
-          lastStep = 2; // Additional info step is last if attending (step 2)
-        }
-        
-        // Show submit button only at the last step (when next button is removed)
-        if (stepIndex >= lastStep) {
-          nextBtn.classList.add('hidden');
-          submitBtn.classList.remove('hidden');
+        if (stepIndex === 0) {
+          if (!ceremonyChecked) {
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+          } else if (ceremonyVal === 'No') {
+            nextBtn.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
+          } else {
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+          }
+          stepIndicator.style.display = 'flex';
+        } else if (isAttending) {
+          if (stepIndex >= lastAttendingStep) {
+            nextBtn.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
+          } else {
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+          }
+          stepIndicator.style.display = 'flex';
         } else {
           nextBtn.classList.remove('hidden');
           submitBtn.classList.add('hidden');
-        }
-        
-        // Show step indicator after first step
-        if (stepIndex > 0) {
-          stepIndicator.style.display = 'flex';
-        } else {
           stepIndicator.style.display = 'none';
         }
         
@@ -2727,7 +2619,7 @@
           const attendeeCards = attendeesContainer.querySelectorAll('.attendee-card');
           if (attendeeCards.length === 0) {
             isValid = false;
-            alert('Please add at least one attendee.');
+            alert('Add at least one guest.');
             return;
           }
           
@@ -2741,9 +2633,7 @@
             // Cache all queries at once
             const nameInput = card.querySelector(`input[name="attendee_name_${attendeeIndex}"]`);
             const emailInput = isFirstAttendee ? card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`) : null;
-            const emergencyNameInput = card.querySelector(`input[name="attendee_emergency_name_${attendeeIndex}"]`);
-            const emergencyPhoneInput = card.querySelector(`input[name="attendee_emergency_phone_${attendeeIndex}"]`);
-            
+            const phoneInput = card.querySelector(`input[name="attendee_phone_${attendeeIndex}"]`);
             // Email is required for first attendee (index 0)
             if (isFirstAttendee && emailInput) {
               if (!emailInput.value.trim()) {
@@ -2753,26 +2643,19 @@
                 emailInput.style.borderColor = '';
               }
             }
-            
+
             if (!nameInput || !nameInput.value.trim()) {
               isValid = false;
               if (nameInput) nameInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
             } else if (nameInput) {
               nameInput.style.borderColor = '';
             }
-            
-            if (!emergencyNameInput || !emergencyNameInput.value.trim()) {
+
+            if (!phoneInput || !phoneInput.value.trim()) {
               isValid = false;
-              if (emergencyNameInput) emergencyNameInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
-            } else if (emergencyNameInput) {
-              emergencyNameInput.style.borderColor = '';
-            }
-            
-            if (!emergencyPhoneInput || !emergencyPhoneInput.value.trim()) {
-              isValid = false;
-              if (emergencyPhoneInput) emergencyPhoneInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
-            } else if (emergencyPhoneInput) {
-              emergencyPhoneInput.style.borderColor = '';
+              if (phoneInput) phoneInput.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+            } else if (phoneInput) {
+              phoneInput.style.borderColor = '';
             }
           }
           
@@ -2838,19 +2721,14 @@
           return;
         }
         
-        // Check ceremony attendance to determine next step
         if (currentStep === 0) {
           const selectedCeremony = document.querySelector('input[name="ceremony"]:checked');
-          if (selectedCeremony?.value === "No") {
-            // Show not attending message and stop
+          if (selectedCeremony && selectedCeremony.value === 'No') {
             notAttendingMessage.classList.remove('hidden');
-            nextBtn.classList.add('hidden');
-            prevBtn.classList.add('hidden');
-            stepIndicator.style.display = 'none';
+            showStep(0);
             return;
-          } else {
-            notAttendingMessage.classList.add('hidden');
           }
+          notAttendingMessage.classList.add('hidden');
         }
         
         // Move to next step
@@ -2906,13 +2784,17 @@
       
       ceremonyRadios.forEach(radio => {
         radio.addEventListener('change', () => {
-          if (radio.value === "No") {
+          if (radio.value === 'No' && radio.checked) {
             notAttendingMessage.classList.remove('hidden');
-            stepIndicator.style.display = 'none';
-          } else {
+            attendeesContainer.innerHTML = '';
+            attendees = [];
+            attendeeCounter = 0;
+          } else if (radio.value === 'Yes' && radio.checked) {
             notAttendingMessage.classList.add('hidden');
+            if (attendeesContainer.children.length === 0) {
+              addAttendee();
+            }
           }
-          // Update step display to reflect button visibility (debounced to prevent lag)
           clearTimeout(rsvpForm._stepUpdateTimeout);
           rsvpForm._stepUpdateTimeout = setTimeout(() => {
             showStep(currentStep);
@@ -2936,7 +2818,6 @@
         formMessage.className = 'form-message';
         formMessage.textContent = '';
         
-        // Collect form data - structured by attendee
         const data = {
           attendees: [],
           contact: {},
@@ -2945,69 +2826,52 @@
           additional: {}
         };
         
-        // Collect all attendee data (optimized - use for loop)
-        const attendeeCards = attendeesContainer.querySelectorAll('.attendee-card');
-        for (let i = 0; i < attendeeCards.length; i++) {
-          const card = attendeeCards[i];
-          // Get the actual attendee index from the card's data attribute
-          const attendeeIndex = parseInt(card.dataset.attendeeIndex);
-          const isFirstAttendee = attendeeIndex === 0;
-          
-          const attendee = {
-            index: attendeeIndex,
-            name: '',
-            email: '',
-            phone: '',
-            emergency_contact_name: '',
-            emergency_contact_phone: '',
-            dietary_restrictions: '',
-            allergies: '',
-            accessibility: '',
-            arrival: '',
-            sleeping: '',
-            packing_list: '',
-            meals: ''
-          };
-          
-          // Cache all queries at once
-          const nameInput = card.querySelector(`input[name="attendee_name_${attendeeIndex}"]`);
-          const emailInput = card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`);
-          const phoneInput = card.querySelector(`input[name="attendee_phone_${attendeeIndex}"]`);
-          const emergencyNameInput = card.querySelector(`input[name="attendee_emergency_name_${attendeeIndex}"]`);
-          const emergencyPhoneInput = card.querySelector(`input[name="attendee_emergency_phone_${attendeeIndex}"]`);
-          const dietaryInput = card.querySelector(`textarea[name="attendee_dietary_${attendeeIndex}"]`);
-          const allergiesInput = card.querySelector(`textarea[name="attendee_allergies_${attendeeIndex}"]`);
-          const accessibilityInput = card.querySelector(`textarea[name="attendee_accessibility_${attendeeIndex}"]`);
-          const arrivalInput = card.querySelector(`input[name="arrival_${attendeeIndex}"]:checked`);
-          const sleepingInput = card.querySelector(`input[name="sleeping_${attendeeIndex}"]:checked`);
-          const packingInput = card.querySelector(`input[name="packing_list_${attendeeIndex}"]:checked`);
-          const mealsInput = card.querySelector(`input[name="meals_${attendeeIndex}"]:checked`);
-          
-          if (nameInput) attendee.name = nameInput.value.trim();
-          if (emailInput) attendee.email = emailInput.value.trim();
-          if (phoneInput) attendee.phone = phoneInput.value.trim();
-          if (emergencyNameInput) attendee.emergency_contact_name = emergencyNameInput.value.trim();
-          if (emergencyPhoneInput) attendee.emergency_contact_phone = emergencyPhoneInput.value.trim();
-          if (dietaryInput) attendee.dietary_restrictions = dietaryInput.value.trim();
-          if (allergiesInput) attendee.allergies = allergiesInput.value.trim();
-          if (accessibilityInput) attendee.accessibility = accessibilityInput.value.trim();
-          if (arrivalInput) attendee.arrival = arrivalInput.value;
-          if (sleepingInput) attendee.sleeping = sleepingInput.value;
-          if (packingInput) attendee.packing_list = packingInput.value;
-          if (mealsInput) attendee.meals = mealsInput.value;
-          
-          data.attendees.push(attendee);
-          
-          // Collect contact info from first attendee
-          if (isFirstAttendee) {
-            data.contact.email = attendee.email;
-            data.contact.phone = attendee.phone;
+        const ceremonyEl = document.querySelector('input[name="ceremony"]:checked');
+        if (ceremonyEl) data.ceremony = ceremonyEl.value;
+        
+        if (data.ceremony === 'No') {
+          data.attendees = [];
+          const regretEmail = document.getElementById('regret_email');
+          const regretAddr = regretEmail && regretEmail.value.trim() ? regretEmail.value.trim() : '';
+          data.contact = { email: regretAddr, phone: '' };
+        } else {
+          const attendeeCards = attendeesContainer.querySelectorAll('.attendee-card');
+          for (let i = 0; i < attendeeCards.length; i++) {
+            const card = attendeeCards[i];
+            const attendeeIndex = parseInt(card.dataset.attendeeIndex, 10);
+            const isFirstAttendee = attendeeIndex === 0;
+            
+            const attendee = {
+              index: attendeeIndex,
+              name: '',
+              email: '',
+              phone: '',
+              dietary_restrictions: '',
+              arrival: '',
+              sleeping: ''
+            };
+            
+            const nameInput = card.querySelector(`input[name="attendee_name_${attendeeIndex}"]`);
+            const emailInput = card.querySelector(`input[name="attendee_email_${attendeeIndex}"]`);
+            const phoneInput = card.querySelector(`input[name="attendee_phone_${attendeeIndex}"]`);
+            const dietaryInput = card.querySelector(`textarea[name="attendee_dietary_${attendeeIndex}"]`);
+            const arrivalInput = card.querySelector(`input[name="arrival_${attendeeIndex}"]:checked`);
+            const sleepingInput = card.querySelector(`input[name="sleeping_${attendeeIndex}"]:checked`);
+            if (nameInput) attendee.name = nameInput.value.trim();
+            if (emailInput) attendee.email = emailInput.value.trim();
+            if (phoneInput) attendee.phone = phoneInput.value.trim();
+            if (dietaryInput) attendee.dietary_restrictions = dietaryInput.value.trim();
+            if (arrivalInput) attendee.arrival = arrivalInput.value;
+            if (sleepingInput) attendee.sleeping = sleepingInput.value;
+            
+            data.attendees.push(attendee);
+            
+            if (isFirstAttendee) {
+              data.contact.email = attendee.email;
+              data.contact.phone = attendee.phone;
+            }
           }
         }
-        
-        // Collect ceremony attendance
-        const ceremony = document.querySelector('input[name="ceremony"]:checked');
-        if (ceremony) data.ceremony = ceremony.value;
         
         // Collect additional info
         const songRequests = document.querySelector('textarea[name="song_requests"]');
@@ -3031,32 +2895,12 @@
           formMessage.className = 'form-message error';
           formMessage.innerHTML = 'Form is not configured. Please set up the Google Apps Script URL. See RSVP-FORM-SETUP.md for instructions.';
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit RSVP';
+          submitBtn.textContent = 'Submit';
           formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           return;
         }
         
         try {
-          // Log submission details
-          const submissionLog = {
-            timestamp: new Date().toISOString(),
-            ceremony: data.ceremony,
-            contactEmail: data.contact?.email || '',
-            contactPhone: data.contact?.phone || '',
-            attendeeCount: data.attendees?.length || 0,
-            attendees: data.attendees?.map(a => ({
-              name: a.name || '',
-              email: a.email || '',
-              phone: a.phone || '',
-              stayingOvernight: !!(a.arrival || a.sleeping || a.packing_list)
-            })) || [],
-            hasSongRequests: !!(data.additional?.song_requests),
-            hasComments: !!(data.additional?.comments)
-          };
-          
-          console.log('RSVP Submission Details:', submissionLog);
-          console.log('Full submission data:', data);
-          
           const response = await fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
@@ -3065,10 +2909,6 @@
             },
             body: JSON.stringify(data)
           });
-          
-          // Log fetch attempt (we can't read response with no-cors)
-          console.log('RSVP submitted to:', SCRIPT_URL);
-          console.log('Fetch response status:', response.status || 'no-cors mode (status not available)');
           
           // Show thank you modal
           showThankYouModal();
@@ -3090,19 +2930,12 @@
           notAttendingMessage.classList.add('hidden');
           
         } catch (error) {
-          console.error('RSVP Submission Error:', error);
-          console.error('Error details:', {
-            message: error.message,
-            stack: error.stack,
-            timestamp: new Date().toISOString()
-          });
-          
           formMessage.className = 'form-message error';
           formMessage.textContent = 'There was an error submitting your RSVP. Please try again or contact us directly.';
           formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } finally {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit RSVP';
+          submitBtn.textContent = 'Submit';
         }
       });
     }

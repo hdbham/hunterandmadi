@@ -29,8 +29,7 @@ function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({
     success: true,
     message: 'RSVP Form Handler is active',
-    timestamp: new Date().toISOString(),
-    spreadsheetId: '1FIo0I4yuqImu3scbJRxmPEKOiDj8qISwsfl1LtCcK2A'
+    timestamp: new Date().toISOString()
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -59,16 +58,11 @@ function doPost(e) {
         'Attendee Name',
         'Attendee Email',
         'Attendee Phone',
-        'Emergency Contact Name',
-        'Emergency Contact Phone',
         'Dietary Restrictions',
-        'Allergies',
-        'Accessibility Needs',
-        'Staying Overnight',
-        'Arrival Time',
-        'Sleeping Arrangement',
+        'Interested in Overnight',
+        'Arrival Interest',
+        'Sleeping Interest',
         'Packing List',
-        'Meal Preference',
         'Song Requests',
         'Comments'
       ];
@@ -88,20 +82,19 @@ function doPost(e) {
     const comments = data.additional?.comments || '';
     
     if (attendees.length === 0) {
-      // No attendees - just write contact info
       const row = [
         timestamp,
         contactEmail,
         contactPhone,
         ceremony,
-        '', '', '', '', '', '', '', '', '', '', '', '', '', ''
+        '', '', '', '', '', '', '', '', '', ''
       ];
       sheet.appendRow(row);
     } else {
       // Write one row per attendee
       attendees.forEach((attendee, index) => {
-        // Check if attendee is staying overnight (has arrival, sleeping, or packing list data)
-        const isStayingOvernight = !!(attendee.arrival || attendee.sleeping || attendee.packing_list);
+        const arrivalVal = attendee.arrival || '';
+        const isInterestedOvernight = (arrivalVal && arrivalVal !== 'Not staying overnight') || !!attendee.sleeping;
         
         const row = [
           timestamp,
@@ -111,16 +104,11 @@ function doPost(e) {
           attendee.name || '',
           attendee.email || '',
           attendee.phone || '',
-          attendee.emergency_contact_name || '',
-          attendee.emergency_contact_phone || '',
           attendee.dietary_restrictions || '',
-          attendee.allergies || '',
-          attendee.accessibility || '',
-          isStayingOvernight ? 'Yes' : 'No',
+          isInterestedOvernight ? 'Yes' : 'No',
           attendee.arrival || '',
           attendee.sleeping || '',
           attendee.packing_list || '',
-          attendee.meals || '',
           index === 0 ? songRequests : '', // Only include once
           index === 0 ? comments : '' // Only include once
         ];
@@ -182,43 +170,46 @@ function setupSheet() {
     'Attendee Name',
     'Attendee Email',
     'Attendee Phone',
-    'Emergency Contact Name',
-    'Emergency Contact Phone',
     'Dietary Restrictions',
-    'Allergies',
-    'Accessibility Needs',
-    'Staying Overnight',
-    'Arrival Time',
-    'Sleeping Arrangement',
+    'Interested in Overnight',
+    'Arrival Interest',
+    'Sleeping Interest',
     'Packing List',
-    'Meal Preference',
     'Song Requests',
     'Comments'
   ];
   
-  // Clear existing headers if any
-  if (sheet.getLastRow() > 0) {
-    sheet.clear();
-  }
+  // Only overwrite the header row — never touch data rows
+  const headerRange = sheet.getRange(1, 1, 1, headers.length);
+  headerRange.setValues([headers]);
+  headerRange.setFontWeight('bold');
+  headerRange.setBackground('#344c12');
+  headerRange.setFontColor('#FFBB88');
   
-  // Add headers
-  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-  sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
-  sheet.getRange(1, 1, 1, headers.length).setBackground('#344c12');
-  sheet.getRange(1, 1, 1, headers.length).setFontColor('#FFBB88');
-  
-  Logger.log('Sheet setup complete!');
+  Logger.log('Header row written (' + sheet.getLastRow() + ' total rows).');
   Logger.log('Spreadsheet URL: ' + spreadsheet.getUrl());
+}
+
+/**
+ * Escape user-supplied text for safe inclusion in HTML email.
+ */
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 /**
  * Send confirmation email receipt with all selections
  */
 function sendReceiptEmail(data, recipientEmail) {
-  const ceremony = data.ceremony || 'Not specified';
+  const ceremony = escHtml(data.ceremony) || 'Not specified';
   const attendees = data.attendees || [];
-  const songRequests = data.additional?.song_requests || '';
-  const comments = data.additional?.comments || '';
+  const songRequests = escHtml(data.additional?.song_requests || '');
+  const comments = escHtml(data.additional?.comments || '');
   const timestamp = data.timestamp || new Date().toISOString();
   const submissionDate = new Date(timestamp).toLocaleDateString('en-US', {
     weekday: 'long',
@@ -230,7 +221,7 @@ function sendReceiptEmail(data, recipientEmail) {
   });
   
   // Build email subject
-  const subject = 'RSVP Confirmation - Hunter & Madi Wedding';
+  const subject = 'RSVP Confirmation — Madi & Hunter Wedding';
   
   // Build email body HTML
   let htmlBody = `
@@ -322,52 +313,32 @@ function sendReceiptEmail(data, recipientEmail) {
     `;
     
     attendees.forEach((attendee, index) => {
-      const attendeeNum = attendees.length > 1 ? ` (Attendee ${index + 1})` : '';
+      const name = escHtml(attendee.name) || 'Not provided';
+      const email = escHtml(attendee.email) || 'Not provided';
+      const phone = escHtml(attendee.phone) || 'Not provided';
+
       htmlBody += `
           <div class="attendee-info">
-            <div class="section-title">Attendee ${index + 1}${attendeeNum}</div>
-            <p><span class="label">Name:</span> <span class="value">${attendee.name || 'Not provided'}</span></p>
-            <p><span class="label">Email:</span> <span class="value">${attendee.email || 'Not provided'}</span></p>
-            <p><span class="label">Phone:</span> <span class="value">${attendee.phone || 'Not provided'}</span></p>
+            <div class="section-title">Attendee ${index + 1}</div>
+            <p><span class="label">Name:</span> <span class="value">${name}</span></p>
+            <p><span class="label">Email:</span> <span class="value">${email}</span></p>
+            <p><span class="label">Phone:</span> <span class="value">${phone}</span></p>
       `;
-      
-      if (attendee.emergency_contact_name || attendee.emergency_contact_phone) {
-        htmlBody += `
-            <p><span class="label">Emergency Contact:</span> <span class="value">${attendee.emergency_contact_name || 'Not provided'} - ${attendee.emergency_contact_phone || 'Not provided'}</span></p>
-        `;
-      }
       
       if (attendee.dietary_restrictions) {
         htmlBody += `
-            <p><span class="label">Dietary Restrictions:</span> <span class="value">${attendee.dietary_restrictions}</span></p>
+            <p><span class="label">Dietary Restrictions:</span> <span class="value">${escHtml(attendee.dietary_restrictions)}</span></p>
         `;
       }
       
-      if (attendee.allergies) {
+      const arrVal = attendee.arrival || '';
+      const isInterestedOvernight = (arrVal && arrVal !== 'Not staying overnight') || !!attendee.sleeping;
+      if (isInterestedOvernight) {
         htmlBody += `
-            <p><span class="label">Allergies:</span> <span class="value">${attendee.allergies}</span></p>
-        `;
-      }
-      
-      if (attendee.accessibility) {
-        htmlBody += `
-            <p><span class="label">Accessibility Needs:</span> <span class="value">${attendee.accessibility}</span></p>
-        `;
-      }
-      
-      const isStayingOvernight = !!(attendee.arrival || attendee.sleeping || attendee.packing_list);
-      if (isStayingOvernight) {
-        htmlBody += `
-            <p><span class="label">Staying Overnight:</span> <span class="value">Yes</span></p>
-            ${attendee.arrival ? `<p><span class="label">Arrival Time:</span> <span class="value">${attendee.arrival}</span></p>` : ''}
-            ${attendee.sleeping ? `<p><span class="label">Sleeping Arrangement:</span> <span class="value">${attendee.sleeping}</span></p>` : ''}
-            ${attendee.packing_list ? `<p><span class="label">Packing List Requested:</span> <span class="value">${attendee.packing_list}</span></p>` : ''}
-        `;
-      }
-      
-      if (attendee.meals) {
-        htmlBody += `
-            <p><span class="label">Meal Preference:</span> <span class="value">${attendee.meals}</span></p>
+            <p><span class="label">Interested in Overnight:</span> <span class="value">Yes</span></p>
+            ${arrVal ? `<p><span class="label">Arrival Interest:</span> <span class="value">${escHtml(arrVal)}</span></p>` : ''}
+            ${attendee.sleeping ? `<p><span class="label">Sleeping Interest:</span> <span class="value">${escHtml(attendee.sleeping)}</span></p>` : ''}
+            ${attendee.packing_list ? `<p><span class="label">Packing List Requested:</span> <span class="value">${escHtml(attendee.packing_list)}</span></p>` : ''}
         `;
       }
       
@@ -412,7 +383,7 @@ function sendReceiptEmail(data, recipientEmail) {
       </div>
       <div class="footer">
         <p>This is an automated confirmation email. Please save this for your records.</p>
-        <p>Hunter & Madi Wedding<br>September 18-20, 2026</p>
+        <p>Madi & Hunter Wedding<br>September 19, 2026</p>
       </div>
     </body>
     </html>

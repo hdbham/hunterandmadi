@@ -18,7 +18,7 @@ describe('Wedding Website Structure', () => {
 
   describe('Page Structure', () => {
     test('should have all required pages', () => {
-      const pages = ['home', 'location', 'faq', 'schedule', 'gallery', 'things-to-do', 'registry', 'rsvp'];
+      const pages = ['home', 'location', 'faq', 'schedule', 'gallery', 'registry', 'rsvp'];
       
       pages.forEach(pageId => {
         expect(html).toMatch(new RegExp(`id="${pageId}"`));
