@@ -28,3 +28,14 @@ yarn-error.log*
 .env
 .env.local
 
+# Generated business lists (Yelp export)
+scripts/business-output/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Claude Code
+CLAUDE.md
+.vibeyardignore
+
