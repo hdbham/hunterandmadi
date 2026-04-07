@@ -1585,13 +1585,13 @@
         <img src="https://images.zola.com/5f5e0c97-b4a7-494c-af4e-dcd1ba5dca76" alt="YMCA Mill Hollow">
       </div>
       <h3 style="text-align: center; color: var(--peach); font-size: 1.2rem; text-transform: lowercase; margin-bottom: 1rem;">Please read all of the details before RSVPing</h3>
-      <p class="page-subtitle">We’re getting married at <strong>YMCA Mill Hollow</strong>, a secluded and gorgeous mountain hideaway nestled in the Uinta Mountains near Kamas, UT. Tall pines, open sky, limited cell service but tons of friends and memories.
+      <p class="page-subtitle">We’re getting married at <strong>YMCA Mill Hollow</strong>, a secluded and gorgeous mountain hideaway nestled in the Uinta Mountains near Kamas, UT. Tall pines, open sky, limited cell service but tons of friends and memories. We’d love nothing more than a fun weekend with the people we love, so if you are able to, please consider camping with us as well!
 
-        <br><br>Heads up: the roads are unpaved and it’s a bit of a drive, so give yourself some extra time. So worth it though.
+        <br><br>We have camp games, a live band, food, snacks and wine, and firepits to use at your leisure. Up the road is an awesome lake we’ll definitely have time to explore. We’re bringing two kayaks, so feel free to bring your favorite slacklining gear, lawn games, a costume, or honestly anything that makes this feel authentically campy (interpret that however you want).
 
-        <br><br>We have camp games, a live band, food, and firepits. Up the road is an awesome lake we’ll definitely have time to explore. We’re bringing two kayaks, so feel free to bring your favorite slacklining gear, lawn games, a costume, or honestly anything that makes this feel authentically campy (interpret that however you want).
+        <br><br>Heads up: the roads are unpaved and it's a bit of a drive, so give yourself some extra time.
 
-        <br><br>We have cabins and tent space, so come ready to stay the night if you can. Pack layers, sturdy shoes, and anything you’d want for a mountain getaway. Can’t wait to celebrate with you out there.
+        <br><br>We have cabins on site and plenty of awesome tent space, so come ready to stay the night if you can. Pack layers, sturdy shoes, and anything you’d want for a mountain getaway. Can’t wait to celebrate with you out there.
 
 
       <div class="card-grid">
@@ -2464,6 +2464,15 @@
           </div>
         `;
         
+        // Make entire .form-radio / .form-checkbox div clickable
+        card.querySelectorAll('.form-radio, .form-checkbox').forEach(div => {
+          div.addEventListener('click', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'LABEL' || e.target.tagName === 'A') return;
+            const input = div.querySelector('input[type="radio"], input[type="checkbox"]');
+            if (input) input.click();
+          });
+        });
+
         // Show/hide sleeping preference based on arrival selection
         const sleepingGroup = card.querySelector('.sleeping-pref-group');
         const arrivalRadios = card.querySelectorAll(`input[name="arrival_${index}"]`);
@@ -2782,6 +2791,15 @@
       nextBtn.addEventListener('click', goToNextStep);
       prevBtn.addEventListener('click', prevStep);
       
+      // Make entire .form-radio div clickable for static (non-card) radio groups
+      document.querySelectorAll('.form-step .form-radio, .form-step .form-checkbox').forEach(div => {
+        div.addEventListener('click', (e) => {
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'LABEL' || e.target.tagName === 'A') return;
+          const input = div.querySelector('input[type="radio"], input[type="checkbox"]');
+          if (input) input.click();
+        });
+      });
+
       ceremonyRadios.forEach(radio => {
         radio.addEventListener('change', () => {
           if (radio.value === 'No' && radio.checked) {
