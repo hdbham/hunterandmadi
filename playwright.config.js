@@ -10,7 +10,7 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
   },
 
@@ -38,8 +38,8 @@ module.exports = defineConfig({
   ],
 
   webServer: {
-    command: 'npx http-server . -p 3000',
-    url: 'http://localhost:3000',
+    command: 'npx http-server . -p 5173 -a 0.0.0.0',
+    url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
   },
 });

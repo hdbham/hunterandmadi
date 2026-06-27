@@ -62,7 +62,7 @@ function doPost(e) {
         'Interested in Overnight',
         'Arrival Interest',
         'Sleeping Interest',
-        'Packing List',
+        'Mailing address',
         'Song Requests',
         'Comments'
       ];
@@ -80,6 +80,8 @@ function doPost(e) {
     const ceremony = data.ceremony || '';
     const songRequests = data.additional?.song_requests || '';
     const comments = data.additional?.comments || '';
+    // Accept the dedicated field; fall back to the legacy packing_list key for older clients.
+    const mailingAddress = (data.mailing_address || (attendees[0] && attendees[0].packing_list) || '').trim();
     
     if (attendees.length === 0) {
       const row = [
@@ -108,7 +110,7 @@ function doPost(e) {
           isInterestedOvernight ? 'Yes' : 'No',
           attendee.arrival || '',
           attendee.sleeping || '',
-          attendee.packing_list || '',
+          index === 0 ? mailingAddress : '', // Household mailing address — only on first row
           index === 0 ? songRequests : '', // Only include once
           index === 0 ? comments : '' // Only include once
         ];
@@ -174,7 +176,7 @@ function setupSheet() {
     'Interested in Overnight',
     'Arrival Interest',
     'Sleeping Interest',
-    'Packing List',
+    'Mailing address',
     'Song Requests',
     'Comments'
   ];
@@ -338,7 +340,12 @@ function sendReceiptEmail(data, recipientEmail) {
             <p><span class="label">Interested in Overnight:</span> <span class="value">Yes</span></p>
             ${arrVal ? `<p><span class="label">Arrival Interest:</span> <span class="value">${escHtml(arrVal)}</span></p>` : ''}
             ${attendee.sleeping ? `<p><span class="label">Sleeping Interest:</span> <span class="value">${escHtml(attendee.sleeping)}</span></p>` : ''}
-            ${attendee.packing_list ? `<p><span class="label">Packing List Requested:</span> <span class="value">${escHtml(attendee.packing_list)}</span></p>` : ''}
+        `;
+      }
+      
+      if (attendee.packing_list) {
+        htmlBody += `
+            <p><span class="label">Mailing address (paper invite):</span> <span class="value">${escHtml(attendee.packing_list)}</span></p>
         `;
       }
       

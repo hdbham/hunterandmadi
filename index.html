@@ -1910,7 +1910,6 @@
           <!-- STEP 1: Ceremony Attendance -->
           <div class="form-step active" data-step="0">
             <h3 class="form-section-title">Ceremony</h3>
-            <p style="text-align: center; margin-bottom: 1.25rem; font-style: italic; opacity: 0.8;">Please RSVP by August 1, 2026</p>
             <div class="form-group">
               <label class="form-label">
                 Join us Saturday, Sept 19 by 4:00 PM for the ceremony and reception? <span class="required">*</span>
@@ -1961,6 +1960,14 @@
           <!-- STEP 3: Additional Information -->
           <div class="form-step hidden" data-step="2" id="meals-step">
             <h3 class="form-section-title">Extras</h3>
+            
+            <div class="form-group">
+              <label class="form-label" for="invite_mailing_address">
+                Mailing address for your paper invite <span class="required">*</span>
+              </label>
+              <textarea id="invite_mailing_address" name="invite_mailing_address" class="form-textarea" rows="3" placeholder="Street, city, state, ZIP — one line or several" required></textarea>
+              <div class="form-help">We’ll use this to mail your physical invitation.</div>
+            </div>
             
             <div class="form-group">
               <label class="form-label" for="song_requests">
@@ -2889,6 +2896,24 @@
               data.contact.phone = attendee.phone;
             }
           }
+          const inviteEl = document.getElementById('invite_mailing_address');
+          const inviteText = inviteEl && inviteEl.value.trim() ? inviteEl.value.trim() : '';
+          // Mailing address is required for attending guests (used for physical invitations).
+          if (!inviteText) {
+            formMessage.className = 'form-message error';
+            formMessage.textContent = 'Please enter a mailing address so we can send your physical invitation.';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit';
+            if (inviteEl) {
+              inviteEl.style.borderColor = 'rgba(244, 67, 54, 0.8)';
+              inviteEl.focus();
+            }
+            formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            return;
+          }
+          if (inviteEl) inviteEl.style.borderColor = '';
+          // Dedicated field; the Apps Script backend writes this into the "Mailing address" sheet column.
+          data.mailing_address = inviteText;
         }
         
         // Collect additional info

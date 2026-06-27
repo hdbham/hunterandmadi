@@ -74,11 +74,11 @@ describe('RSVP Form Structure', () => {
     test('should have overnight stay fields', () => {
       expect(html).toMatch(/arrival_\$\{index\}/);
       expect(html).toMatch(/sleeping_\$\{index\}/);
-      expect(html).toMatch(/packing_list_\$\{index\}/);
     });
 
-    test('should have packing list fields', () => {
-      expect(html).toMatch(/packing_list_\$\{index\}/);
+    test('should have invite mailing address field on extras step', () => {
+      expect(html).toMatch(/id="invite_mailing_address"/);
+      expect(html).toMatch(/name="invite_mailing_address"/);
     });
   });
 

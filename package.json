@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Wedding website with RSVP form",
   "scripts": {
-    "serve": "http-server . -p 3000 -a 0.0.0.0",
+    "serve": "http-server . -p 5173 -a 0.0.0.0",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

@@ -91,6 +91,7 @@ test.describe('RSVP Form E2E', () => {
     // Step 2: Fill attendee information
     await page.fill('input[name="attendee_name_0"]', 'John Doe');
     await page.fill('input[name="attendee_email_0"]', 'john@example.com');
+    await page.fill('input[name="attendee_phone_0"]', '5551234567');
     
     await page.click('#nextBtn');
     
@@ -119,6 +120,7 @@ test.describe('RSVP Form E2E', () => {
     await page.click('#nextBtn');
     await page.fill('input[name="attendee_name_0"]', 'John Doe');
     await page.fill('input[name="attendee_email_0"]', 'john@example.com');
+    await page.fill('input[name="attendee_phone_0"]', '5551234567');
     await page.click('#nextBtn');
     await page.click('#submitBtn');
     
