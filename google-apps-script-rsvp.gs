@@ -1,26 +1,46 @@
 /**
  * Google Apps Script to receive RSVP form data and write to Google Sheets
- * 
- * SETUP INSTRUCTIONS:
- * 1. Open Google Drive (drive.google.com)
- * 2. Create a new Google Sheet (name it "Wedding RSVPs" or similar)
- * 3. Click Extensions > Apps Script
- * 4. Delete the default code and paste this entire file
- * 5. Replace 'YOUR_SHEET_NAME' with your actual sheet name (or leave as default)
- * 6. Click the Save icon (or Ctrl+S / Cmd+S)
- * 7. Click Deploy > New deployment
- * 8. Click the gear icon next to "Select type" and choose "Web app"
- * 9. Set:
- *    - Description: "RSVP Form Handler"
- *    - Execute as: "Me"
- *    - Who has access: "Anyone"
- * 10. Click "Deploy"
- * 11. Copy the Web App URL (it will look like: https://script.google.com/macros/s/...)
- * 12. Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' in index.html with this URL
- * 13. Click "Authorize access" and grant permissions
- * 
- * The script will automatically create headers in the sheet on first run.
+ *
+ * DEPLOY / UPDATE INSTRUCTIONS:
+ * 1. Open the spreadsheet (https://docs.google.com/spreadsheets/d/1FIo0I4yuqImu3scbJRxmPEKOiDj8qISwsfl1LtCcK2A/edit)
+ * 2. Extensions > Apps Script
+ * 3. Replace ALL existing code with this file, then Save (Cmd/Ctrl+S)
+ * 4. Run setupSheet() once to refresh the header row (this is now NON-destructive
+ *    — it only rewrites row 1 and never clears data)
+ * 5. Deploy > Manage deployments > edit (pencil) the existing Web App deployment
+ *    > Version: New version > Deploy. This keeps the same /exec URL the site uses.
+ *
+ * The "Mailing Address" column (column P) holds the address for physical
+ * invitations. The frontend sends it as `mailing_address`; we also fall back to
+ * the legacy `packing_list` key so older cached clients keep working.
  */
+
+// Single source of truth for the sheet layout. Order matters: rows are written
+// by column position, so do not reorder existing columns — only append.
+const RSVP_HEADERS = [
+  'Timestamp',
+  'Contact Email',
+  'Contact Phone',
+  'Ceremony Attendance',
+  'Attendee Name',
+  'Attendee Email',
+  'Attendee Phone',
+  'Emergency Contact Name',
+  'Emergency Contact Phone',
+  'Dietary Restrictions',
+  'Allergies',
+  'Accessibility Needs',
+  'Staying Overnight',
+  'Arrival Time',
+  'Sleeping Arrangement',
+  'Mailing Address',
+  'Meal Preference',
+  'Song Requests',
+  'Comments'
+];
+
+const SPREADSHEET_ID = '1FIo0I4yuqImu3scbJRxmPEKOiDj8qISwsfl1LtCcK2A';
+const SHEET_NAME = 'RSVPs';
 
 /**
  * Handle GET requests (for testing/verification)
@@ -29,7 +49,8 @@ function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({
     success: true,
     message: 'RSVP Form Handler is active',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    spreadsheetId: SPREADSHEET_ID
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -37,67 +58,50 @@ function doPost(e) {
   try {
     // Parse the JSON data from the form
     const data = JSON.parse(e.postData.contents);
-    
-    // Get or create the spreadsheet
-    const SPREADSHEET_ID = '1FIo0I4yuqImu3scbJRxmPEKOiDj8qISwsfl1LtCcK2A';
-    const SHEET_NAME = 'RSVPs'; // Change this to your sheet name if different
-    
-    let spreadsheet;
-    spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-    
-    // Get or create the sheet
+
+    const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+    // Get or create the sheet (write headers only when first created)
     let sheet = spreadsheet.getSheetByName(SHEET_NAME);
     if (!sheet) {
       sheet = spreadsheet.insertSheet(SHEET_NAME);
-      // Add headers
-      const headers = [
-        'Timestamp',
-        'Contact Email',
-        'Contact Phone',
-        'Ceremony Attendance',
-        'Attendee Name',
-        'Attendee Email',
-        'Attendee Phone',
-        'Dietary Restrictions',
-        'Interested in Overnight',
-        'Arrival Interest',
-        'Sleeping Interest',
-        'Mailing address',
-        'Song Requests',
-        'Comments'
-      ];
-      sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-      sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
-      sheet.getRange(1, 1, 1, headers.length).setBackground('#344c12');
-      sheet.getRange(1, 1, 1, headers.length).setFontColor('#FFBB88');
+      writeHeaderRow(sheet);
     }
-    
+
     // Write one row per attendee
     const attendees = data.attendees || [];
     const timestamp = data.timestamp || new Date().toISOString();
-    const contactEmail = data.contact?.email || '';
-    const contactPhone = data.contact?.phone || '';
+    const contactEmail = data.contact && data.contact.email ? data.contact.email : '';
+    const contactPhone = data.contact && data.contact.phone ? data.contact.phone : '';
     const ceremony = data.ceremony || '';
-    const songRequests = data.additional?.song_requests || '';
-    const comments = data.additional?.comments || '';
-    // Accept the dedicated field; fall back to the legacy packing_list key for older clients.
-    const mailingAddress = (data.mailing_address || (attendees[0] && attendees[0].packing_list) || '').trim();
-    
+    const songRequests = (data.additional && data.additional.song_requests) || '';
+    const comments = (data.additional && data.additional.comments) || '';
+    // Household mailing address for the paper invite. Prefer the dedicated field;
+    // fall back to the legacy packing_list key used by older clients.
+    const mailingAddress = (
+      data.mailing_address ||
+      (attendees[0] && attendees[0].packing_list) ||
+      ''
+    ).toString().trim();
+
     if (attendees.length === 0) {
+      // No attendees - just write contact info
       const row = [
         timestamp,
         contactEmail,
         contactPhone,
         ceremony,
-        '', '', '', '', '', '', '', '', '', ''
+        '', '', '', '', '', '', '', '', '', '',
+        mailingAddress, // Mailing Address (column P)
+        '', '', ''
       ];
       sheet.appendRow(row);
     } else {
       // Write one row per attendee
       attendees.forEach((attendee, index) => {
-        const arrivalVal = attendee.arrival || '';
-        const isInterestedOvernight = (arrivalVal && arrivalVal !== 'Not staying overnight') || !!attendee.sleeping;
-        
+        // Staying overnight if any overnight detail is present
+        const isStayingOvernight = !!(attendee.arrival || attendee.sleeping);
+
         const row = [
           timestamp,
           contactEmail,
@@ -106,19 +110,24 @@ function doPost(e) {
           attendee.name || '',
           attendee.email || '',
           attendee.phone || '',
+          attendee.emergency_contact_name || '',
+          attendee.emergency_contact_phone || '',
           attendee.dietary_restrictions || '',
-          isInterestedOvernight ? 'Yes' : 'No',
+          attendee.allergies || '',
+          attendee.accessibility || '',
+          isStayingOvernight ? 'Yes' : 'No',
           attendee.arrival || '',
           attendee.sleeping || '',
-          index === 0 ? mailingAddress : '', // Household mailing address — only on first row
+          index === 0 ? mailingAddress : '', // Mailing Address — household, on first row only
+          attendee.meals || '',
           index === 0 ? songRequests : '', // Only include once
           index === 0 ? comments : '' // Only include once
         ];
-        
+
         sheet.appendRow(row);
       });
     }
-    
+
     // Send confirmation email receipt if email is provided
     if (contactEmail && contactEmail.trim() !== '') {
       try {
@@ -128,13 +137,13 @@ function doPost(e) {
         Logger.log('Error sending receipt email: ' + emailError.toString());
       }
     }
-    
+
     // Return success response
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
       message: 'RSVP submitted successfully'
     })).setMimeType(ContentService.MimeType.JSON);
-    
+
   } catch (error) {
     // Return error response
     return ContentService.createTextOutput(JSON.stringify({
@@ -145,73 +154,44 @@ function doPost(e) {
 }
 
 /**
- * Test function - run this to set up the sheet with headers
+ * Write/refresh the formatted header row. Does NOT touch data rows.
+ */
+function writeHeaderRow(sheet) {
+  const range = sheet.getRange(1, 1, 1, RSVP_HEADERS.length);
+  range.setValues([RSVP_HEADERS]);
+  range.setFontWeight('bold');
+  range.setBackground('#344c12');
+  range.setFontColor('#FFBB88');
+}
+
+/**
+ * Run this once after deploying to refresh the header row.
+ * SAFE: only overwrites row 1 — it never clears or shifts your data.
  */
 function setupSheet() {
-  const SPREADSHEET_ID = '1FIo0I4yuqImu3scbJRxmPEKOiDj8qISwsfl1LtCcK2A';
-  const SHEET_NAME = 'RSVPs';
-  
-  let spreadsheet;
-  if (SPREADSHEET_ID === 'YOUR_SPREADSHEET_ID_HERE') {
-    spreadsheet = SpreadsheetApp.create('Wedding RSVPs');
-    Logger.log('Created new spreadsheet: ' + spreadsheet.getUrl());
-  } else {
-    spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-  }
-  
+  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = spreadsheet.insertSheet(SHEET_NAME);
   }
-  
-  const headers = [
-    'Timestamp',
-    'Contact Email',
-    'Contact Phone',
-    'Ceremony Attendance',
-    'Attendee Name',
-    'Attendee Email',
-    'Attendee Phone',
-    'Dietary Restrictions',
-    'Interested in Overnight',
-    'Arrival Interest',
-    'Sleeping Interest',
-    'Mailing address',
-    'Song Requests',
-    'Comments'
-  ];
-  
-  // Only overwrite the header row — never touch data rows
-  const headerRange = sheet.getRange(1, 1, 1, headers.length);
-  headerRange.setValues([headers]);
-  headerRange.setFontWeight('bold');
-  headerRange.setBackground('#344c12');
-  headerRange.setFontColor('#FFBB88');
-  
-  Logger.log('Header row written (' + sheet.getLastRow() + ' total rows).');
+  writeHeaderRow(sheet);
+  Logger.log('Header row refreshed (' + sheet.getLastRow() + ' total rows, data untouched).');
   Logger.log('Spreadsheet URL: ' + spreadsheet.getUrl());
-}
-
-/**
- * Escape user-supplied text for safe inclusion in HTML email.
- */
-function escHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
 
 /**
  * Send confirmation email receipt with all selections
  */
 function sendReceiptEmail(data, recipientEmail) {
-  const ceremony = escHtml(data.ceremony) || 'Not specified';
+  const ceremony = data.ceremony || 'Not specified';
   const attendees = data.attendees || [];
-  const songRequests = escHtml(data.additional?.song_requests || '');
-  const comments = escHtml(data.additional?.comments || '');
+  const songRequests = (data.additional && data.additional.song_requests) || '';
+  const comments = (data.additional && data.additional.comments) || '';
+  const mailingAddress = (
+    data.mailing_address ||
+    (attendees[0] && attendees[0].packing_list) ||
+    ''
+  ).toString().trim();
   const timestamp = data.timestamp || new Date().toISOString();
   const submissionDate = new Date(timestamp).toLocaleDateString('en-US', {
     weekday: 'long',
@@ -221,10 +201,10 @@ function sendReceiptEmail(data, recipientEmail) {
     hour: '2-digit',
     minute: '2-digit'
   });
-  
+
   // Build email subject
-  const subject = 'RSVP Confirmation — Madi & Hunter Wedding';
-  
+  const subject = 'RSVP Confirmation - Hunter & Madi Wedding';
+
   // Build email body HTML
   let htmlBody = `
     <!DOCTYPE html>
@@ -300,89 +280,95 @@ function sendReceiptEmail(data, recipientEmail) {
           <div class="section-title">Submission Details</div>
           <p><span class="label">Submitted:</span> <span class="value">${submissionDate}</span></p>
         </div>
-        
+
         <div class="section">
           <div class="section-title">Ceremony Attendance</div>
-          <p><span class="label">Will you be attending?</span> <span class="value">${ceremony}</span></p>
+          <p><span class="label">Will you be attending?</span> <span class="value">${escHtml(ceremony)}</span></p>
         </div>
   `;
-  
+
   // Add attendee information
   if (attendees.length > 0) {
     htmlBody += `
         <div class="section">
           <div class="section-title">Attendee Information</div>
     `;
-    
-    attendees.forEach((attendee, index) => {
-      const name = escHtml(attendee.name) || 'Not provided';
-      const email = escHtml(attendee.email) || 'Not provided';
-      const phone = escHtml(attendee.phone) || 'Not provided';
 
+    attendees.forEach((attendee, index) => {
       htmlBody += `
           <div class="attendee-info">
             <div class="section-title">Attendee ${index + 1}</div>
-            <p><span class="label">Name:</span> <span class="value">${name}</span></p>
-            <p><span class="label">Email:</span> <span class="value">${email}</span></p>
-            <p><span class="label">Phone:</span> <span class="value">${phone}</span></p>
+            <p><span class="label">Name:</span> <span class="value">${escHtml(attendee.name) || 'Not provided'}</span></p>
+            <p><span class="label">Email:</span> <span class="value">${escHtml(attendee.email) || 'Not provided'}</span></p>
+            <p><span class="label">Phone:</span> <span class="value">${escHtml(attendee.phone) || 'Not provided'}</span></p>
       `;
-      
+
       if (attendee.dietary_restrictions) {
         htmlBody += `
             <p><span class="label">Dietary Restrictions:</span> <span class="value">${escHtml(attendee.dietary_restrictions)}</span></p>
         `;
       }
-      
-      const arrVal = attendee.arrival || '';
-      const isInterestedOvernight = (arrVal && arrVal !== 'Not staying overnight') || !!attendee.sleeping;
-      if (isInterestedOvernight) {
+
+      const isStayingOvernight = !!(attendee.arrival || attendee.sleeping);
+      if (isStayingOvernight) {
         htmlBody += `
-            <p><span class="label">Interested in Overnight:</span> <span class="value">Yes</span></p>
-            ${arrVal ? `<p><span class="label">Arrival Interest:</span> <span class="value">${escHtml(arrVal)}</span></p>` : ''}
-            ${attendee.sleeping ? `<p><span class="label">Sleeping Interest:</span> <span class="value">${escHtml(attendee.sleeping)}</span></p>` : ''}
+            <p><span class="label">Staying Overnight:</span> <span class="value">Yes</span></p>
+            ${attendee.arrival ? `<p><span class="label">Arrival Time:</span> <span class="value">${escHtml(attendee.arrival)}</span></p>` : ''}
+            ${attendee.sleeping ? `<p><span class="label">Sleeping Arrangement:</span> <span class="value">${escHtml(attendee.sleeping)}</span></p>` : ''}
         `;
       }
-      
-      if (attendee.packing_list) {
+
+      if (attendee.meals) {
         htmlBody += `
-            <p><span class="label">Mailing address (paper invite):</span> <span class="value">${escHtml(attendee.packing_list)}</span></p>
+            <p><span class="label">Meal Preference:</span> <span class="value">${escHtml(attendee.meals)}</span></p>
         `;
       }
-      
+
       htmlBody += `
           </div>
       `;
     });
-    
+
     htmlBody += `
         </div>
     `;
   }
-  
+
+  // Mailing address (for the physical invitation)
+  if (mailingAddress) {
+    htmlBody += `
+        <div class="section">
+          <div class="section-title">Mailing Address</div>
+          <p><span class="value">${escHtml(mailingAddress).replace(/\n/g, '<br>')}</span></p>
+          <p class="no-info">We'll use this to send your physical invitation.</p>
+        </div>
+    `;
+  }
+
   // Add additional information
   if (songRequests || comments) {
     htmlBody += `
         <div class="section">
           <div class="section-title">Additional Information</div>
     `;
-    
+
     if (songRequests) {
       htmlBody += `
-          <p><span class="label">Song Requests:</span> <span class="value">${songRequests}</span></p>
+          <p><span class="label">Song Requests:</span> <span class="value">${escHtml(songRequests)}</span></p>
       `;
     }
-    
+
     if (comments) {
       htmlBody += `
-          <p><span class="label">Comments:</span> <span class="value">${comments}</span></p>
+          <p><span class="label">Comments:</span> <span class="value">${escHtml(comments)}</span></p>
       `;
     }
-    
+
     htmlBody += `
         </div>
     `;
   }
-  
+
   htmlBody += `
         <div class="section">
           <p>We're so excited to celebrate with you! If you need to make any changes to your RSVP, please contact us at <a href="mailto:hunterandmadi9496@gmail.com">hunterandmadi9496@gmail.com</a> or call Madi at 801-458-2972.</p>
@@ -390,19 +376,31 @@ function sendReceiptEmail(data, recipientEmail) {
       </div>
       <div class="footer">
         <p>This is an automated confirmation email. Please save this for your records.</p>
-        <p>Madi & Hunter Wedding<br>September 19, 2026</p>
+        <p>Hunter & Madi Wedding<br>September 18-20, 2026</p>
       </div>
     </body>
     </html>
   `;
-  
+
   // Send email
   MailApp.sendEmail({
     to: recipientEmail,
     subject: subject,
     htmlBody: htmlBody
   });
-  
+
   Logger.log('Receipt email sent to: ' + recipientEmail);
 }
 
+/**
+ * Escape user-supplied text for safe inclusion in HTML email.
+ */
+function escHtml(text) {
+  if (text === null || text === undefined) return '';
+  return text.toString()
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
