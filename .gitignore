@@ -39,3 +39,8 @@ test-results/
 CLAUDE.md
 .vibeyardignore
 
+# clasp / Apps Script deploy (generated in CI)
+.clasp.json
+.clasprc.json
+gas/Code.gs
+
