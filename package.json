@@ -9,9 +9,12 @@
     "test:coverage": "jest --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:all": "npm test && npm run test:e2e"
+    "test:all": "npm test && npm run test:e2e",
+    "sync:gas": "cp google-apps-script-rsvp.gs gas/Code.gs && clasp push -f",
+    "deploy:gas": "cp google-apps-script-rsvp.gs gas/Code.gs && clasp push -f && clasp deploy -i AKfycbxUioEDO3Dh1czyvyLBTMYTQPCKkMiQrmU2N1gHzolWjGzsI2rXMHaadtXXV5Eh_ZO_ -d \"clasp deploy\""
   },
   "devDependencies": {
+    "@google/clasp": "^2.4.2",
     "@playwright/test": "^1.40.0",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/user-event": "^14.5.1",
@@ -22,8 +25,12 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
-    "testMatch": ["**/tests/**/*.test.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
     "collectCoverageFrom": [
       "index.html",
       "!**/node_modules/**",
@@ -31,4 +38,3 @@
     ]
   }
 }
-

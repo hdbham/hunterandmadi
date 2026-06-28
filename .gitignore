@@ -42,3 +42,6 @@ CLAUDE.md
 
 # Claude Code local config
 .claude/
+
+# clasp generated file (synced from google-apps-script-rsvp.gs)
+gas/Code.gs
