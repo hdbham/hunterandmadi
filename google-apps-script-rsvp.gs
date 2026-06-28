@@ -296,182 +296,125 @@ function buildRsvpHtml(data, heading, subheading) {
     minute: '2-digit'
   });
 
-  // Build email body HTML
-  let htmlBody = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          line-height: 1.6;
-          color: #333;
-          max-width: 600px;
-          margin: 0 auto;
-          padding: 20px;
-        }
-        .header {
-          background-color: #344c12;
-          color: #FFBB88;
-          padding: 20px;
-          text-align: center;
-          border-radius: 8px 8px 0 0;
-        }
-        .content {
-          background-color: #f9f9f9;
-          padding: 20px;
-          border: 2px solid #344c12;
-        }
-        .section {
-          margin-bottom: 20px;
-          padding: 15px;
-          background-color: white;
-          border-left: 4px solid #FFBB88;
-          border-radius: 4px;
-        }
-        .section-title {
-          font-weight: bold;
-          color: #344c12;
-          font-size: 1.1em;
-          margin-bottom: 10px;
-        }
-        .attendee-info {
-          margin-bottom: 15px;
-          padding: 10px;
-          background-color: #f5f5f5;
-          border-radius: 4px;
-        }
-        .label {
-          font-weight: bold;
-          color: #344c12;
-        }
-        .value {
-          margin-left: 10px;
-          color: #666;
-        }
-        .footer {
-          text-align: center;
-          padding: 20px;
-          color: #666;
-          font-size: 0.9em;
-        }
-        .no-info {
-          color: #999;
-          font-style: italic;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <h1>${escHtml(heading)}</h1>
-        <p>${escHtml(subheading)}</p>
-      </div>
-      <div class="content">
-        <div class="section">
-          <div class="section-title">Submission Details</div>
-          <p><span class="label">Submitted:</span> <span class="value">${submissionDate}</span></p>
-        </div>
+  // ---- Moody palette + type ----
+  const BG = '#10130c';      // near-black forest
+  const CARD = '#1c2413';    // deep evergreen
+  const LINE = 'rgba(201,169,110,0.28)'; // antique-gold hairline
+  const GOLD = '#c9a96e';    // muted gold accent
+  const CREAM = '#ece5d4';   // parchment text
+  const MUTED = '#9a957f';   // soft muted text
+  const SERIF = "Georgia, 'Times New Roman', Times, serif";
 
-        <div class="section">
-          <div class="section-title">Ceremony Attendance</div>
-          <p><span class="label">Will you be attending?</span> <span class="value">${escHtml(ceremony)}</span></p>
-        </div>
-  `;
+  const lblStyle = `font-family:${SERIF};font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:${GOLD};margin:0 0 8px;`;
+  const valStyle = `font-family:${SERIF};font-size:16px;line-height:1.55;color:${CREAM};margin:0;`;
+  const metaStyle = `font-family:${SERIF};font-size:13px;line-height:1.5;color:${MUTED};margin:0;`;
 
-  // Add attendee information
+  // A divider-topped section block.
+  function section(inner) {
+    return `<tr><td style="padding:24px 36px;border-top:1px solid ${LINE};">${inner}</td></tr>`;
+  }
+
+  const attendingNicely = (ceremony === 'No')
+    ? 'Regretfully unable to attend'
+    : (ceremony === 'Yes' ? 'Joyfully attending' : escHtml(ceremony));
+
+  // ---- Guests ----
+  let guestsSection = '';
   if (attendees.length > 0) {
-    htmlBody += `
-        <div class="section">
-          <div class="section-title">Attendee Information</div>
-    `;
-
-    attendees.forEach((attendee, index) => {
-      htmlBody += `
-          <div class="attendee-info">
-            <div class="section-title">Attendee ${index + 1}</div>
-            <p><span class="label">Name:</span> <span class="value">${escHtml(attendee.name) || 'Not provided'}</span></p>
-            <p><span class="label">Email:</span> <span class="value">${escHtml(attendee.email) || 'Not provided'}</span></p>
-            <p><span class="label">Phone:</span> <span class="value">${escHtml(attendee.phone) || 'Not provided'}</span></p>
-      `;
-
-      if (attendee.dietary_restrictions) {
-        htmlBody += `
-            <p><span class="label">Dietary Restrictions:</span> <span class="value">${escHtml(attendee.dietary_restrictions)}</span></p>
-        `;
+    let inner = `<p style="${lblStyle}">${attendees.length > 1 ? 'The Party' : 'Guest'}</p>`;
+    attendees.forEach(function (a, i) {
+      inner += `<div style="margin-top:${i === 0 ? 2 : 20}px;">`;
+      inner += `<p style="font-family:${SERIF};font-size:19px;color:${CREAM};margin:0 0 5px;">${escHtml(a.name) || '—'}</p>`;
+      const contact = [];
+      if (a.email) contact.push(escHtml(a.email));
+      if (a.phone) contact.push(escHtml(a.phone));
+      if (contact.length) inner += `<p style="${metaStyle}">${contact.join(' &nbsp;&middot;&nbsp; ')}</p>`;
+      const extras = [];
+      if (a.dietary_restrictions) extras.push(['Dietary', escHtml(a.dietary_restrictions)]);
+      if (a.arrival || a.sleeping) {
+        if (a.arrival) extras.push(['Arrival', escHtml(a.arrival)]);
+        if (a.sleeping) extras.push(['Sleeping', escHtml(a.sleeping)]);
       }
-
-      const isStayingOvernight = !!(attendee.arrival || attendee.sleeping);
-      if (isStayingOvernight) {
-        htmlBody += `
-            <p><span class="label">Staying Overnight:</span> <span class="value">Yes</span></p>
-            ${attendee.arrival ? `<p><span class="label">Arrival Time:</span> <span class="value">${escHtml(attendee.arrival)}</span></p>` : ''}
-            ${attendee.sleeping ? `<p><span class="label">Sleeping Arrangement:</span> <span class="value">${escHtml(attendee.sleeping)}</span></p>` : ''}
-        `;
-      }
-
-      if (attendee.meals) {
-        htmlBody += `
-            <p><span class="label">Meal Preference:</span> <span class="value">${escHtml(attendee.meals)}</span></p>
-        `;
-      }
-
-      htmlBody += `
-          </div>
-      `;
+      if (a.meals) extras.push(['Meal', escHtml(a.meals)]);
+      extras.forEach(function (pair) {
+        inner += `<p style="${metaStyle}margin-top:6px;"><span style="color:${GOLD};">${pair[0]}</span> &nbsp;${pair[1]}</p>`;
+      });
+      inner += `</div>`;
     });
-
-    htmlBody += `
-        </div>
-    `;
+    guestsSection = section(inner);
   }
 
-  // Mailing address (for the physical invitation)
+  // ---- Mailing address ----
+  let addressSection = '';
   if (mailingAddress) {
-    htmlBody += `
-        <div class="section">
-          <div class="section-title">Mailing Address</div>
-          <p><span class="value">${escHtml(mailingAddress).replace(/\n/g, '<br>')}</span></p>
-          <p class="no-info">We'll use this to send your physical invitation.</p>
-        </div>
-    `;
+    addressSection = section(
+      `<p style="${lblStyle}">Mailing Address</p>` +
+      `<p style="${valStyle}">${escHtml(mailingAddress).replace(/\n/g, '<br>')}</p>` +
+      `<p style="font-family:${SERIF};font-size:12px;font-style:italic;color:${MUTED};margin:10px 0 0;">For your paper invitation.</p>`
+    );
   }
 
-  // Add additional information
+  // ---- Notes ----
+  let notesSection = '';
   if (songRequests || comments) {
-    htmlBody += `
-        <div class="section">
-          <div class="section-title">Additional Information</div>
-    `;
-
-    if (songRequests) {
-      htmlBody += `
-          <p><span class="label">Song Requests:</span> <span class="value">${escHtml(songRequests)}</span></p>
-      `;
-    }
-
-    if (comments) {
-      htmlBody += `
-          <p><span class="label">Comments:</span> <span class="value">${escHtml(comments)}</span></p>
-      `;
-    }
-
-    htmlBody += `
-        </div>
-    `;
+    let inner = '';
+    if (songRequests) inner += `<p style="${lblStyle}">A Song to Hear</p><p style="${valStyle}margin-bottom:${comments ? 16 : 0}px;">${escHtml(songRequests)}</p>`;
+    if (comments) inner += `<p style="${lblStyle}">A Note</p><p style="${valStyle}">${escHtml(comments)}</p>`;
+    notesSection = section(inner);
   }
 
-  htmlBody += `
-        <div class="section">
-          <p>We're so excited to celebrate with you! If you need to make any changes to your RSVP, please contact us at <a href="mailto:hunterandmadi9496@gmail.com">hunterandmadi9496@gmail.com</a> or call Madi at 801-458-2972.</p>
-        </div>
-      </div>
-      <div class="footer">
-        <p>This is an automated confirmation email. Please save this for your records.</p>
-        <p>Hunter & Madi Wedding<br>September 18-20, 2026</p>
-      </div>
-    </body>
-    </html>
-  `;
+  const closingLine = (ceremony === 'No')
+    ? "We'll miss you dearly — thank you for letting us know."
+    : "We can't wait to celebrate with you beneath the pines.";
+
+  const htmlBody = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="margin:0;padding:0;background:${BG};">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${escHtml(heading)} — Madi &amp; Hunter, September 19, 2026</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${BG};padding:32px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:${CARD};border:1px solid ${LINE};">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:44px 36px 36px;text-align:center;">
+              <p style="font-family:${SERIF};font-size:13px;letter-spacing:7px;text-transform:uppercase;color:${GOLD};margin:0 0 22px;">Madi &amp; Hunter</p>
+              <p style="font-family:${SERIF};font-size:30px;line-height:1.2;color:${CREAM};margin:0;">${escHtml(heading)}</p>
+              <p style="font-family:${SERIF};font-size:15px;font-style:italic;color:${MUTED};margin:14px 0 0;">${escHtml(subheading)}</p>
+              <p style="font-family:${SERIF};font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:${GOLD};margin:24px 0 0;">September 19, 2026 &nbsp;&middot;&nbsp; Mill Hollow, Utah</p>
+            </td>
+          </tr>
+
+          <!-- Ceremony -->
+          ${section(`<p style="${lblStyle}">Ceremony</p><p style="${valStyle}">${attendingNicely}</p>`)}
+
+          ${guestsSection}
+          ${addressSection}
+          ${notesSection}
+
+          <!-- Closing -->
+          ${section(`<p style="font-family:${SERIF};font-size:16px;font-style:italic;line-height:1.6;color:${CREAM};margin:0;text-align:center;">${closingLine}</p>`)}
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:30px 36px 38px;text-align:center;border-top:1px solid ${LINE};">
+              <p style="font-family:${SERIF};font-size:12px;line-height:1.6;color:${MUTED};margin:0;">Questions? <a href="mailto:hunterandmadi9496@gmail.com" style="color:${GOLD};text-decoration:none;">hunterandmadi9496@gmail.com</a><br>or call Madi at 801-458-2972</p>
+              <p style="font-family:${SERIF};font-size:11px;letter-spacing:4px;text-transform:uppercase;color:${GOLD};margin:18px 0 0;">M &middot; &amp; &middot; H</p>
+              <p style="font-family:${SERIF};font-size:10px;color:${MUTED};opacity:0.7;margin:14px 0 0;">Submitted ${submissionDate}</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
 
   return htmlBody;
 }
