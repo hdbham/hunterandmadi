@@ -51,6 +51,31 @@ const SHEET_NAME = 'RSVPs';
 // Couple's inbox — a copy of every RSVP record is sent here.
 const NOTIFY_EMAIL = 'hunterandmadi9496@gmail.com';
 
+// ---- Event details (edit these if the time/venue changes) ----
+const EVENT_TITLE = "Madi & Hunter's Wedding";
+const EVENT_WHEN = 'Saturday, September 19, 2026 · 4:00 PM';
+const EVENT_VENUE = 'YMCA Camp Mill Hollow';
+const EVENT_ADDRESS = '7480 S Mill Hollow Rd, Kamas, UT 84036';
+const EVENT_START = '20260919T160000'; // 4:00 PM, local
+const EVENT_END = '20260919T210000';   // 9:00 PM, local
+const EVENT_TZ = 'America/Denver';     // Mountain Time (Utah)
+const EVENT_DETAILS = "We can't wait to celebrate with you — ceremony and reception at YMCA Camp Mill Hollow.";
+
+/**
+ * Build a Google Calendar "add event" link with the wedding time + address.
+ */
+function googleCalendarUrl() {
+  const params = [
+    'action=TEMPLATE',
+    'text=' + encodeURIComponent(EVENT_TITLE),
+    'dates=' + EVENT_START + '/' + EVENT_END,
+    'ctz=' + encodeURIComponent(EVENT_TZ),
+    'location=' + encodeURIComponent(EVENT_VENUE + ', ' + EVENT_ADDRESS),
+    'details=' + encodeURIComponent(EVENT_DETAILS)
+  ];
+  return 'https://calendar.google.com/calendar/render?' + params.join('&');
+}
+
 /**
  * Handle GET requests (for testing/verification)
  */
@@ -318,6 +343,18 @@ function buildRsvpHtml(data, heading, subheading, detailed) {
     ? 'Regretfully unable to attend'
     : (ceremony === 'Yes' ? 'Joyfully attending' : escHtml(ceremony));
 
+  // ---- The celebration + add-to-calendar (only when attending) ----
+  let calendarSection = '';
+  if (ceremony !== 'No') {
+    const calUrl = googleCalendarUrl();
+    calendarSection = section(
+      `<p style="${lblStyle}">The Celebration</p>` +
+      `<p style="${valStyle}">${escHtml(EVENT_WHEN)}</p>` +
+      `<p style="${metaStyle}margin-top:6px;">${escHtml(EVENT_VENUE)}<br>${escHtml(EVENT_ADDRESS)}</p>` +
+      `<p style="margin:20px 0 0;"><a href="${calUrl}" style="display:inline-block;font-family:${SERIF};font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#1c2413;background:${GOLD};padding:13px 28px;text-decoration:none;">Add to Calendar</a></p>`
+    );
+  }
+
   // ---- Guests ----
   let guestsSection = '';
   if (attendees.length > 0) {
@@ -395,6 +432,7 @@ function buildRsvpHtml(data, heading, subheading, detailed) {
           <!-- Ceremony -->
           ${section(`<p style="${lblStyle}">Ceremony</p><p style="${valStyle}">${attendingNicely}</p>`)}
 
+          ${calendarSection}
           ${guestsSection}
           ${addressSection}
           ${notesSection}
