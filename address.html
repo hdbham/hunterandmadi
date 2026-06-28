@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Your Address — Madi &amp; Hunter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Crimson Text', Georgia, serif;
+      background: #14180e;
+      color: #232a1c;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: #fffdf8;
+      border: 1px solid #d8cfb8;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .head {
+      background: #2c3a1c;
+      color: #f6f1e3;
+      text-align: center;
+      padding: 40px 32px 34px;
+    }
+    .wordmark {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 13px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #d8b66a;
+      margin-bottom: 16px;
+    }
+    .head h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 400;
+      font-size: 28px;
+      line-height: 1.25;
+    }
+    .head p { font-style: italic; color: #cdc4ab; margin-top: 12px; font-size: 16px; }
+    .body { padding: 30px 36px 36px; }
+    label {
+      display: block;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #5a5135;
+      margin: 18px 0 7px;
+    }
+    label .req { color: #9a3b1d; }
+    input, textarea {
+      width: 100%;
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 17px;
+      color: #232a1c;
+      background: #fff;
+      border: 1px solid #c9bfa3;
+      border-radius: 3px;
+      padding: 11px 13px;
+    }
+    input:focus, textarea:focus { outline: none; border-color: #7d6321; box-shadow: 0 0 0 2px rgba(125,99,33,0.18); }
+    textarea { resize: vertical; min-height: 84px; }
+    .help { font-size: 14px; color: #6b6450; font-style: italic; margin-top: 6px; }
+    button {
+      width: 100%;
+      margin-top: 26px;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #f8f4e8;
+      background: #2c3a1c;
+      border: none;
+      border-radius: 3px;
+      padding: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #38491f; }
+    button:disabled { opacity: 0.6; cursor: default; }
+    .msg { margin-top: 18px; text-align: center; font-size: 16px; display: none; }
+    .msg.error { display: block; color: #9a3b1d; }
+    .msg.success { display: block; color: #2c3a1c; }
+    .thanks { display: none; text-align: center; padding: 8px 0 4px; }
+    .thanks h2 { font-family: 'Libre Baskerville', serif; font-weight: 400; font-size: 24px; color: #2c3a1c; margin-bottom: 12px; }
+    .thanks p { font-size: 17px; line-height: 1.6; color: #3a4230; }
+    .foot { text-align: center; font-size: 13px; color: #6b6450; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <div class="wordmark">Madi &amp; Hunter</div>
+      <h1>Share Your Mailing Address</h1>
+      <p>So we can send your invitation</p>
+    </div>
+    <div class="body">
+      <form id="addressForm">
+        <label for="name">Full name(s) <span class="req">*</span></label>
+        <input type="text" id="name" name="name" required autocomplete="name">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email">
+        <div class="help">Optional — helps us match you to your RSVP.</div>
+
+        <label for="address">Mailing address <span class="req">*</span></label>
+        <textarea id="address" name="address" rows="3" required placeholder="Street, city, state, ZIP" autocomplete="street-address"></textarea>
+
+        <button type="submit" id="submitBtn">Send My Address</button>
+        <div class="msg" id="msg"></div>
+      </form>
+
+      <div class="thanks" id="thanks">
+        <h2>Thank you!</h2>
+        <p>We've got your address — a paper invitation is on its way. We can't wait to celebrate with you.</p>
+      </div>
+
+      <div class="foot">Questions? Email hunterandmadi9496@gmail.com or call Madi at 801-458-2972</div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxUioEDO3Dh1czyvyLBTMYTQPCKkMiQrmU2N1gHzolWjGzsI2rXMHaadtXXV5Eh_ZO_/exec';
+    const form = document.getElementById('addressForm');
+    const msg = document.getElementById('msg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      msg.className = 'msg';
+      if (!name || !address) {
+        msg.className = 'msg error';
+        msg.textContent = 'Please enter your name and mailing address.';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      const payload = {
+        type: 'address',
+        name: name,
+        email: email,
+        mailing_address: address,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        form.style.display = 'none';
+        document.getElementById('thanks').style.display = 'block';
+      } catch (err) {
+        msg.className = 'msg error';
+        msg.textContent = 'Something went wrong — please try again, or email us your address.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send My Address';
+      }
+    });
+  </script>
+</body>
+</html>

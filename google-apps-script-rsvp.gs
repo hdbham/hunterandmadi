@@ -101,6 +101,24 @@ function doPost(e) {
     })).setMimeType(ContentService.MimeType.JSON);
   }
 
+  // Address-only submission from the standalone address page (address.html).
+  if (data && data.type === 'address') {
+    try {
+      writeAddressEntry(data);
+    } catch (addrError) {
+      Logger.log('Error writing address entry: ' + addrError.toString());
+    }
+    try {
+      notifyAddressEntry(data);
+    } catch (notifyError) {
+      Logger.log('Error notifying address entry: ' + notifyError.toString());
+    }
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true,
+      message: 'Address received'
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+
   // 1) Write to the sheet — isolated so a sheet error can't block emails.
   try {
     writeToSheet(data);
@@ -206,6 +224,47 @@ function writeToSheet(data) {
       sheet.appendRow(rowFor(attendee, index));
     });
   }
+}
+
+/**
+ * Append an address-only submission to the "Addresses" tab.
+ */
+function writeAddressEntry(data) {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('Addresses');
+  if (!sheet) {
+    sheet = ss.insertSheet('Addresses');
+    const headers = ['Timestamp', 'Name', 'Email', 'Mailing Address'];
+    const r = sheet.getRange(1, 1, 1, headers.length);
+    r.setValues([headers]);
+    r.setFontWeight('bold');
+    r.setBackground('#2c3a1c');
+    r.setFontColor('#f6f1e3');
+  }
+  sheet.appendRow([
+    data.timestamp || new Date().toISOString(),
+    (data.name || '').toString().trim(),
+    (data.email || '').toString().trim(),
+    (data.mailing_address || '').toString().trim()
+  ]);
+}
+
+/**
+ * Notify the couple when someone submits their address via the address page.
+ */
+function notifyAddressEntry(data) {
+  const name = (data.name || 'Someone').toString().trim();
+  const addr = (data.mailing_address || '').toString().trim();
+  const email = (data.email || '').toString().trim();
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    replyTo: NOTIFY_EMAIL,
+    subject: 'New mailing address: ' + name,
+    htmlBody:
+      '<p style="font-family:Georgia,serif;font-size:16px;color:#232a1c;"><strong>' + escHtml(name) + '</strong>' +
+      (email ? ' (' + escHtml(email) + ')' : '') + ' shared their mailing address:</p>' +
+      '<p style="font-family:Georgia,serif;font-size:16px;color:#232a1c;white-space:pre-line;">' + escHtml(addr) + '</p>'
+  });
 }
 
 /**
@@ -575,10 +634,10 @@ function buildAddressRequestHtml_() {
         </td></tr>
         <tr><td style="padding:34px 40px 8px;">
           <p style="font-family:${SERIF};font-size:17px;line-height:1.7;color:#232a1c;margin:0 0 18px;">We're so excited to celebrate with you — and we'd love to mail you a proper invitation.</p>
-          <p style="font-family:${SERIF};font-size:17px;line-height:1.7;color:#232a1c;margin:0;">Could you <strong style="color:#7d6321;">reply to this email with your mailing address</strong> (street, city, state, ZIP)? That's all we need.</p>
+          <p style="font-family:${SERIF};font-size:17px;line-height:1.7;color:#232a1c;margin:0;">Just <strong style="color:#7d6321;">tap below to share your mailing address</strong> — it only takes a moment. (Or simply reply to this email with it.)</p>
         </td></tr>
         <tr><td style="padding:24px 40px 34px;text-align:center;">
-          <a href="https://madiandhunter.com" style="display:inline-block;font-family:${SERIF};font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#f8f4e8;background:#2c3a1c;padding:14px 30px;text-decoration:none;">View Details &amp; RSVP</a>
+          <a href="https://madiandhunter.com/address.html" style="display:inline-block;font-family:${SERIF};font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#f8f4e8;background:#2c3a1c;padding:14px 30px;text-decoration:none;">Share Your Address</a>
         </td></tr>
         <tr><td style="padding:24px 40px 34px;text-align:center;border-top:1px solid #e6dec9;">
           <p style="font-family:${SERIF};font-size:15px;font-style:italic;color:#2c3a1c;margin:0 0 12px;">With love,<br>Madi &amp; Hunter</p>
