@@ -42,6 +42,9 @@ const RSVP_HEADERS = [
 const SPREADSHEET_ID = '1FIo0I4yuqImu3scbJRxmPEKOiDj8qISwsfl1LtCcK2A';
 const SHEET_NAME = 'RSVPs';
 
+// Couple's inbox — a copy of every RSVP record is sent here.
+const NOTIFY_EMAIL = 'hunterandmadi9496@gmail.com';
+
 /**
  * Handle GET requests (for testing/verification)
  */
@@ -138,6 +141,14 @@ function doPost(e) {
       }
     }
 
+    // Always notify the couple with a copy of the record
+    try {
+      sendNotificationEmail(data);
+    } catch (notifyError) {
+      // Log error but don't fail the submission
+      Logger.log('Error sending notification email: ' + notifyError.toString());
+    }
+
     // Return success response
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
@@ -180,9 +191,39 @@ function setupSheet() {
 }
 
 /**
- * Send confirmation email receipt with all selections
+ * Send the guest their confirmation receipt.
  */
 function sendReceiptEmail(data, recipientEmail) {
+  MailApp.sendEmail({
+    to: recipientEmail,
+    subject: 'RSVP Confirmation - Hunter & Madi Wedding',
+    htmlBody: buildRsvpHtml(data, 'RSVP Confirmation', 'Thank you for your RSVP!')
+  });
+  Logger.log('Receipt email sent to: ' + recipientEmail);
+}
+
+/**
+ * Send the couple a copy of the record for every submission.
+ */
+function sendNotificationEmail(data) {
+  const attendees = data.attendees || [];
+  const names = attendees.map(function (a) { return a.name; }).filter(Boolean).join(', ');
+  const who = names || ((data.contact && data.contact.email) || 'someone');
+  const attending = (data.ceremony === 'No') ? 'Regrets' : 'Attending';
+  const subject = 'New RSVP (' + attending + '): ' + who;
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: subject,
+    htmlBody: buildRsvpHtml(data, 'New RSVP Received', who)
+  });
+  Logger.log('Notification email sent to: ' + NOTIFY_EMAIL);
+}
+
+/**
+ * Build the shared RSVP record HTML used by both the guest receipt and the
+ * couple's notification.
+ */
+function buildRsvpHtml(data, heading, subheading) {
   const ceremony = data.ceremony || 'Not specified';
   const attendees = data.attendees || [];
   const songRequests = (data.additional && data.additional.song_requests) || '';
@@ -201,9 +242,6 @@ function sendReceiptEmail(data, recipientEmail) {
     hour: '2-digit',
     minute: '2-digit'
   });
-
-  // Build email subject
-  const subject = 'RSVP Confirmation - Hunter & Madi Wedding';
 
   // Build email body HTML
   let htmlBody = `
@@ -272,8 +310,8 @@ function sendReceiptEmail(data, recipientEmail) {
     </head>
     <body>
       <div class="header">
-        <h1>RSVP Confirmation</h1>
-        <p>Thank you for your RSVP!</p>
+        <h1>${escHtml(heading)}</h1>
+        <p>${escHtml(subheading)}</p>
       </div>
       <div class="content">
         <div class="section">
@@ -382,14 +420,7 @@ function sendReceiptEmail(data, recipientEmail) {
     </html>
   `;
 
-  // Send email
-  MailApp.sendEmail({
-    to: recipientEmail,
-    subject: subject,
-    htmlBody: htmlBody
-  });
-
-  Logger.log('Receipt email sent to: ' + recipientEmail);
+  return htmlBody;
 }
 
 /**
