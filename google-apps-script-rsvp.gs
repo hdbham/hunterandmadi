@@ -94,9 +94,9 @@ function doPost(e) {
         contactEmail,
         contactPhone,
         ceremony,
-        '', '', '', '', '', '', '', '', '', '',
-        mailingAddress, // Mailing Address (column P)
-        '', '', ''
+        '', '', '', '', '', '', '', '', '', '', '', // cols 5-15 (Attendee Name .. Sleeping Arrangement)
+        mailingAddress, // Mailing Address (column P / 16)
+        '', '', '' // Meal Preference, Song Requests, Comments
       ];
       sheet.appendRow(row);
     } else {
