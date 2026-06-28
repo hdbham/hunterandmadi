@@ -17,6 +17,9 @@
 
 // Single source of truth for the sheet layout. Order matters: rows are written
 // by column position, so do not reorder existing columns — only append.
+// Default header row, only used when the sheet is created from scratch. For an
+// existing sheet we read its actual headers and write by name, so column ORDER
+// here does not matter — values are matched to whatever columns the sheet has.
 const RSVP_HEADERS = [
   'Timestamp',
   'Contact Email',
@@ -28,16 +31,19 @@ const RSVP_HEADERS = [
   'Emergency Contact Name',
   'Emergency Contact Phone',
   'Dietary Restrictions',
-  'Allergies',
-  'Accessibility Needs',
+  'Health Information',
   'Staying Overnight',
   'Arrival Time',
   'Sleeping Arrangement',
-  'Mailing Address',
+  'Packing List',
   'Meal Preference',
   'Song Requests',
-  'Comments'
+  'Comments',
+  'Mailing Address'
 ];
+
+// The column that must always exist for physical invitations.
+const MAILING_ADDRESS_HEADER = 'Mailing Address';
 
 const SPREADSHEET_ID = '1FIo0I4yuqImu3scbJRxmPEKOiDj8qISwsfl1LtCcK2A';
 const SHEET_NAME = 'RSVPs';
@@ -71,7 +77,11 @@ function doPost(e) {
       writeHeaderRow(sheet);
     }
 
-    // Write one row per attendee
+    // Make sure the Mailing Address column exists, then read the sheet's ACTUAL
+    // header order so we can write each value to the right column by name.
+    ensureColumn(sheet, MAILING_ADDRESS_HEADER);
+    const headers = getHeaders(sheet);
+
     const attendees = data.attendees || [];
     const timestamp = data.timestamp || new Date().toISOString();
     const contactEmail = data.contact && data.contact.email ? data.contact.email : '';
@@ -87,47 +97,45 @@ function doPost(e) {
       ''
     ).toString().trim();
 
+    // Build a row that matches the sheet's real header order. Fields that only
+    // belong on the first row (household-level) are blank for index > 0.
+    function rowFor(attendee, index) {
+      const a = attendee || {};
+      const isStayingOvernight = !!(a.arrival || a.sleeping);
+      const byHeader = {
+        'Timestamp': timestamp,
+        'Contact Email': contactEmail,
+        'Contact Phone': contactPhone,
+        'Ceremony Attendance': ceremony,
+        'Attendee Name': a.name || '',
+        'Attendee Email': a.email || '',
+        'Attendee Phone': a.phone || '',
+        'Emergency Contact Name': a.emergency_contact_name || '',
+        'Emergency Contact Phone': a.emergency_contact_phone || '',
+        'Dietary Restrictions': a.dietary_restrictions || '',
+        'Health Information': a.health_information || a.health || a.allergies || a.accessibility || '',
+        'Allergies': a.allergies || '',
+        'Accessibility Needs': a.accessibility || '',
+        'Staying Overnight': isStayingOvernight ? 'Yes' : 'No',
+        'Arrival Time': a.arrival || '',
+        'Sleeping Arrangement': a.sleeping || '',
+        'Packing List': a.packing_list || '',
+        'Meal Preference': a.meals || '',
+        'Song Requests': index === 0 ? songRequests : '',
+        'Comments': index === 0 ? comments : '',
+        'Mailing Address': index === 0 ? mailingAddress : ''
+      };
+      return headers.map(function (h) {
+        return Object.prototype.hasOwnProperty.call(byHeader, h) ? byHeader[h] : '';
+      });
+    }
+
     if (attendees.length === 0) {
-      // No attendees - just write contact info
-      const row = [
-        timestamp,
-        contactEmail,
-        contactPhone,
-        ceremony,
-        '', '', '', '', '', '', '', '', '', '', '', // cols 5-15 (Attendee Name .. Sleeping Arrangement)
-        mailingAddress, // Mailing Address (column P / 16)
-        '', '', '' // Meal Preference, Song Requests, Comments
-      ];
-      sheet.appendRow(row);
+      // No attendees (declined) - just contact info + household fields
+      sheet.appendRow(rowFor({}, 0));
     } else {
-      // Write one row per attendee
-      attendees.forEach((attendee, index) => {
-        // Staying overnight if any overnight detail is present
-        const isStayingOvernight = !!(attendee.arrival || attendee.sleeping);
-
-        const row = [
-          timestamp,
-          contactEmail,
-          contactPhone,
-          ceremony,
-          attendee.name || '',
-          attendee.email || '',
-          attendee.phone || '',
-          attendee.emergency_contact_name || '',
-          attendee.emergency_contact_phone || '',
-          attendee.dietary_restrictions || '',
-          attendee.allergies || '',
-          attendee.accessibility || '',
-          isStayingOvernight ? 'Yes' : 'No',
-          attendee.arrival || '',
-          attendee.sleeping || '',
-          index === 0 ? mailingAddress : '', // Mailing Address — household, on first row only
-          attendee.meals || '',
-          index === 0 ? songRequests : '', // Only include once
-          index === 0 ? comments : '' // Only include once
-        ];
-
-        sheet.appendRow(row);
+      attendees.forEach(function (attendee, index) {
+        sheet.appendRow(rowFor(attendee, index));
       });
     }
 
@@ -165,7 +173,7 @@ function doPost(e) {
 }
 
 /**
- * Write/refresh the formatted header row. Does NOT touch data rows.
+ * Write the default header row for a brand-new sheet. Only used at creation.
  */
 function writeHeaderRow(sheet) {
   const range = sheet.getRange(1, 1, 1, RSVP_HEADERS.length);
@@ -176,18 +184,44 @@ function writeHeaderRow(sheet) {
 }
 
 /**
- * Run this once after deploying to refresh the header row.
- * SAFE: only overwrites row 1 — it never clears or shifts your data.
+ * Read the sheet's current header row (row 1), trimmed.
+ */
+function getHeaders(sheet) {
+  const lastCol = sheet.getLastColumn();
+  if (lastCol < 1) return [];
+  return sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(function (h) {
+    return String(h).trim();
+  });
+}
+
+/**
+ * Ensure a column with the given header exists. If missing, append it as a new
+ * column at the end. NEVER reorders or relabels existing columns or data.
+ */
+function ensureColumn(sheet, header) {
+  const headers = getHeaders(sheet);
+  if (headers.indexOf(header) !== -1) return;
+  const col = headers.length + 1;
+  const cell = sheet.getRange(1, col);
+  cell.setValue(header);
+  cell.setFontWeight('bold');
+  cell.setBackground('#344c12');
+  cell.setFontColor('#FFBB88');
+}
+
+/**
+ * Run once after deploying. SAFE: only adds the Mailing Address column if it's
+ * missing — it never clears, reorders, or relabels existing columns or data.
  */
 function setupSheet() {
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = spreadsheet.insertSheet(SHEET_NAME);
+    writeHeaderRow(sheet);
   }
-  writeHeaderRow(sheet);
-  Logger.log('Header row refreshed (' + sheet.getLastRow() + ' total rows, data untouched).');
-  Logger.log('Spreadsheet URL: ' + spreadsheet.getUrl());
+  ensureColumn(sheet, MAILING_ADDRESS_HEADER);
+  Logger.log('Ensured "' + MAILING_ADDRESS_HEADER + '" column. Current headers: ' + getHeaders(sheet).join(' | '));
 }
 
 /**
