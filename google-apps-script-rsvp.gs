@@ -89,111 +89,122 @@ function doGet(e) {
 }
 
 function doPost(e) {
+  // Parse the payload first. Everything below is isolated so one failure
+  // (e.g. the sheet) can never prevent another step (e.g. the emails).
+  let data;
   try {
-    // Parse the JSON data from the form
-    const data = JSON.parse(e.postData.contents);
-
-    const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-
-    // Get or create the sheet (write headers only when first created)
-    let sheet = spreadsheet.getSheetByName(SHEET_NAME);
-    if (!sheet) {
-      sheet = spreadsheet.insertSheet(SHEET_NAME);
-      writeHeaderRow(sheet);
-    }
-
-    // Make sure the Mailing Address column exists, then read the sheet's ACTUAL
-    // header order so we can write each value to the right column by name.
-    ensureColumn(sheet, MAILING_ADDRESS_HEADER);
-    const headers = getHeaders(sheet);
-
-    const attendees = data.attendees || [];
-    const timestamp = data.timestamp || new Date().toISOString();
-    const contactEmail = data.contact && data.contact.email ? data.contact.email : '';
-    const contactPhone = data.contact && data.contact.phone ? data.contact.phone : '';
-    const ceremony = data.ceremony || '';
-    const songRequests = (data.additional && data.additional.song_requests) || '';
-    const comments = (data.additional && data.additional.comments) || '';
-    // Household mailing address for the paper invite. Prefer the dedicated field;
-    // fall back to the legacy packing_list key used by older clients.
-    const mailingAddress = (
-      data.mailing_address ||
-      (attendees[0] && attendees[0].packing_list) ||
-      ''
-    ).toString().trim();
-
-    // Build a row that matches the sheet's real header order. Fields that only
-    // belong on the first row (household-level) are blank for index > 0.
-    function rowFor(attendee, index) {
-      const a = attendee || {};
-      const isStayingOvernight = !!(a.arrival || a.sleeping);
-      const byHeader = {
-        'Timestamp': timestamp,
-        'Contact Email': contactEmail,
-        'Contact Phone': contactPhone,
-        'Ceremony Attendance': ceremony,
-        'Attendee Name': a.name || '',
-        'Attendee Email': a.email || '',
-        'Attendee Phone': a.phone || '',
-        'Emergency Contact Name': a.emergency_contact_name || '',
-        'Emergency Contact Phone': a.emergency_contact_phone || '',
-        'Dietary Restrictions': a.dietary_restrictions || '',
-        'Health Information': a.health_information || a.health || a.allergies || a.accessibility || '',
-        'Allergies': a.allergies || '',
-        'Accessibility Needs': a.accessibility || '',
-        'Staying Overnight': isStayingOvernight ? 'Yes' : 'No',
-        'Arrival Time': a.arrival || '',
-        'Sleeping Arrangement': a.sleeping || '',
-        'Packing List': a.packing_list || '',
-        'Meal Preference': a.meals || '',
-        'Song Requests': index === 0 ? songRequests : '',
-        'Comments': index === 0 ? comments : '',
-        'Mailing Address': index === 0 ? mailingAddress : ''
-      };
-      return headers.map(function (h) {
-        return Object.prototype.hasOwnProperty.call(byHeader, h) ? byHeader[h] : '';
-      });
-    }
-
-    if (attendees.length === 0) {
-      // No attendees (declined) - just contact info + household fields
-      sheet.appendRow(rowFor({}, 0));
-    } else {
-      attendees.forEach(function (attendee, index) {
-        sheet.appendRow(rowFor(attendee, index));
-      });
-    }
-
-    // Send confirmation email receipt if email is provided
-    if (contactEmail && contactEmail.trim() !== '') {
-      try {
-        sendReceiptEmail(data, contactEmail);
-      } catch (emailError) {
-        // Log error but don't fail the submission
-        Logger.log('Error sending receipt email: ' + emailError.toString());
-      }
-    }
-
-    // Always notify the couple with a copy of the record
-    try {
-      sendNotificationEmail(data);
-    } catch (notifyError) {
-      // Log error but don't fail the submission
-      Logger.log('Error sending notification email: ' + notifyError.toString());
-    }
-
-    // Return success response
-    return ContentService.createTextOutput(JSON.stringify({
-      success: true,
-      message: 'RSVP submitted successfully'
-    })).setMimeType(ContentService.MimeType.JSON);
-
-  } catch (error) {
-    // Return error response
+    data = JSON.parse(e.postData.contents);
+  } catch (parseError) {
     return ContentService.createTextOutput(JSON.stringify({
       success: false,
-      error: error.toString()
+      error: 'Invalid payload: ' + parseError.toString()
     })).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  // 1) Write to the sheet — isolated so a sheet error can't block emails.
+  try {
+    writeToSheet(data);
+  } catch (sheetError) {
+    Logger.log('Error writing to sheet: ' + sheetError.toString());
+  }
+
+  // 2) Guest receipt — isolated.
+  const contactEmail = data.contact && data.contact.email ? data.contact.email : '';
+  if (contactEmail && contactEmail.trim() !== '') {
+    try {
+      sendReceiptEmail(data, contactEmail);
+    } catch (receiptError) {
+      Logger.log('Error sending receipt email: ' + receiptError.toString());
+    }
+  }
+
+  // 3) Couple notification — isolated, always attempted.
+  try {
+    sendNotificationEmail(data);
+  } catch (notifyError) {
+    Logger.log('Error sending notification email: ' + notifyError.toString());
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    message: 'RSVP submitted successfully'
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Append the submission to the sheet, writing each value to the column that
+ * matches its header name (so column order in the sheet doesn't matter).
+ */
+function writeToSheet(data) {
+  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+  // Get or create the sheet (write headers only when first created)
+  let sheet = spreadsheet.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(SHEET_NAME);
+    writeHeaderRow(sheet);
+  }
+
+  // Make sure the Mailing Address column exists, then read the sheet's ACTUAL
+  // header order so we can write each value to the right column by name.
+  ensureColumn(sheet, MAILING_ADDRESS_HEADER);
+  const headers = getHeaders(sheet);
+
+  const attendees = data.attendees || [];
+  const timestamp = data.timestamp || new Date().toISOString();
+  const contactEmail = data.contact && data.contact.email ? data.contact.email : '';
+  const contactPhone = data.contact && data.contact.phone ? data.contact.phone : '';
+  const ceremony = data.ceremony || '';
+  const songRequests = (data.additional && data.additional.song_requests) || '';
+  const comments = (data.additional && data.additional.comments) || '';
+  // Household mailing address for the paper invite. Prefer the dedicated field;
+  // fall back to the legacy packing_list key used by older clients.
+  const mailingAddress = (
+    data.mailing_address ||
+    (attendees[0] && attendees[0].packing_list) ||
+    ''
+  ).toString().trim();
+
+  // Build a row that matches the sheet's real header order. Fields that only
+  // belong on the first row (household-level) are blank for index > 0.
+  function rowFor(attendee, index) {
+    const a = attendee || {};
+    const isStayingOvernight = !!(a.arrival || a.sleeping);
+    const byHeader = {
+      'Timestamp': timestamp,
+      'Contact Email': contactEmail,
+      'Contact Phone': contactPhone,
+      'Ceremony Attendance': ceremony,
+      'Attendee Name': a.name || '',
+      'Attendee Email': a.email || '',
+      'Attendee Phone': a.phone || '',
+      'Emergency Contact Name': a.emergency_contact_name || '',
+      'Emergency Contact Phone': a.emergency_contact_phone || '',
+      'Dietary Restrictions': a.dietary_restrictions || '',
+      'Health Information': a.health_information || a.health || a.allergies || a.accessibility || '',
+      'Allergies': a.allergies || '',
+      'Accessibility Needs': a.accessibility || '',
+      'Staying Overnight': isStayingOvernight ? 'Yes' : 'No',
+      'Arrival Time': a.arrival || '',
+      'Sleeping Arrangement': a.sleeping || '',
+      'Packing List': a.packing_list || '',
+      'Meal Preference': a.meals || '',
+      'Song Requests': index === 0 ? songRequests : '',
+      'Comments': index === 0 ? comments : '',
+      'Mailing Address': index === 0 ? mailingAddress : ''
+    };
+    return headers.map(function (h) {
+      return Object.prototype.hasOwnProperty.call(byHeader, h) ? byHeader[h] : '';
+    });
+  }
+
+  if (attendees.length === 0) {
+    // No attendees (declined) - just contact info + household fields
+    sheet.appendRow(rowFor({}, 0));
+  } else {
+    attendees.forEach(function (attendee, index) {
+      sheet.appendRow(rowFor(attendee, index));
+    });
   }
 }
 
@@ -339,9 +350,7 @@ function buildRsvpHtml(data, heading, subheading, detailed) {
     return `<tr><td style="padding:24px 36px;border-top:1px solid ${LINE};">${inner}</td></tr>`;
   }
 
-  const attendingNicely = (ceremony === 'No')
-    ? 'Regretfully unable to attend'
-    : (ceremony === 'Yes' ? 'Joyfully attending' : escHtml(ceremony));
+  const attendingNicely = escHtml(ceremony || 'Not specified');
 
   // ---- The celebration + add-to-calendar (only when attending) ----
   let calendarSection = '';
