@@ -479,6 +479,118 @@ function stayWindow(arrival) {
 }
 
 /**
+ * One-off: email the guest list asking them to send their mailing address.
+ * Run this manually from the editor. Everyone is BCC'd (so guests don't see
+ * each other's emails); replies go to the couple's inbox.
+ */
+// Where the TEST address-request email goes (just you, for previewing).
+const ADDRESS_REQUEST_TEST_RECIPIENT = 'burninghamhunter@gmail.com';
+
+/**
+ * REAL SEND: emails everyone who RSVP'd but hasn't given a mailing address yet.
+ * Recipients are pulled live from the sheet, so no addresses live in this file.
+ * BCC'd for privacy; replies go to the couple inbox; a copy goes to NOTIFY_EMAIL.
+ */
+function emailAddressRequest() {
+  const recipients = getAddresslessRecipients_();
+  if (recipients.length === 0) {
+    Logger.log('No one is missing a mailing address — nothing to send.');
+    return;
+  }
+  sendAddressRequest_(recipients, false);
+  Logger.log('Address request sent (bcc) to ' + recipients.length + ' guest(s): ' + recipients.join(', '));
+}
+
+/**
+ * TEST SEND: sends the exact same email only to you, to preview it. Also logs
+ * how many real guests the live version would reach (without sending to them).
+ */
+function emailAddressRequestTest() {
+  sendAddressRequest_([ADDRESS_REQUEST_TEST_RECIPIENT], true);
+  const real = getAddresslessRecipients_();
+  Logger.log('TEST sent to ' + ADDRESS_REQUEST_TEST_RECIPIENT + '. Real send would reach ' + real.length + ' guest(s): ' + real.join(', '));
+}
+
+/**
+ * De-duped contact emails of households that have NOT provided a mailing address
+ * (the Mailing Address cell is blank across all of their rows). Read from the sheet.
+ */
+function getAddresslessRecipients_() {
+  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+  if (!sheet || sheet.getLastRow() < 2) return [];
+  const headers = getHeaders(sheet);
+  const emailCol = headers.indexOf('Contact Email');
+  const attEmailCol = headers.indexOf('Attendee Email');
+  const addrCol = headers.indexOf('Mailing Address');
+  const rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, headers.length).getValues();
+
+  const byEmail = {}; // lowercased email -> does any of their rows have an address?
+  rows.forEach(function (row) {
+    let email = emailCol >= 0 ? String(row[emailCol] || '').trim() : '';
+    if (!email && attEmailCol >= 0) email = String(row[attEmailCol] || '').trim();
+    email = email.toLowerCase();
+    if (email.indexOf('@') < 0) return;
+    const hasAddr = addrCol >= 0 && String(row[addrCol] || '').trim() !== '';
+    if (!(email in byEmail)) byEmail[email] = false;
+    if (hasAddr) byEmail[email] = true;
+  });
+
+  return Object.keys(byEmail).filter(function (e) { return !byEmail[e]; });
+}
+
+/**
+ * Build + send the address-request email. Test mode goes straight to you; real
+ * mode BCCs the recipients with a copy to the couple inbox.
+ */
+function sendAddressRequest_(recipients, isTest) {
+  const opts = {
+    replyTo: NOTIFY_EMAIL,
+    subject: (isTest ? '[TEST] ' : '') + "Madi & Hunter's Wedding — may we have your mailing address?",
+    htmlBody: buildAddressRequestHtml_()
+  };
+  if (isTest) {
+    opts.to = recipients[0];
+  } else {
+    opts.to = NOTIFY_EMAIL;
+    opts.bcc = recipients.join(',');
+  }
+  MailApp.sendEmail(opts);
+}
+
+/**
+ * Light, high-contrast version of the address-request email (dark text on ivory,
+ * forest-green header band). Pretty but easy to read.
+ */
+function buildAddressRequestHtml_() {
+  const SERIF = "Georgia, 'Times New Roman', Times, serif";
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#e7e2d4;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#e7e2d4;padding:32px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#fffdf8;border:1px solid #d8cfb8;">
+        <tr><td style="background:#2c3a1c;padding:38px 36px;text-align:center;">
+          <p style="font-family:${SERIF};font-size:13px;letter-spacing:6px;text-transform:uppercase;color:#d8b66a;margin:0 0 16px;">Madi &amp; Hunter</p>
+          <p style="font-family:${SERIF};font-size:27px;line-height:1.25;color:#f6f1e3;margin:0;">A paper invitation<br>is on its way</p>
+          <p style="font-family:${SERIF};font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#cdb277;margin:18px 0 0;">September 19, 2026 &nbsp;&middot;&nbsp; Mill Hollow, Utah</p>
+        </td></tr>
+        <tr><td style="padding:34px 40px 8px;">
+          <p style="font-family:${SERIF};font-size:17px;line-height:1.7;color:#232a1c;margin:0 0 18px;">We're so excited to celebrate with you — and we'd love to mail you a proper invitation.</p>
+          <p style="font-family:${SERIF};font-size:17px;line-height:1.7;color:#232a1c;margin:0;">Could you <strong style="color:#7d6321;">reply to this email with your mailing address</strong> (street, city, state, ZIP)? That's all we need.</p>
+        </td></tr>
+        <tr><td style="padding:24px 40px 34px;text-align:center;">
+          <a href="https://madiandhunter.com" style="display:inline-block;font-family:${SERIF};font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#f8f4e8;background:#2c3a1c;padding:14px 30px;text-decoration:none;">View Details &amp; RSVP</a>
+        </td></tr>
+        <tr><td style="padding:24px 40px 34px;text-align:center;border-top:1px solid #e6dec9;">
+          <p style="font-family:${SERIF};font-size:15px;font-style:italic;color:#2c3a1c;margin:0 0 12px;">With love,<br>Madi &amp; Hunter</p>
+          <p style="font-family:${SERIF};font-size:13px;color:#6b6450;margin:0;">Questions? Just reply, or call Madi at 801-458-2972</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+}
+
+/**
  * Escape user-supplied text for safe inclusion in HTML email.
  */
 function escHtml(text) {
