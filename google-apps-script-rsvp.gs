@@ -250,7 +250,7 @@ function sendReceiptEmail(data, recipientEmail) {
   MailApp.sendEmail({
     to: recipientEmail,
     subject: 'RSVP Confirmation - Hunter & Madi Wedding',
-    htmlBody: buildRsvpHtml(data, 'RSVP Confirmation', 'Thank you for your RSVP!')
+    htmlBody: buildRsvpHtml(data, 'RSVP Confirmation', 'Thank you for your RSVP!', false)
   });
   Logger.log('Receipt email sent to: ' + recipientEmail);
 }
@@ -267,7 +267,7 @@ function sendNotificationEmail(data) {
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
     subject: subject,
-    htmlBody: buildRsvpHtml(data, 'New RSVP Received', who)
+    htmlBody: buildRsvpHtml(data, 'New RSVP Received', who, true)
   });
   Logger.log('Notification email sent to: ' + NOTIFY_EMAIL);
 }
@@ -276,7 +276,7 @@ function sendNotificationEmail(data) {
  * Build the shared RSVP record HTML used by both the guest receipt and the
  * couple's notification.
  */
-function buildRsvpHtml(data, heading, subheading) {
+function buildRsvpHtml(data, heading, subheading, detailed) {
   const ceremony = data.ceremony || 'Not specified';
   const attendees = data.attendees || [];
   const songRequests = (data.additional && data.additional.song_requests) || '';
@@ -325,20 +325,22 @@ function buildRsvpHtml(data, heading, subheading) {
     attendees.forEach(function (a, i) {
       inner += `<div style="margin-top:${i === 0 ? 2 : 20}px;">`;
       inner += `<p style="font-family:${SERIF};font-size:19px;color:${CREAM};margin:0 0 5px;">${escHtml(a.name) || '—'}</p>`;
-      const contact = [];
-      if (a.email) contact.push(escHtml(a.email));
-      if (a.phone) contact.push(escHtml(a.phone));
-      if (contact.length) inner += `<p style="${metaStyle}">${contact.join(' &nbsp;&middot;&nbsp; ')}</p>`;
-      const extras = [];
-      if (a.dietary_restrictions) extras.push(['Dietary', escHtml(a.dietary_restrictions)]);
-      if (a.arrival || a.sleeping) {
-        if (a.arrival) extras.push(['Arrival', escHtml(a.arrival)]);
-        if (a.sleeping) extras.push(['Sleeping', escHtml(a.sleeping)]);
+      if (detailed) {
+        const contact = [];
+        if (a.email) contact.push(escHtml(a.email));
+        if (a.phone) contact.push(escHtml(a.phone));
+        if (contact.length) inner += `<p style="${metaStyle}">${contact.join(' &nbsp;&middot;&nbsp; ')}</p>`;
+        const extras = [];
+        if (a.dietary_restrictions) extras.push(['Dietary', escHtml(a.dietary_restrictions)]);
+        if (a.arrival || a.sleeping) {
+          if (a.arrival) extras.push(['Arrival', escHtml(a.arrival)]);
+          if (a.sleeping) extras.push(['Sleeping', escHtml(a.sleeping)]);
+        }
+        if (a.meals) extras.push(['Meal', escHtml(a.meals)]);
+        extras.forEach(function (pair) {
+          inner += `<p style="${metaStyle}margin-top:6px;"><span style="color:${GOLD};">${pair[0]}</span> &nbsp;${pair[1]}</p>`;
+        });
       }
-      if (a.meals) extras.push(['Meal', escHtml(a.meals)]);
-      extras.forEach(function (pair) {
-        inner += `<p style="${metaStyle}margin-top:6px;"><span style="color:${GOLD};">${pair[0]}</span> &nbsp;${pair[1]}</p>`;
-      });
       inner += `</div>`;
     });
     guestsSection = section(inner);
@@ -356,7 +358,7 @@ function buildRsvpHtml(data, heading, subheading) {
 
   // ---- Notes ----
   let notesSection = '';
-  if (songRequests || comments) {
+  if (detailed && (songRequests || comments)) {
     let inner = '';
     if (songRequests) inner += `<p style="${lblStyle}">A Song to Hear</p><p style="${valStyle}margin-bottom:${comments ? 16 : 0}px;">${escHtml(songRequests)}</p>`;
     if (comments) inner += `<p style="${lblStyle}">A Note</p><p style="${valStyle}">${escHtml(comments)}</p>`;
