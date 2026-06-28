@@ -369,11 +369,8 @@ function buildRsvpHtml(data, heading, subheading, detailed) {
         if (contact.length) inner += `<p style="${metaStyle}">${contact.join(' &nbsp;&middot;&nbsp; ')}</p>`;
         const extras = [];
         if (a.dietary_restrictions) extras.push(['Dietary', escHtml(a.dietary_restrictions)]);
-        if (a.arrival || a.sleeping) {
-          if (a.arrival) extras.push(['Arrival', escHtml(a.arrival)]);
-          if (a.sleeping) extras.push(['Sleeping', escHtml(a.sleeping)]);
-        }
-        if (a.meals) extras.push(['Meal', escHtml(a.meals)]);
+        if (a.arrival) extras.push(['Staying', stayWindow(a.arrival)]);
+        if (a.sleeping) extras.push(['Sleeping', escHtml(a.sleeping)]);
         extras.forEach(function (pair) {
           inner += `<p style="${metaStyle}margin-top:6px;"><span style="color:${GOLD};">${pair[0]}</span> &nbsp;${pair[1]}</p>`;
         });
@@ -430,7 +427,7 @@ function buildRsvpHtml(data, heading, subheading, detailed) {
           </tr>
 
           <!-- Ceremony -->
-          ${section(`<p style="${lblStyle}">Ceremony</p><p style="${valStyle}">${attendingNicely}</p>`)}
+          ${section(`<p style="${lblStyle}">Attending Ceremony?</p><p style="${valStyle}">${attendingNicely}</p>`)}
 
           ${calendarSection}
           ${guestsSection}
@@ -457,6 +454,19 @@ function buildRsvpHtml(data, heading, subheading, detailed) {
 </html>`;
 
   return htmlBody;
+}
+
+/**
+ * Map the RSVP arrival/guest-type answer to a plain stay window.
+ * The form's arrival options encode the whole stay, so we can derive it.
+ */
+function stayWindow(arrival) {
+  const a = (arrival || '').toLowerCase();
+  if (a.indexOf('full weekend') !== -1) return 'Friday–Sunday';
+  if (a.indexOf('setup crew') !== -1) return 'Friday–Saturday';
+  if (a.indexOf('saturday guest') !== -1) return 'Saturday–Sunday';
+  if (a.indexOf('day guest') !== -1) return 'Saturday only (no overnight)';
+  return escHtml(arrival); // fallback: show whatever was provided
 }
 
 /**
