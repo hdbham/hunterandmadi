@@ -39,3 +39,6 @@ test-results/
 CLAUDE.md
 .vibeyardignore
 
+
+# Claude Code local config
+.claude/
