@@ -191,6 +191,25 @@ function setupSheet() {
 }
 
 /**
+ * Run this once from the editor to (a) trigger the Gmail authorization prompt
+ * and (b) confirm email actually sends. Sends both a sample receipt and a
+ * sample couple-notification using fake data. Check both inboxes (and spam).
+ */
+function testEmail() {
+  const sample = {
+    ceremony: 'Yes',
+    timestamp: new Date().toISOString(),
+    contact: { email: NOTIFY_EMAIL, phone: '8014582972' },
+    mailing_address: 'TEST 742 Evergreen Terrace, Kamas, UT 84036',
+    additional: { song_requests: 'TEST song', comments: 'TEST comment' },
+    attendees: [{ name: 'TEST Guest', email: NOTIFY_EMAIL, phone: '8014582972' }]
+  };
+  sendReceiptEmail(sample, NOTIFY_EMAIL);   // sample receipt -> couple inbox
+  sendNotificationEmail(sample);            // sample notification -> couple inbox
+  Logger.log('testEmail finished. Check ' + NOTIFY_EMAIL + ' (and Spam) for two messages.');
+}
+
+/**
  * Send the guest their confirmation receipt.
  */
 function sendReceiptEmail(data, recipientEmail) {
